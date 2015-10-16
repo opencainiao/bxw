@@ -1,0 +1,12 @@
+eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
+encoding//src/main/java/bxw/common/util/RequestUtil.java=UTF-8
+encoding//src/main/java/bxw/common/util/ValCodeGenerator.java=UTF-8
+encoding//src/main/java/bxw/modules/global/controller/DownLoadExcelController.java=UTF-8
+encoding//src/main/java/bxw/modules/global/controller/ValidateCodeController.java=UTF-8
+encoding//src/main/java/bxw/modules/user/controller/AdminLoginController.java=UTF-8
+encoding//src/main/java/bxw/modules/user/controller/UserLoginController.java=UTF-8
+encoding//src/main/resources=UTF-8
+encoding//src/test/java=UTF-8
+encoding//src/test/resources=UTF-8
+encoding/<project>=UTF-8
