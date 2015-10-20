@@ -504,6 +504,23 @@ $.browser = {
 	$.fn.isExist_ux = function() {
 		return this.length > 0;
 	};
+	
+	$.fn.serializeJsonObject = function()
+	{
+	  var o = {};
+	  var a = this.serializeArray();
+	  $.each(a, function() {
+	    if (o[this.name] !== undefined) {
+	      if (!o[this.name].push) {
+	        o[this.name] = [o[this.name]];
+	      }
+	      o[this.name].push(this.value || '');
+	    } else {
+	      o[this.name] = this.value || '';
+	    }
+	  });
+	  return o;
+	};
 
 	/**
 	 * 将表单中各域的值自动封装成参数对象<br>
@@ -520,25 +537,28 @@ $.browser = {
 		for (var i = 0; i < len; i++) {
 
 			var oEle = oFrm.elements[i];
-
+			
+			var key = oEle.id || oEle.name;
+			var value = $.htmlDecode(oEle.value.trim());
+			
 			if (oEle.type === "radio") {
 				if (oEle.checked) {
-					ret[oEle.name] = $.htmlDecode(oEle.value.trim());
+					ret[key] = value;
 				}
 			} else if (oEle.type === "checkbox") {
-				var curVal = ret[oEle.name];
+				var curVal = ret[key];
 				if (curVal === undefined) {
-					ret[oEle.name] = [];
+					ret[key] = [];
 					if (oEle.checked) {
-						ret[oEle.name].push($.htmlDecode(oEle.value.trim()));
+						ret[key].push(value);
 					}
 				} else {
 					if (oEle.checked) {
-						ret[oEle.name].push($.htmlDecode(oEle.value.trim()));
+						ret[key].push(value);
 					}
 				}
 			} else {
-				ret[oEle.name] = $.htmlDecode(oEle.value.trim());
+				ret[key] = value;
 			}
 		}
 		return ret;

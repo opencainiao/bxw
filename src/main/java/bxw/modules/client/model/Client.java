@@ -15,7 +15,7 @@ import com.mou.mongodb.base.domain.BaseModel;
 import bxw.common.util.PinyinUtil;
 import bxw.modules.client.model.partinfo.ClientBaseInfo;
 
-@Document(collection="client")
+@Document(collection = "client")
 public class Client extends BaseModel {
 
 	private String owner_user_id; // 归属用户id
@@ -107,6 +107,10 @@ public class Client extends BaseModel {
 
 	private String interesting_service_name; // 关注的服务
 
+	private String pinyin_name;// 姓名拼音， 比如：ZHANGSAN
+	private String first_char_header;// 姓名拼音第一个首字母， 比如：Z
+	private String all_char_header;// 姓名拼音首字母， 比如：ZS
+
 	public String getContact_type_name() {
 		return contact_type_name;
 	}
@@ -114,10 +118,6 @@ public class Client extends BaseModel {
 	public void setContact_type_name(String contact_type_name) {
 		this.contact_type_name = contact_type_name;
 	}
-
-	private String pinyin_name;// 姓名拼音， 比如：ZHANGSAN
-	private String first_char_header;// 姓名拼音第一个首字母， 比如：Z
-	private String all_char_header;// 姓名拼音首字母， 比如：ZS
 
 	@NotEmpty(message = "归属用户_id不能为空")
 	public String getOwner_user_id() {
@@ -136,8 +136,7 @@ public class Client extends BaseModel {
 		return introducer_relationship_name;
 	}
 
-	public void setIntroducer_relationship_name(
-			String introducer_relationship_name) {
+	public void setIntroducer_relationship_name(String introducer_relationship_name) {
 		this.introducer_relationship_name = introducer_relationship_name;
 	}
 
@@ -351,8 +350,7 @@ public class Client extends BaseModel {
 		return annual_income_personal_type;
 	}
 
-	public void setAnnual_income_personal_type(
-			String annual_income_personal_type) {
+	public void setAnnual_income_personal_type(String annual_income_personal_type) {
 		this.annual_income_personal_type = annual_income_personal_type;
 	}
 
@@ -648,8 +646,7 @@ public class Client extends BaseModel {
 		return annual_income_personal_type_name;
 	}
 
-	public void setAnnual_income_personal_type_name(
-			String annual_income_personal_type_name) {
+	public void setAnnual_income_personal_type_name(String annual_income_personal_type_name) {
 		this.annual_income_personal_type_name = annual_income_personal_type_name;
 	}
 
@@ -657,8 +654,7 @@ public class Client extends BaseModel {
 		return annual_income_family_type_name;
 	}
 
-	public void setAnnual_income_family_type_name(
-			String annual_income_family_type_name) {
+	public void setAnnual_income_family_type_name(String annual_income_family_type_name) {
 		this.annual_income_family_type_name = annual_income_family_type_name;
 	}
 
@@ -666,8 +662,7 @@ public class Client extends BaseModel {
 		return family_financial_standing_name;
 	}
 
-	public void setFamily_financial_standing_name(
-			String family_financial_standing_name) {
+	public void setFamily_financial_standing_name(String family_financial_standing_name) {
 		this.family_financial_standing_name = family_financial_standing_name;
 	}
 
@@ -758,8 +753,7 @@ public class Client extends BaseModel {
 			if (StringUtil.isNotEmpty(this.pinyin_name)) {
 				setFirst_char_header(this.pinyin_name.substring(0, 1));
 			} else {
-				String headerFirst = PinyinUtil
-						.str2PinyinHeaderFirst(client_name);
+				String headerFirst = PinyinUtil.str2PinyinHeaderFirst(client_name);
 				setFirst_char_header(headerFirst);
 			}
 		}
@@ -952,8 +946,7 @@ public class Client extends BaseModel {
 		rtnMap.put("annual_income_family_type_name", 8000);
 		rtnMap.put("source_type", 1900);
 		rtnMap.put("sex_name", 1900);
-		
-		
+
 		return rtnMap;
 	}
 }

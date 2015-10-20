@@ -9,6 +9,7 @@ F:\git\bxw\src\main\java\bxw\modules\global\model\ThumbParam.java
 F:\git\bxw\src\main\java\bxw\common\util\RequestUtil.java
 F:\git\bxw\src\main\java\bxw\modules\client\service\ClientService.java
 F:\git\bxw\src\main\java\bxw\modules\global\model\ResizedPic.java
+F:\git\bxw\src\main\java\bxw\modules\exhibition\service\IExhibitionService.java
 F:\git\bxw\src\main\java\bxw\modules\client\service\modifyclientinfo\ClientSourceInfoService.java
 F:\git\bxw\src\main\java\bxw\modules\infrustructure\service\ISysConstService.java
 F:\git\bxw\src\main\java\bxw\modules\user\enums\UserActiveResult.java
@@ -44,6 +45,7 @@ F:\git\bxw\src\main\java\bxw\modules\infrustructure\service\ICityService.java
 F:\git\bxw\src\main\java\bxw\modules\infrustructure\service\impl\CityService.java
 F:\git\bxw\src\main\java\bxw\modules\global\controller\ValidateCodeController.java
 F:\git\bxw\src\main\java\bxw\modules\client\controller\PhoneController.java
+F:\git\bxw\src\main\java\bxw\modules\exhibition\model\Exhibition.java
 F:\git\bxw\src\main\java\bxw\modules\client\enums\PartFlgEnum.java
 F:\git\bxw\src\main\java\bxw\modules\user\controller\AdminLoginController.java
 F:\git\bxw\src\main\java\bxw\common\util\MongoUpListUtil.java
@@ -66,6 +68,7 @@ F:\git\bxw\src\main\java\bxw\modules\client\service\IEmailTypeService.java
 F:\git\bxw\src\main\java\bxw\common\globalhandler\UTF8StringHttpMessageConverter.java
 F:\git\bxw\src\main\java\bxw\modules\client\service\modifyclientinfo\ClientBaseInfoService.java
 F:\git\bxw\src\main\java\bxw\modules\global\service\IPicThumb.java
+F:\git\bxw\src\main\java\bxw\modules\exhibition\enums\ExhibitionState.java
 F:\git\bxw\src\main\java\bxw\modules\client\model\partinfo\ClientXgInfo.java
 F:\git\bxw\src\main\java\bxw\modules\user\service\ILoginInfService.java
 F:\git\bxw\src\main\java\bxw\modules\user\enums\UserMailConfig.java
@@ -90,9 +93,9 @@ F:\git\bxw\src\main\java\bxw\common\web\filter\SpecialCharacterFilter.java
 F:\git\bxw\src\main\java\bxw\modules\global\model\ThumbType.java
 F:\git\bxw\src\main\java\bxw\modules\client\service\EmailService.java
 F:\git\bxw\src\main\java\bxw\modules\infrustructure\enums\AutoIncreaseKeyEnum.java
-F:\git\bxw\src\main\java\bxw\modules\user\enums\RegistResult.java
-F:\git\bxw\src\main\java\bxw\modules\client\model\partinfo\ClientBaseInfo.java
 F:\git\bxw\src\main\java\bxw\common\util\MenuUtil.java
+F:\git\bxw\src\main\java\bxw\modules\client\model\partinfo\ClientBaseInfo.java
+F:\git\bxw\src\main\java\bxw\modules\user\enums\RegistResult.java
 F:\git\bxw\src\main\java\bxw\common\util\EncoderHandler.java
 F:\git\bxw\src\main\java\bxw\common\util\RegexPatternUtil.java
 F:\git\bxw\src\main\java\bxw\common\web\init\Initializable.java
@@ -122,6 +125,8 @@ F:\git\bxw\src\main\java\bxw\modules\client\model\propertyeidtor\StringListEdito
 F:\git\bxw\src\main\java\bxw\modules\user\controller\ProfileController.java
 F:\git\bxw\src\main\java\bxw\modules\global\controller\DownLoadExcelController.java
 F:\git\bxw\src\main\java\bxw\modules\client\service\IAddressTypeService.java
+F:\git\bxw\src\main\java\bxw\modules\exhibition\enums\ExhibitionStage.java
+F:\git\bxw\src\main\java\bxw\modules\exhibition\controller\ExhibitionController.java
 F:\git\bxw\src\main\java\bxw\common\util\SpringMailUtil.java
 F:\git\bxw\src\main\java\bxw\modules\client\model\partinfo\ClientIncomeInfo.java
 F:\git\bxw\src\main\java\bxw\common\web\interceptors\ContextInteceptor.java
@@ -139,6 +144,7 @@ F:\git\bxw\src\main\java\bxw\modules\user\model\LoginInf.java
 F:\git\bxw\src\main\java\bxw\modules\client\model\propertyeidtor\AddressListEditor.java
 F:\git\bxw\src\main\java\bxw\modules\user\service\IUserService.java
 F:\git\bxw\src\main\java\bxw\common\globalobj\SessionPublicData.java
+F:\git\bxw\src\main\java\bxw\modules\exhibition\service\ExhibitionService.java
 F:\git\bxw\src\main\java\bxw\modules\infrustructure\service\IAutoIncreaserService.java
 F:\git\bxw\src\main\java\bxw\modules\infrustructure\service\impl\SysConstTypeService.java
 F:\git\bxw\src\main\java\bxw\common\util\ZTreeUtil.java

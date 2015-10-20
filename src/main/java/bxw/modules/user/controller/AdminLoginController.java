@@ -149,6 +149,7 @@ public class AdminLoginController {
 			HttpSession session = request.getSession(true);
 			session.setAttribute("userid", user.get_id_m());
 			session.setAttribute("username", user.getUsername());
+			session.setAttribute("user_sex", user.getSex());
 			session.setAttribute("nickname", user.getNick());
 			session.setAttribute("user_head_img", user.getHeadImageId());
 			model.addAttribute("state", user.getState());
@@ -159,8 +160,6 @@ public class AdminLoginController {
 
 			// 7.设置全局登陆信息
 			loginInfService.saveLoginInf(loginInf, true);
-
-			// 8.登记登陆日志
 
 			// 8.登记登陆日志
 			LoginLogInf logInf = new LoginLogInf();

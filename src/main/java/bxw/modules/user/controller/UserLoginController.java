@@ -137,9 +137,13 @@ public class UserLoginController {
 
 			// 6. 将缓存对象放入session
 			HttpSession session = request.getSession(true);
-			session.setAttribute("user_id", user.get_id());
+			session.setAttribute("userid", user.get_id_m());
 			session.setAttribute("username", user.getUsername());
+			session.setAttribute("user_sex", user.getSex());
 			session.setAttribute("nickname", user.getNick());
+			session.setAttribute("user_head_img", user.getHeadImageId());
+			model.addAttribute("state", user.getState());
+			model.addAttribute("statename", user.getStatename());
 			session.setAttribute(Constant.SESSION_CASH_PUBLICDATA, sPublicData);
 
 			logger.debug(session.getAttribute(Constant.SESSION_CASH_PUBLICDATA));
