@@ -94,8 +94,8 @@ var data_manage = {
 
 	search : function() {
 		var searchcondition = {};
-		searchcondition["name"] = "search_condition";
-		searchcondition["value"] = $("#search_condition").val().trim();
+		searchcondition["name"] = "username";
+		searchcondition["value"] = $("#username").trim_value();
 
 		var params = [];
 		params.push(searchcondition);

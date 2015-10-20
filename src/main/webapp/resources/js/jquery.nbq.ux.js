@@ -505,6 +505,11 @@ $.browser = {
 		return this.length > 0;
 	};
 	
+	$.fn.trim_value = function(){
+		var value = $.htmlDecode($(this).val().trim());
+		return value;
+	};
+	
 	$.fn.serializeJsonObject = function()
 	{
 	  var o = {};

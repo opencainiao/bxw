@@ -21,11 +21,12 @@
 	</ul>
 
 	<div id="content_inner_page" class="innercontent">
-		<div class="navbar navbar-default">
+		<div class="navbar navbar-default ">
 			<form class="navbar-form navbar-left">
 				<div class="form-group ">
-					<input class="form-control " style="width: 300px" type="text"
-						id="search_condition" name="search_condition" placeholder="">
+					<span>姓名</span>
+					<input class="form-control input-sm" style="width: 300px" type="text"
+						id="username" name="username" placeholder="输入客户姓名、拼音或是首字母">
 				</div>
 				<button class="btn btn-info" type="button" id="btn_search">
 					查询</button>
