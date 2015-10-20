@@ -196,11 +196,11 @@ var data_manage = {
 		},{
 			display : '开始日期',
 			name : 'start_date',
-			width : 160
+			width : 80
 		},{
 			display : '开始时间',
 			name : 'start_time',
-			width : 120
+			width : 140
 		}, {
 			display : '操作',
 			name : 'operation',
