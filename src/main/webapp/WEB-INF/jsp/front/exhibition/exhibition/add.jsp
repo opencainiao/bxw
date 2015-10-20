@@ -102,7 +102,7 @@ input {
 
 			var paramForm = $('form').serializeJsonObject();
 			
-			$.logJson(paramForm);
+			//$.logJson(paramForm);
 
 			var successstr = "开启成功";
 

@@ -64,7 +64,7 @@ var data_manage_functions = {
 
 		var url = $.getSitePath() + '/front/exhibition/' + data["_id_m"] + "/update";
 
-		$.popUpWindow("编辑材料类型信息", url, "800px", "400px", "edit", $("#data_manage"));
+		$.popUpWindow("编辑展业信息", url, "800px", "400px", "edit", $("#data_manage"));
 	},
 	/***************************************************************************
 	 * 进入详细信息页面
@@ -76,7 +76,7 @@ var data_manage_functions = {
 
 		var url = $.getSitePath() + '/front/exhibition/' + data["_id_m"];
 
-		$.showDetailWindow("材料类型信息", url, "600px", "300px");
+		$.showDetailWindow("展业信息", url, "600px", "300px");
 	},
 	/***************************************************************************
 	 * 关闭编辑窗口

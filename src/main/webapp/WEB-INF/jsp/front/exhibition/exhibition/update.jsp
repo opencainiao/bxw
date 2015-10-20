@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,113 +15,102 @@
 </head>
 
 <body>
-<input type="hidden" name="ctx" value="<%=request.getContextPath()%>" />
+	<div id="edit_div" class="onepage" style="margin-top: 30px">
+		<input type="hidden" name="_id" value="${sysconst._id}" readonly />
+		<sf:form modelAttribute="exhibition" class="form-horizontal">
+			<input type="hidden" id="user_id" name="user_id"
+				value="${exhibition.user_id }" />
+			<input type="hidden" id="username" name="username"
+				value="${exhibition.username }" />
 
-<div id="edit_div" class="onepage" style="margin-top: 30px">
-    <input type="hidden" name="_id" value="${sysconst._id}" readonly/>
-    <sf:form modelAttribute="sysconst" class="form-horizontal center-block " style="width: 500px">
-    		<div class="form-group ">
-	            <label for="typecode" class="col-sm-3 control-label">
-	                常量类型码
-	            </label>
-	            <div class="col-sm-8">
-	                <input type="text" class="form-control" id="typecode" name="typecode" value="${sysconst.typecode}"  placeholder="" readonly>
-	            </div>
-	        </div>
-	        <div class="form-group ">
-	            <label for="typename" class="col-sm-3 control-label">
-	                常量类型
-	            </label>
-	            <div class="col-sm-8">
-	                <input type="text" class="form-control" id="typename" name="typename" value="${sysconst.typename}"  placeholder="" readonly>
-	            </div>
-	        </div>
-      		<div class="form-group ">
-		            <label for="val" class="col-sm-3 control-label">
-		                常量值
-		            </label>
-		            <div class="col-sm-8">
-		                <input type="text" class="form-control" id="val" name="val" value="${sysconst.val}"  placeholder="" >
-		            </div>
-	        </div>
-      		<div class="form-group ">
-		            <label for="dspval" class="col-sm-3 control-label">
-		                常量显示值
-		            </label>
-		            <div class="col-sm-8">
-		                <input type="text" class="form-control" id="dspval" name="dspval" value="${sysconst.dspval}"  placeholder="" >
-		            </div>
-	        </div>
-      		
-      		<div class="form-group ">
-		            <label for="valordernum" class="col-sm-3 control-label">
-		                常量值顺序号
-		            </label>
-		            <div class="col-sm-8">
-		                <input type="text" class="form-control" id="valordernum" name="valordernum" value="${sysconst.valordernum}"  placeholder="" >
-		            </div>
-	        </div>
-        
-        <hr />
-        <div class="col-sm-12">
-        	<button type="button" id="btn_save" class="btn btn-primary btn-lg center-block">提交</button>
-        </div>
-    </sf:form>
-</div>
-	
-<script>
-    $().ready(function() {
-        $("#btn_save").bind("click", save);
-        
-        document.onkeydown = function(event) {
-    		if (event.keyCode == 13) {
-    			return false;
-    		}
-    	}
-    });
+			<div class="form-group  form-group-sm " style="margin-top: 15px">
+				<label for="family_income_feature" class="col-sm-2 control-label">客户</label>
+				<div class="col-sm-7">
+					<input type="text" id="client_choose" name="client_choose"
+						class="form-control " value="${exhibition.username }" readonly>
+				</div>
+			</div>
+			<div class="form-group form-group-sm ">
+				<label for="remark" class="col-sm-2 control-label"> 说明 </label>
+				<div class="col-sm-7">
+					<textarea type="text" class="form-control " id="remark"
+						name="remark" placeholder="请输入说明" style="height: 180px">${ exhibition.remark}</textarea>
+				</div>
+			</div>
 
-    var closeEditWindow=function(){
-    	parent.data_manage_functions.refreshPage();
-    	parent.data_manage_functions.closeEditWindow();
-    }
-    //保存
-    var save = function() {
+			<hr />
+			<div class="col-sm-7">
+				<button type="button" id="btn_save"
+					class="btn btn-primary btn-lg center-block">提交</button>
+			</div>
+		</sf:form>
+	</div>
 
-        // 控制按钮为禁用
-        $.disableButton("btn_save");
+	<script>
+		$().ready(function() {
 
-        var paramForm = $('form').getFormParam_ux();
+			$("#btn_save").bind("click", save);
 
-        var successstr = "修改成功";
+			document.onkeydown = function(event) {
+				if (event.keyCode == 13) {
+					return false;
+				}
+			}
+		});
 
-        var url_to = window.location.href ;
+		//保存
+		var save = function() {
 
-        $.ajax({
-            type: 'POST',
-            url: url_to,
-            data: $.extend({
-                ts: new Date().getTime()
-            },
-            paramForm),
-            type: 'POST',
-            dataType: 'json',
-            success: function(data) {
+			// 控制按钮为禁用
+			$.disableButton("btn_save");
 
-                if (data['success'] == 'n') {
-                    if (data['brErrors']) {
-                        $.showBRErrors_mou_abs(data['brErrors'], $("#edit_div"));
-                    } else {
-                    	$.alertError(data['message']);
-                    }
-                } else {
-                    $.alertSuccessCallback("修改成功", successstr, closeEditWindow);
-                }
-            },
-            complete: function(XMLHttpRequest, textStatus) {
-                $.enableButton("btn_save");
-            }
-        });
-    };
-</script>
+			var paramForm = $('form').serializeJsonObject();
+
+			$.logJson(paramForm);
+
+			var successstr = "修改成功";
+
+			var url_to = window.location.href ;
+			var url_success = $.getSitePath() + "/front/exhibition/list";
+
+			var params = [];
+			//params.push("typecode=${sysconst.typecode}");
+			//params.push("typename=${sysconst.typename}");
+			params.push("ts=" + new Date().getTime());
+
+			url_success = url_success + "?" + params.join("&");
+
+			$.ajax({
+				type : 'POST',
+				url : url_to,
+				data : $.extend({
+					ts : new Date().getTime()
+				}, paramForm),
+				type : 'POST',
+				dataType : 'json',
+				success : function(data) {
+
+					if (data['success'] == 'n') {
+						if (data['brErrors']) {
+							$.showBRErrors_mou_abs(data['brErrors'],
+									$("#add_div"));
+						} else {
+							$.alertError(data['message']);
+						}
+					} else {
+
+						var callback = parent.data_manage_functions.closeAddWindow;
+
+						$.alertSuccessCallback("成功", successstr,
+								callback);
+						//$.alertSuccessNewPage("成功", successstr, url_success);
+					}
+				},
+				complete : function(XMLHttpRequest, textStatus) {
+					$.enableButton("btn_save");
+				}
+			});
+		};
+	</script>
 </body>
 </html>
