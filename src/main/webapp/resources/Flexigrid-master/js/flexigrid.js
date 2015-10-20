@@ -560,7 +560,7 @@ var mou_grid_ux = {
 		
 		return html_rtn;
 	},
-	createMenuList:function(config){
+	createMenuList:function(config,title){
 		
 		var firstClass = config["css"] || "btn btn-primary";
 		var firstBtnName = config["text"];
@@ -581,24 +581,28 @@ var mou_grid_ux = {
 			html_all_list = html_all_list + btn_array_html;
 		}
 		
-		console.log(html_all_list);    
-		
 		var createdHtml = '' + 
-		'<div class="btn-group">                                                                                                                 ' +
-		'		   <button class="#firstClass#" name="#firstBtnTitle#" type="button">"#firstBtnName#"</button>                                                                      ' +
-		'		   <button class="btn btn-danger dropdown-toggle"  data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">   ' +
+		''+
+		'<div class="btn-group" style="position:absolute;left:#LEFT#px;top:0px;">                                                                                                                 ' +
+		'		   <button class="#firstClass#" name="#firstBtnTitle#" type="button">#firstBtnName#</button>                                                                      ' +
+		'		   <button class="btn btn-success btn-xs dropdown-toggle "  data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">   ' +
 		'		   	<span class="caret"></span>                                                                                                      ' +
 		'		   	<span class="sr-only">Toggle Dropdown</span>                                                                                     ' +
 		'		   </button>                                                                                                                         ' +
-		'		   <ul class="dropdown-menu">                                                                                                        ' +
+		'		   <ul class="dropdown-menu" style="position:absolute;left:3px;top:25px;overflow-y: visible; overflow-x: visible;">                                                                                                        ' +
 		'		      #LIHTML#                                                                                   ' +
 		'		   </ul>                                                                                                                             ' +
-		'		</div>                                                                                                                               ' ;
-	
+		'		</div>       '+
+		'' ;
+		
 		createdHtml = createdHtml.replaceAll("#firstClass#",firstClass);
 		createdHtml = createdHtml.replaceAll("#firstBtnName#",firstBtnName);
 		createdHtml = createdHtml.replaceAll("#firstBtnTitle#",firstBtnTitle);
 		createdHtml = createdHtml.replaceAll("#LIHTML#",html_all_list);
+		
+		var left = $("th[name_cm="+ title +"]").offset().left - 11;
+		console.log("left--" + left); 
+		createdHtml = createdHtml.replaceAll("#LEFT#",left);
 		
 		return createdHtml;
 	}
@@ -1271,7 +1275,7 @@ var mou_grid_ux = {
 										var nameBtn = btncfg.r_name;
 										var css = btncfg.css || "btn btn-xs btn-primary";
 
-										var btns_html = mou_grid_ux.createMenuList(btncfg);
+										var btns_html = mou_grid_ux.createMenuList(btncfg,colModelTmp.name);
 										
 										var btn = $(btns_html);
 

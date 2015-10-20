@@ -244,7 +244,7 @@ var data_manage = {
 			} ]
 		}, {
 			display : '创建展业活动',
-			name : 'operation',
+			name : 'operation1',
 			m_type : 'drop_down_list_buttons',
 			width : 130,
 			buttons : {
@@ -259,9 +259,6 @@ var data_manage = {
 				}, {
 					"text" : "记录",
 					"data-name" : "record"
-				} ], [ {
-					"text" : "取消",
-					"data-name" : "cancel"
 				} ] ]
 			}
 		} ]
