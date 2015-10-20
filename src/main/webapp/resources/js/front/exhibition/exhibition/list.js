@@ -93,12 +93,22 @@ var data_manage_functions = {
 var data_manage = {
 
 	search : function() {
-		var searchcondition = {};
-		searchcondition["name"] = "username";
-		searchcondition["value"] = $("#username").trim_value();
-
+		var username = {};
+		username["name"] = "username";
+		username["value"] = $("#username").trim_value();
+		
+		var exhibition_stage = {};
+		exhibition_stage["name"] = "exhibition_stage";
+		exhibition_stage["value"] = $("#exhibition_stage").trim_value();
+		
+		var exhibition_state = {};
+		exhibition_state["name"] = "exhibition_state";
+		exhibition_state["value"] = $("#exhibition_state").trim_value();
+		
 		var params = [];
-		params.push(searchcondition);
+		params.push(username);
+		params.push(exhibition_stage);
+		params.push(exhibition_state);
 
 		data_manage.gridsetting.url = $.getSitePath() + '/front/exhibition/list?ts=' + new Date().getTime();
 

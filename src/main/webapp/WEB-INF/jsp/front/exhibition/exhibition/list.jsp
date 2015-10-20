@@ -25,11 +25,25 @@
 			<form class="navbar-form navbar-left">
 				<div class="form-group ">
 					<span>姓名</span>
-					<input class="form-control input-sm" style="width: 300px" type="text"
-						id="username" name="username" placeholder="输入客户姓名、拼音或是首字母">
+					<input class="form-control input-sm" style="width: 300px"
+						type="text" id="username" name="username"
+						placeholder="输入客户姓名、拼音或是首字母">
 				</div>
 				<button class="btn btn-info" type="button" id="btn_search">
 					查询</button>
+
+				<span>阶段</span>
+				<select id="exhibition_stage" name="exhibition_stage"
+					class="form-control input-sm" data-src="constant"
+					data-typecode="EXHIBITION_STAGE"
+					data-value="" data-allownull></select>
+
+				<span>状态</span>
+				<select id="exhibition_state" name="exhibition_state"
+					class="form-control input-sm" data-src="constant"
+					data-typecode="EXHIBITION_STATE" 
+					data-value="" data-allownull></select>
+
 				<button class="btn btn-primary" type="button" id="btn_add"
 					style="margin-left: 50px;">开启新展业</button>
 			</form>

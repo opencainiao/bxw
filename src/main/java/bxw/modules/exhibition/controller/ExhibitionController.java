@@ -73,9 +73,9 @@ public class ExhibitionController extends BaseController {
 			return this.handleValidateFalse(br);
 		}
 		try {
-			
+
 			String user_id = exhibition.getUser_id();
-			if (StringUtil.isEmpty(user_id)){
+			if (StringUtil.isEmpty(user_id)) {
 				return this.handleValidateFalse("请选择客户!");
 			}
 			// 1.校验是否已存在相同的类型码
@@ -123,7 +123,8 @@ public class ExhibitionController extends BaseController {
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	@ResponseBody
-	public Object list(Model model, HttpServletRequest request, String username) {
+	public Object list(Model model, HttpServletRequest request, String username, String exhibition_stage,
+			String exhibition_state) {
 
 		HttpServletRequestUtil.debugParams(request);
 		try {
@@ -146,6 +147,20 @@ public class ExhibitionController extends BaseController {
 				values.add(new BasicDBObject("first_char_header", namePattern));
 				values.add(new BasicDBObject("all_char_header", namePattern));
 				query.put("$or", values);
+			}
+
+			if (StringUtil.isNotEmpty(exhibition_stage)) {
+
+				if (!exhibition_stage.equals("-1")) {
+					query.put("stage", exhibition_stage);
+				}
+			}
+
+			if (StringUtil.isNotEmpty(exhibition_state)) {
+
+				if (!exhibition_state.equals("-1")) {
+					query.put("state", exhibition_state);
+				}
 			}
 
 			DBObject sort = new BasicDBObject();
