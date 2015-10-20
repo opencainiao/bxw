@@ -538,6 +538,69 @@ var mou_grid_ux = {
 			rtnArray.push(tmp);
 		}
 		return rtnArray;
+	},
+	createBtnListHtml :function(btn_array){
+		
+		var html_rtn = "";
+		
+		for (var i=0; i<btn_array.length; ++i){
+			
+			var btn_config = btn_array[i];
+			
+			var btnName = btn_config["text"];
+			var dataName= btn_config["data-name"];
+			
+			var html_btn_this = '<li> <a href="#" data-name="#DATA-NAME#">#btnName#</a> </li>';
+			
+			html_btn_this = html_btn_this.replaceAll("#btnName#",btnName);
+			html_btn_this = html_btn_this.replaceAll("#DATA-NAMEe#",dataName);
+		
+			html_rtn = html_rtn + html_btn_this;
+		}
+		
+		return html_rtn;
+	},
+	createMenuList:function(config){
+		
+		var firstClass = config["css"] || "btn btn-primary";
+		var firstBtnName = config["text"];
+		var firstBtnTitle = config["r_name"];
+		
+		var btns = config["btns"];
+		
+		var html_all_list = "";
+		for (var i=0; i<btns.length; ++i){
+			var btn_array = btns[i];
+			
+			if (i > 0){
+				html_all_list = html_all_list+ '<li class="divider" role="separator"></li>';  
+			}
+			
+			var btn_array_html = mou_grid_ux.createBtnListHtml(btn_array);
+			
+			html_all_list = html_all_list + btn_array_html;
+		}
+		
+		console.log(html_all_list);    
+		
+		var createdHtml = '' + 
+		'<div class="btn-group">                                                                                                                 ' +
+		'		   <button class="#firstClass#" name="#firstBtnTitle#" type="button">"#firstBtnName#"</button>                                                                      ' +
+		'		   <button class="btn btn-danger dropdown-toggle"  data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">   ' +
+		'		   	<span class="caret"></span>                                                                                                      ' +
+		'		   	<span class="sr-only">Toggle Dropdown</span>                                                                                     ' +
+		'		   </button>                                                                                                                         ' +
+		'		   <ul class="dropdown-menu">                                                                                                        ' +
+		'		      #LIHTML#                                                                                   ' +
+		'		   </ul>                                                                                                                             ' +
+		'		</div>                                                                                                                               ' ;
+	
+		createdHtml = createdHtml.replaceAll("#firstClass#",firstClass);
+		createdHtml = createdHtml.replaceAll("#firstBtnName#",firstBtnName);
+		createdHtml = createdHtml.replaceAll("#firstBtnTitle#",firstBtnTitle);
+		createdHtml = createdHtml.replaceAll("#LIHTML#",html_all_list);
+		
+		return createdHtml;
 	}
 
 };
@@ -1197,6 +1260,22 @@ var mou_grid_ux = {
 
 											$(td).append(btn);
 										}
+									}
+								}else if (m_type == 'drop_down_list_buttons') {
+
+									var btncfg = colModelTmp.buttons;
+
+									if (btncfg) {
+
+										var textBtn = btncfg.text;
+										var nameBtn = btncfg.r_name;
+										var css = btncfg.css || "btn btn-xs btn-primary";
+
+										var btns_html = mou_grid_ux.createMenuList(btncfg);
+										
+										var btn = $(btns_html);
+
+										$(td).append(btn);
 									}
 								}
 

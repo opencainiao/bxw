@@ -1,31 +1,34 @@
-$().ready(function() {
+$().ready(
+		function() {
 
-	data_manage.init();
+			data_manage.init();
 
-	$("#btn_add").click(function() {
-		var url_to = $.getSitePath() + '/front/exhibition/add';
-		
-		var params = [];
-		params.push("typecode=" + $("#typecode").val());
-		params.push("typename=" + $("#typename").val());
-		params.push("ts=" + new Date().getTime());
-		
-		url_to = url_to + "?" + params.join("&");
-		
-		//$.loadPage(url_to);
-		
-		$.popUpWindow("开启新展业", url_to, "780px", "450px", "add", $("#content_inner_page"));
-	});
+			$("#btn_add").click(
+					function() {
+						var url_to = $.getSitePath() + '/front/exhibition/add';
 
-	$("#btn_search").click(function() {
-		data_manage.search();
-	});
-});
+						var params = [];
+						params.push("typecode=" + $("#typecode").val());
+						params.push("typename=" + $("#typename").val());
+						params.push("ts=" + new Date().getTime());
+
+						url_to = url_to + "?" + params.join("&");
+
+						// $.loadPage(url_to);
+
+						$.popUpWindow("开启新展业", url_to, "780px", "450px", "add",
+								$("#content_inner_page"));
+					});
+
+			$("#btn_search").click(function() {
+				data_manage.search();
+			});
+		});
 
 var data_manage_functions = {
-	
-	closeAddWindow:function(){
-	
+
+	closeAddWindow : function() {
+
 		window.location.reload();
 		$.closeWindow("add", $("#content_inner_page"));
 	},
@@ -37,7 +40,8 @@ var data_manage_functions = {
 	 */
 	delOne : function(data) {
 
-		var url_to = $.getSitePath() + '/front/exhibition/' + data["_id_m"] + '/delete';
+		var url_to = $.getSitePath() + '/front/exhibition/' + data["_id_m"]
+				+ '/delete';
 
 		$.ajax({
 			type : 'POST',
@@ -62,9 +66,11 @@ var data_manage_functions = {
 	 */
 	toEdit : function(data) {
 
-		var url = $.getSitePath() + '/front/exhibition/' + data["_id_m"] + "/update";
+		var url = $.getSitePath() + '/front/exhibition/' + data["_id_m"]
+				+ "/update";
 
-		$.popUpWindow("编辑展业信息", url, "800px", "400px", "edit", $("#data_manage"));
+		$.popUpWindow("编辑展业信息", url, "800px", "400px", "edit",
+				$("#data_manage"));
 	},
 	/***************************************************************************
 	 * 进入详细信息页面
@@ -84,9 +90,17 @@ var data_manage_functions = {
 	closeEditWindow : function() {
 		$.closeWindow("edit", $("#data_manage"));
 	},
-	refreshPage:function(){
+	refreshPage : function() {
 		window.location.reload();
-		//data_manage.search();
+		// data_manage.search();
+	},
+	/***************************************************************************
+	 * 创建展业事项
+	 */
+	createExhibitionItem : function(data) {
+		var _id_m = data["_id_m"];
+
+		alert(_id_m);
 	}
 };
 
@@ -96,21 +110,22 @@ var data_manage = {
 		var username = {};
 		username["name"] = "username";
 		username["value"] = $("#username").trim_value();
-		
+
 		var exhibition_stage = {};
 		exhibition_stage["name"] = "exhibition_stage";
 		exhibition_stage["value"] = $("#exhibition_stage").trim_value();
-		
+
 		var exhibition_state = {};
 		exhibition_state["name"] = "exhibition_state";
 		exhibition_state["value"] = $("#exhibition_state").trim_value();
-		
+
 		var params = [];
 		params.push(username);
 		params.push(exhibition_stage);
 		params.push(exhibition_state);
 
-		data_manage.gridsetting.url = $.getSitePath() + '/front/exhibition/list?ts=' + new Date().getTime();
+		data_manage.gridsetting.url = $.getSitePath()
+				+ '/front/exhibition/list?ts=' + new Date().getTime();
 
 		if ($("#data_manage").attr("s_times")) {
 			params.push({
@@ -133,15 +148,15 @@ var data_manage = {
 	init : function() {
 
 		var url = $.getSitePath() + '/front/exhibition/list';
-		
+
 		var params = [];
 		params.push("typecode=" + $("#typecode").val());
 		params.push("ts=" + new Date().getTime());
-		
+
 		url = url + "?" + params.join("&");
-		
+
 		data_manage.gridsetting.url = url;
-		
+
 		// alert(data_manage.gridsetting.url);
 		$("#list").flexigrid(data_manage.gridsetting);
 
@@ -152,7 +167,8 @@ var data_manage = {
 		var inPage_h = $(parent.window).height();
 		var nav_h = 160;
 		var btnbar_h = 40;
-		var table_h = mou_grid_ux.getTableH($("#content_inner_page"), inPage_h - nav_h - btnbar_h - 2 - 8);
+		var table_h = mou_grid_ux.getTableH($("#content_inner_page"), inPage_h
+				- nav_h - btnbar_h - 2 - 8);
 		mou_grid_ux.resetHeight_grid($("#content_inner_page"), table_h);
 	},
 	/***************************************************************************
@@ -189,25 +205,23 @@ var data_manage = {
 			width : 150,
 			hide : true,
 			callback : data_manage_functions.toDetail
-		}, 
-		{
+		}, {
 			display : '用户',
 			name : 'username',
 			width : 120
-		},
-			{
-				display : '阶段',
-				name : 'stage_name',
-				width : 120
-		},{
+		}, {
+			display : '阶段',
+			name : 'stage_name',
+			width : 120
+		}, {
 			display : '状态',
 			name : 'state_name',
 			width : 120
-		},{
+		}, {
 			display : '开始日期',
 			name : 'start_date',
 			width : 80
-		},{
+		}, {
 			display : '开始时间',
 			name : 'start_time',
 			width : 140
@@ -215,7 +229,7 @@ var data_manage = {
 			display : '操作',
 			name : 'operation',
 			m_type : 'buttons',
-			width : 200,
+			width : 90,
 			buttons : [ {
 				r_name : 'del',
 				text : '删除',
@@ -228,7 +242,28 @@ var data_manage = {
 				callback : data_manage_functions.toEdit,
 				paramConfig : [ "_id_m" ]
 			} ]
+		}, {
+			display : '创建展业活动',
+			name : 'operation',
+			m_type : 'drop_down_list_buttons',
+			width : 130,
+			buttons : {
+				r_name : 'createExhibitionItem',
+				text : '创建展业活动',
+				callback : data_manage_functions.createExhibitionItem,
+				paramConfig : [ "_id_m" ],
+				css : "btn btn-xs btn-success",
+				btns : [ [ {
+					"text" : "计划",
+					"data-name" : "plan"
+				}, {
+					"text" : "记录",
+					"data-name" : "record"
+				} ], [ {
+					"text" : "取消",
+					"data-name" : "cancel"
+				} ] ]
+			}
 		} ]
-
 	}
 };
