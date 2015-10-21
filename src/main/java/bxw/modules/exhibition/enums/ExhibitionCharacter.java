@@ -6,7 +6,7 @@ package bxw.modules.exhibition.enums;
  * @author NBQ
  *
  */
-public enum EXHIBITION_CHARACTER {
+public enum ExhibitionCharacter {
 
 	INITIAL_CONTACT("01", "初步接触"), //
 	CONTACT("02", "沟通了解"), //
@@ -20,7 +20,7 @@ public enum EXHIBITION_CHARACTER {
 	private String code;
 	private String name;
 
-	private EXHIBITION_CHARACTER(String code, String name) {
+	private ExhibitionCharacter(String code, String name) {
 		this.code = code;
 		this.name = name;
 	}
