@@ -539,7 +539,7 @@ var mou_grid_ux = {
 		}
 		return rtnArray;
 	},
-	createBtnListHtml :function(btn_array){
+	createBtnListHtml :function(btn_array,tr_no){
 		
 		var html_rtn = "";
 		
@@ -550,17 +550,18 @@ var mou_grid_ux = {
 			var btnName = btn_config["text"];
 			var dataName= btn_config["data-name"];
 			
-			var html_btn_this = '<li> <a href="#" data-name="#DATA-NAME#">#btnName#</a> </li>';
+			var html_btn_this = '<li> <a href="#" type="btn_in_dropdownlist" r_name="#DATA-NAME#" tr_no="#TR_NO#" btnincell="true">#btnName#</a> </li>';
 			
 			html_btn_this = html_btn_this.replaceAll("#btnName#",btnName);
-			html_btn_this = html_btn_this.replaceAll("#DATA-NAMEe#",dataName);
-		
+			html_btn_this = html_btn_this.replaceAll("#DATA-NAME#",dataName);
+			html_btn_this = html_btn_this.replaceAll("#TR_NO#",tr_no);
+			
 			html_rtn = html_rtn + html_btn_this;
 		}
 		
 		return html_rtn;
 	},
-	createMenuList:function(config,title){
+	createMenuList:function(config,title,tr_no){
 		
 		var firstClass = config["css"] || "btn btn-primary";
 		var firstBtnName = config["text"];
@@ -576,7 +577,7 @@ var mou_grid_ux = {
 				html_all_list = html_all_list+ '<li class="divider" role="separator"></li>';  
 			}
 			
-			var btn_array_html = mou_grid_ux.createBtnListHtml(btn_array);
+			var btn_array_html = mou_grid_ux.createBtnListHtml(btn_array,tr_no);
 			
 			html_all_list = html_all_list + btn_array_html;
 		}
@@ -1275,7 +1276,7 @@ var mou_grid_ux = {
 										var nameBtn = btncfg.r_name;
 										var css = btncfg.css || "btn btn-xs btn-primary";
 
-										var btns_html = mou_grid_ux.createMenuList(btncfg,colModelTmp.name);
+										var btns_html = mou_grid_ux.createMenuList(btncfg,colModelTmp.name,i);
 										
 										var btn = $(btns_html);
 
@@ -1628,21 +1629,44 @@ var mou_grid_ux = {
 				// addey by nbq 2014-2-5
 				// support link click
 				$('tbody tr td div a', g.bDiv).on('click', function(e) {
+					
 					var _this = $(this);
-					var _td = _this.parent().parent();
-					var _tr = _td.parent();
-					var gridid = _tr.parent().parent().attr("id");
+					
+					var type = $(this).attr("type");
+					
+					if (type && type == "btn_in_dropdownlist"){
+						
+						var _td = _this.closest("td");
+						var _tr = _td.parent();
+						var gridid = _tr.parent().parent().attr("id");
+						
+						console.log("grid_id--" + gridid);
+						
+						// 生成选中的对象
+						var config_select = mou_grid_ux.getTdSelect(gridid, _td.attr('no'));
+						var obj = mou_grid_ux.getTrObj(_tr, config_select);
 
-					//console.log("grid_id--" + gridid);
+						var cmTmp = mou_grid_ux.getColModel(gridid, _td.attr('no'));
+						var callback = cmTmp.callback;
+						if (callback) {
+							callback(obj, $(this), e);
+						}
+					}else{
+						var _td = _this.parent().parent();
+						var _tr = _td.parent();
+						var gridid = _tr.parent().parent().attr("id");
 
-					// 生成选中的对象
-					var config_select = mou_grid_ux.getTdSelect(gridid, _td.attr('no'));
-					var obj = mou_grid_ux.getTrObj(_tr, config_select);
+						//console.log("grid_id--" + gridid);
 
-					var cmTmp = mou_grid_ux.getColModel(gridid, _td.attr('no'));
-					var callback = cmTmp.callback;
-					if (callback) {
-						callback(obj, $(this), e);
+						// 生成选中的对象
+						var config_select = mou_grid_ux.getTdSelect(gridid, _td.attr('no'));
+						var obj = mou_grid_ux.getTrObj(_tr, config_select);
+
+						var cmTmp = mou_grid_ux.getColModel(gridid, _td.attr('no'));
+						var callback = cmTmp.callback;
+						if (callback) {
+							callback(obj, $(this), e);
+						}
 					}
 				});
 

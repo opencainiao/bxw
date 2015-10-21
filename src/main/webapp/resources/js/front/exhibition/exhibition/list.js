@@ -97,10 +97,13 @@ var data_manage_functions = {
 	/***************************************************************************
 	 * 创建展业事项
 	 */
-	createExhibitionItem : function(data) {
+	createExhibitionItem : function(data,button) {
+		
+		
 		var _id_m = data["_id_m"];
 
-		alert(_id_m);
+		var r_name = $(button).attr("r_name");
+		alert(_id_m + "---" + r_name);
 	}
 };
 
@@ -250,8 +253,6 @@ var data_manage = {
 			buttons : {
 				r_name : 'createExhibitionItem',
 				text : '创建展业活动',
-				callback : data_manage_functions.createExhibitionItem,
-				paramConfig : [ "_id_m" ],
 				css : "btn btn-xs btn-success",
 				btns : [ [ {
 					"text" : "计划",
@@ -260,7 +261,9 @@ var data_manage = {
 					"text" : "记录",
 					"data-name" : "record"
 				} ] ]
-			}
+			},
+			select : [ "_id_m" ],
+			callback : data_manage_functions.createExhibitionItem
 		} ]
 	}
 };
