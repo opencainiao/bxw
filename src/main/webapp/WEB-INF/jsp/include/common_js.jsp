@@ -68,11 +68,20 @@ div.laydate_yms {
 <script>
 	$().ready(function() {
 		document.onkeydown = function(event) {
+		
 			if (event.keyCode == 13) {
-				return false;
+				
+				var name = event.target.tagName.toLowerCase();
+				
+				//alert(name);
+				if (name == "button"){
+					return false;
+				}
+				
+				return true;
 			}
 		}
-
+		
 		$("a").bind("focus", function() {
 			if (this.blur) {
 				this.blur();

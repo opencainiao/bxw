@@ -27,6 +27,7 @@ F:\git\bxw\src\main\java\bxw\modules\client\service\IAddressService.java
 F:\git\bxw\src\main\java\bxw\common\util\FileUtil.java
 F:\git\bxw\src\main\java\bxw\common\util\AgeUtil.java
 F:\git\bxw\src\main\java\bxw\modules\base\BaseController.java
+F:\git\bxw\src\main\java\bxw\modules\exhibition\controller\ExhibitionItemController.java
 F:\git\bxw\src\main\java\bxw\modules\user\enums\ResetpwdResult.java
 F:\git\bxw\src\main\java\bxw\modules\global\service\AttachMentSerivceImpl.java
 F:\git\bxw\src\main\java\bxw\modules\client\controller\app\ClientController.java
@@ -54,6 +55,7 @@ F:\git\bxw\src\main\java\bxw\modules\infrustructure\service\impl\SysConstService
 F:\git\bxw\src\main\java\bxw\modules\infrustructure\model\SysMenu.java
 F:\git\bxw\src\main\java\bxw\modules\global\service\IAttachmentService.java
 F:\git\bxw\src\main\java\bxw\modules\infrustructure\controller\SysConstTypeController.java
+F:\git\bxw\src\main\java\bxw\modules\exhibition\enums\ExhibitionItemType.java
 F:\git\bxw\src\main\java\bxw\modules\client\model\Group.java
 F:\git\bxw\src\main\java\bxw\modules\client\controller\FamillyController.java
 F:\git\bxw\src\main\java\bxw\modules\infrustructure\service\ISysMenuService.java
@@ -102,6 +104,7 @@ F:\git\bxw\src\main\java\bxw\common\web\init\Initializable.java
 F:\git\bxw\src\main\java\bxw\common\web\interceptors\SpecialCharacterInteceptor.java
 F:\git\bxw\src\main\java\bxw\modules\client\service\modifyclientinfo\ClientFamilyInfoService.java
 F:\git\bxw\src\main\java\bxw\modules\user\enums\LoginActionType.java
+F:\git\bxw\src\main\java\bxw\modules\exhibition\model\ExhibitionItem.java
 F:\git\bxw\src\main\java\bxw\modules\infrustructure\model\TagType.java
 F:\git\bxw\src\main\java\bxw\modules\client\service\modifyclientinfo\ClientIncomeInfoService.java
 F:\git\bxw\src\main\java\bxw\modules\user\service\UserService.java

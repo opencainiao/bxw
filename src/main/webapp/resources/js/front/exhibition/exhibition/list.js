@@ -99,11 +99,20 @@ var data_manage_functions = {
 	 */
 	createExhibitionItem : function(data,button) {
 		
-		
 		var _id_m = data["_id_m"];
-
 		var r_name = $(button).attr("r_name");
-		alert(_id_m + "---" + r_name);
+		
+		var params = [];
+		params.push("user_id=" + _id_m);
+		params.push("type=" + r_name);
+		params.push("ts=" + new Date().getTime());
+
+		//alert(_id_m + "---" + r_name);
+		
+		var url_to = $.getSitePath() + '/front/exhibition_item/add';
+		url_to = url_to + "?" + params.join("&");
+
+		window.location.href = url_to;
 	}
 };
 
@@ -255,12 +264,24 @@ var data_manage = {
 				text : '创建展业活动',
 				css : "btn btn-xs btn-success",
 				btns : [ [ {
-					"text" : "计划",
-					"data-name" : "plan"
+					"text" : "电话约访计划",
+					"data-name" : "PLAN_PHONE"
 				}, {
-					"text" : "记录",
-					"data-name" : "record"
-				} ] ]
+					"text" : "客户拜访计划",
+					"data-name" : "PLAN_MEET"
+				},{
+					"text" : "电话约访记录",
+					"data-name" : "RECORD_PHONE"
+				} , {
+					"text" : "客户拜访记录",
+					"data-name" : "RECORD_MEET"
+				}, {
+					"text" : "活动",
+					"data-name" : "ACTION"
+				}, {
+					"text" : "其他",
+					"data-name" : "OTHER"
+				}] ]
 			},
 			select : [ "_id_m" ],
 			callback : data_manage_functions.createExhibitionItem
