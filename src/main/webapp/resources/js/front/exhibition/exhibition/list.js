@@ -26,13 +26,18 @@ $().ready(
 		});
 
 var data_manage_functions = {
-
+		
+	itemList : function(data) {
+		var url = $.getSitePath() + '/front/exhibition_item/list?user_id=' + data["_id_m"]
+		
+		alert(url);
+		window.location.href = url;
+	},
 	closeAddWindow : function() {
 
 		window.location.reload();
 		$.closeWindow("add", $("#content_inner_page"));
 	},
-
 	/***************************************************************************
 	 * 删除
 	 * 
@@ -255,6 +260,18 @@ var data_manage = {
 				text : '修改',
 				callback : data_manage_functions.toEdit,
 				paramConfig : [ "_id_m" ]
+			} ]
+		}, {
+			display : '操作',
+			name : 'operation2',
+			m_type : 'buttons',
+			width : 90,
+			buttons : [ {
+				r_name : 'itemlist',
+				text : '展业记录',
+				callback : data_manage_functions.itemList,
+				paramConfig : [ "_id_m" ],
+				css : "btn btn-xs btn-primary"
 			} ]
 		}, {
 			display : '创建展业活动',

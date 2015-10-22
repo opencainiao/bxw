@@ -2511,7 +2511,12 @@ var mou_grid_ux = {
 	}; // end flexigrid
 	$.fn.flexReload = function(setting) { // function to reload grid
 		return this.each(function() {
+			
+			//$.logJson(this.p,"p");
+			//$.logJson(setting,"setting");
 			if (this.grid && this.p.url) {
+				
+				this.p.url = setting.url || this.p.url;
 
 				if (setting.params) {
 					this.p.params = setting.params;

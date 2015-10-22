@@ -74,7 +74,7 @@ public class ExhibitionItemController extends BaseController {
 				path = "other";
 			}
 		}
-		
+
 		// 开启modelDriven
 		return "front/exhibition/item/" + path + "/add";
 	}
@@ -126,8 +126,9 @@ public class ExhibitionItemController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Model model) {
+	public String list(Model model, String user_id) {
 
+		model.addAttribute("user_id", user_id);
 		return "front/exhibition/item/list";
 	}
 
@@ -140,8 +141,8 @@ public class ExhibitionItemController extends BaseController {
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	@ResponseBody
-	public Object list(Model model, HttpServletRequest request, String username, String exhibition_stage,
-			String exhibition_state) {
+	public Object list(Model model, HttpServletRequest request, String user_id, String username,
+			String exhibition_stage, String exhibition_state) {
 
 		HttpServletRequestUtil.debugParams(request);
 		try {
@@ -153,6 +154,11 @@ public class ExhibitionItemController extends BaseController {
 
 			DBObject query = new BasicDBObject();
 			query.put("del_flg", "0");
+
+			if (this.isValidObjId(user_id)) {
+				query.put("user_id", user_id);
+			}
+
 			if (StringUtil.isNotEmpty(username)) {
 				String name = username.trim();
 

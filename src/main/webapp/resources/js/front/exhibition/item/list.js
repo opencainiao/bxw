@@ -20,7 +20,8 @@ $().ready(
 								$("#content_inner_page"));
 					});
 
-			$("#btn_search").click(function() {
+			$("#btn_search").click(function(e) {
+				e.preventDefault();
 				data_manage.search();
 			});
 		});
@@ -119,6 +120,7 @@ var data_manage_functions = {
 var data_manage = {
 
 	search : function() {
+		
 		var username = {};
 		username["name"] = "username";
 		username["value"] = $("#username").trim_value();
@@ -139,20 +141,15 @@ var data_manage = {
 		data_manage.gridsetting.url = $.getSitePath()
 				+ '/front/exhibition_item/list?ts=' + new Date().getTime();
 
-		if ($("#data_manage").attr("s_times")) {
-			params.push({
-				name : 'reload',
-				value : true
-			});
-			data_manage.gridsetting.params = params;
-
-			$("#list").flexReload(data_manage.gridsetting);
-		} else {
-			data_manage.gridsetting.params = params;
-			$("#list").flexigrid(data_manage.gridsetting);
-		}
-
-		$("#data_manage").attr("s_times", 1);
+		//$.logJson(params);
+		
+		params.push({
+			name : 'reload',
+			value : true
+		});
+		data_manage.gridsetting.params = params;
+		
+		$("#list").flexReload(data_manage.gridsetting);
 	},
 	/***************************************************************************
 	 * 页面加载后的初始化方法
@@ -162,15 +159,16 @@ var data_manage = {
 		var url = $.getSitePath() + '/front/exhibition_item/list';
 
 		var params = [];
-		params.push("typecode=" + $("#typecode").val());
+		params.push("user_id=" + $("#user_id").trim_value()) ;
 		params.push("ts=" + new Date().getTime());
 
 		url = url + "?" + params.join("&");
 
 		data_manage.gridsetting.url = url;
 
-		// alert(data_manage.gridsetting.url);
+		//alert(data_manage.gridsetting.url);
 		$("#list").flexigrid(data_manage.gridsetting);
+		$("#data_manage").attr("s_times", 1);
 
 		data_manage.pageLayout();
 	},
@@ -267,37 +265,6 @@ var data_manage = {
 				callback : data_manage_functions.toEdit,
 				paramConfig : [ "_id_m" ]
 			} ]
-		}, {
-			display : '创建展业活动',
-			name : 'operation1',
-			m_type : 'drop_down_list_buttons',
-			width : 130,
-			buttons : {
-				r_name : 'createExhibitionItem',
-				text : '创建展业活动',
-				css : "btn btn-xs btn-success",
-				btns : [ [ {
-					"text" : "电话约访计划",
-					"data-name" : "PLAN_PHONE"
-				}, {
-					"text" : "客户拜访计划",
-					"data-name" : "PLAN_MEET"
-				},{
-					"text" : "电话约访记录",
-					"data-name" : "RECORD_PHONE"
-				} , {
-					"text" : "客户拜访记录",
-					"data-name" : "RECORD_MEET"
-				}, {
-					"text" : "活动",
-					"data-name" : "ACTION"
-				}, {
-					"text" : "其他",
-					"data-name" : "OTHER"
-				}] ]
-			},
-			select : [ "_id_m" ],
-			callback : data_manage_functions.createExhibitionItem
-		} ]
+		}]
 	}
 };

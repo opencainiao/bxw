@@ -14,7 +14,7 @@
 </head>
 
 <body>
-	<input type="hidden" name="ctx" value="<%=request.getContextPath()%>" />
+	<input type="hidden" id="user_id" name="user_id" value="${user_id }" />
 
 	<ul class="breadcrumb">
 		<li class="active">展业记录</li>
