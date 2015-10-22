@@ -71,11 +71,6 @@
 				parent.setSelectedClient(selectedObj);
 			});
 
-			document.onkeydown = function(event) {
-				if (event.keyCode == 13) {
-					return false;
-				}
-			}
 		});
 
 		function refresh_parent() {

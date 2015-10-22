@@ -137,11 +137,6 @@
 
 			$("#family_choose_div").bind("click", parent.popUpChooseClient);
 
-			document.onkeydown = function(event) {
-				if (event.keyCode == 13) {
-					return false;
-				}
-			}
 		});
 
 		//设置选择的客户		

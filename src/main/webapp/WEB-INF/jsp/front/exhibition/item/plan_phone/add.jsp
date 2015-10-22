@@ -25,8 +25,13 @@
 	<div id="add_div" class="onepage">
 		<input type="hidden" name="_id" />
 		<sf:form modelAttribute="exhibitionitem" class="form-horizontal">
+		
+			<input type="hidden" id="user_id" name="user_id"
+				value="${exhibitionitem.user_id}">
+			<input type="hidden" id="username" name="username"
+				value="${exhibitionitem.username}">
+				
 			<div class="container-fluid" style="margin-top: 30px">
-
 				<div class="panel panel-info">
 					<div class="panel-heading hide">创建电话约访计划</div>
 					<div class="panel-body">
@@ -75,14 +80,13 @@
 							<div class="col-xs-6">
 								<div class="row">
 									<div class="form-group form-group-sm  ">
-										<label for="family_income_feature"
-											class="col-sm-3 control-label">客户 </label>
+										<label for="" class="col-sm-3 control-label">客户 </label>
 										<div class="col-sm-8">
-											<div class="input-group" id="family_choose_div">
-												<input type="text" id="family_choose" name="family_choose"
+											<div class="input-group" id="choose_client_div">
+												<input type="text" id="choose_client" name="choose_client"
 													class="form-control" readonly placeholder="请选择"> <span
 													class="input-group-btn">
-													<button class="btn btn-default btn-sm" type="button">
+													<button class="btn btn-default btn-sm" id="choose_client_btn" type="button">
 														<span class="glyphicon glyphicon-chevron-right"
 															aria-hidden="true"></span>
 													</button>
@@ -122,14 +126,14 @@
 							<div class="col-xs-6">
 								<div class="row">
 									<div class="form-group form-group-sm  ">
-										<label for="phone_info" class="col-sm-3 control-label">
+										<label for="attention_info" class="col-sm-3 control-label">
 											注意事项 </label>
 										<div class="col-sm-8">
-											<div class="row" id="phone_info">
+											<div class="row" id="attention_info">
 												<div
 													class="input-group input-group-xs  online-input col-md-12"
 													style="padding-left: 15px;">
-													<button type="button" id="add_phone"
+													<button type="button" id="add_attention"
 														class="btn btn-info btn-sm">添加</button>
 												</div>
 											</div>
@@ -185,20 +189,30 @@
 				});
 			});
 			$("#end_time").val(laydate.now());
+
+			iniAttention();
+
+			$("#choose_client_btn").bind("click", popUpChooseClient);
 		});
 
 		//保存
 		var save = function() {
 
-			// 控制按钮为禁用
-			$.disableButton("btn_save");
-
 			var paramForm = $('form').getFormParam_ux();
+
+			var attention_info = getAttentionInfo();
+			paramForm = $.extend(paramForm, attention_info);
 
 			var successstr = "新增成功";
 
 			var url_to = $.getSitePath() + "/backend/sysconsttype/add";
 			var url_success = $.getSitePath() + "/backend/sysconsttype/list";
+
+			$.logJson(paramForm);
+			return;
+
+			// 控制按钮为禁用
+			$.disableButton("btn_save");
 
 			$.ajax({
 				type : 'POST',
@@ -226,6 +240,114 @@
 				}
 			});
 		};
+
+		function registRemoveOne() {
+			$(".btn-rm-box").click(function() {
+				$(this).css("border-radius", "3px!important");
+				$(this).closest('div.one_box').remove();
+			});
+		}
+
+		var addAttention = function(config) {
+
+			var order = $(".one_box", $("#attention_info")).length + 1;
+
+			var p = $.extend({ // apply default properties
+				ipt_w : '500px', // 输入框的宽度
+				ipt_val : '',
+				margin_l_button_w : '15px' // 按钮至输入框的边距
+			}, config);
+
+			var toAdd = '<div   data-order= "#ORDER#"                                                                            '
+					+ '			class="input-group input-group-xs  online-input col-md-12 one_box"                   '
+					+ '			style="padding-left: 15px; margin-top: 8px; width: 580px">                                 '
+					+ '			<textarea type="text" class="form-control "                              '
+					+ '				style="margin-left: 0px; width: #IPT_W# ;height: 60px">#IPT_VAL#</textarea>                                 '
+					+ '			<span                                                                        '
+					+ '				class="pull-right">                                                   '
+					+ '				<button class="btn btn-danger btn-sm btn-rm-box"  type="button" style="margin-left: #MARGIN_L_BUTTON_W#">删除</button>        '
+					+ '			</span>                                                                      '
+					+ '</div>                                                                            ';
+
+			toAdd = toAdd.replace("#IPT_W#", p.ipt_w);
+			toAdd = toAdd.replace("#MARGIN_L_BUTTON_W#", p.margin_l_button_w);
+			toAdd = toAdd.replace("#IPT_VAL#", p.ipt_val);
+			toAdd = toAdd.replace("#ORDER#", order);
+
+			$("#attention_info").append(toAdd);
+
+			registRemoveOne();
+		}
+
+		// 初始化注意事项信息
+		function iniAttention() {
+
+			var data_attention = eval('${client.attention_info }');
+			if (data_attention && data_attention.length > 0) {
+				for ( var item in data_attention) {
+					var attention_temp = data_attention[item];
+
+					var value = attention_temp["phone_number"];
+
+					addAttention({
+						ipt_val : value
+					});
+				}
+			} else {
+				addAttention();
+			}
+
+			$("#add_attention").click(function() {
+				addAttention();
+			})
+		}
+
+		function getAttentionInfo() {
+
+			var attention_info = [];
+			var attention_div = $("#attention_info");
+
+			$(".one_box", attention_div).each(function() {
+
+				var value_attention = $("textarea", $(this)).val().trim();
+
+				if (value_attention == "") {
+					return;
+				}
+
+				attention_info.push(value_attention);
+			});
+
+			return {
+				"attentions" : JSON.stringify(attention_info)
+			};
+		}
+
+		/****
+		 * 弹出选择客户窗口
+		 */
+		var popUpChooseClient = function(){
+			var url_to = $.getSitePath() + '/front/familly/choose_client?user_id=#USERID#&user_name=#USERNAME#&user_sex=#USERSEX#';
+			
+			url_to = url_to.replaceAll("#USERID#","${userid}");
+			url_to = url_to.replaceAll("#USERNAME#","${username}");
+			url_to = url_to.replaceAll("#USERSEX#","${user_sex}");
+
+			$.popUpWindow("选择客户", url_to, "90%", "90%", "choose_client", $("#choose_client_div"));
+		}
+		
+		//设置选择的客户		
+		function setSelectedClient(obj) {
+			//$.alertObjJson(obj);
+
+			$("#user_id").val(obj["_id_m"]);
+			$("#username").val(obj["client_name"]);
+
+			$("#choose_client").val(obj["client_name"]);
+			
+			// 关闭选择客户弹出窗口
+			$.closeWindow("choose_client", $("#choose_client_div"));
+		}
 	</script>
 </body>
 </html>
