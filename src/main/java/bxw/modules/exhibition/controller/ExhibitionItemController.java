@@ -57,6 +57,13 @@ public class ExhibitionItemController extends BaseController {
 
 		HttpServletRequestUtil.debugParams(request);
 
+		String path = getPathByType(type);
+
+		// 开启modelDriven
+		return "front/exhibition/item/" + path + "/add";
+	}
+
+	private String getPathByType(String type) {
 		String path = "";
 		if (StringUtil.isNotEmpty(type)) {
 
@@ -74,9 +81,7 @@ public class ExhibitionItemController extends BaseController {
 				path = "other";
 			}
 		}
-
-		// 开启modelDriven
-		return "front/exhibition/item/" + path + "/add";
+		return path;
 	}
 
 	/****
@@ -231,7 +236,8 @@ public class ExhibitionItemController extends BaseController {
 
 		model.addAttribute("_id", _id);
 
-		return "front/exhibition/item/update";
+		String path = getPathByType(exhibitionitem.getType());
+		return "front/exhibition/item/" + path + "/update";
 	}
 
 	/****

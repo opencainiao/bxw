@@ -15,29 +15,15 @@
 </head>
 
 <body>
-	<input type="hidden" name="ctx" value="<%=request.getContextPath()%>" />
-
-	<ul class="breadcrumb">
-		<li><a href="<%=request.getContextPath()%>/front/exhibition/list">展业信息</a>
-			<span class="divider"></span></li>
-		<li class="active">制定电话约访计划</li>
-	</ul>
 	<div id="add_div" class="onepage">
 		<sf:form modelAttribute="exhibitionitem" class="form-horizontal">
 			<jsp:include page="/WEB-INF/jsp/front/exhibition/item/base_info.jsp"></jsp:include>
 		</sf:form>
-	</div>
 
+	</div>
 	<script>
 		$().ready(function() {
-
-			$("#attention_info").resize(function() {
-
-				window.top.autoHeight();
-			});
-
 			$("#btn_save").bind("click", save);
-
 		});
 
 		//保存

@@ -21,7 +21,6 @@ $().ready(
 					});
 
 			$("#btn_search").click(function(e) {
-				e.preventDefault();
 				data_manage.search();
 			});
 		});
@@ -67,7 +66,7 @@ var data_manage_functions = {
 	 */
 	toEdit : function(data) {
 
-		var url = $.getSitePath() + '/front/exhibition/' + data["_id_m"]
+		var url = $.getSitePath() + '/front/exhibition_item/' + data["_id_m"]
 				+ "/update";
 
 		$.popUpWindow("编辑展业信息", url, "800px", "400px", "edit",

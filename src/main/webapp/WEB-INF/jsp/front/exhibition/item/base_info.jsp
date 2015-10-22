@@ -1,0 +1,281 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+
+<input type="hidden" name="_id" />
+<input type="hidden" id="user_id" name="user_id"
+	value="${exhibitionitem.user_id}">
+<input type="hidden" id="username" name="username"
+	value="${exhibitionitem.username}">
+
+<div class="container-fluid" style="margin-top: 30px">
+	<div class="panel panel-info">
+		<div class="panel-heading hide">创建电话约访计划</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="row">
+						<div class="form-group form-group-sm  ">
+							<label for="character" class="col-sm-3 control-label"> 性质
+							</label>
+							<div class="col-xs-9">
+								<select id="character" name="character"
+									class="form-control input-sm" data-src="constant"
+									data-typecode="EXHIBITION_CHARACTER"
+									data-value="${exhibitionitem.character }" style="width: 580px">
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-sm  ">
+							<label for="title" class="col-sm-3 control-label"> 标题 </label>
+							<div class="col-xs-9">
+								<div class="input-group input-group-xs " style="width: 580px">
+									<input id="title" class="form-control" name="title" type="text"
+										placeholder="请输入标题" value="${exhibitionitem.title }">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-sm  ">
+							<label for="content" class="col-sm-3 control-label"> 内容 </label>
+							<div class="col-xs-9">
+								<textarea type="text" class="form-control " id="content"
+									name="content" placeholder="请输入说明"
+									style="width: 580px; height: 120px">${exhibitionitem.content }</textarea>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="row">
+						<div class="form-group form-group-sm  ">
+							<label for="" class="col-sm-3 control-label">客户 </label>
+							<div class="col-sm-8">
+								<div class="input-group" id="choose_client_div">
+									<input type="text" id="choose_client" name="choose_client"
+										class="form-control" readonly placeholder="请选择"
+										value="${exhibitionitem.username}"> <span
+										class="input-group-btn">
+										<button class="btn btn-default btn-sm" id="choose_client_btn"
+											type="button">
+											<span class="glyphicon glyphicon-chevron-right"
+												aria-hidden="true"></span>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="row">
+						<div class="form-group form-group-sm  ">
+							<label for="start_time" class="col-sm-3 control-label">开始
+							</label>
+							<div class="col-sm-8">
+								<input id="start_time" name="start_time" placeholder="请输入日期"
+									class="laydate-icon form-control dateipt"
+									value="${exhibitionitem.start_time }">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-sm  ">
+							<label for="end_time" class="col-sm-3 control-label">结束 </label>
+							<div class="col-sm-8">
+								<input id="end_time" name="end_time" placeholder="请输入日期"
+									class="laydate-icon form-control dateipt"
+									value="${exhibitionitem.end_time }">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-6"></div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="row">
+						<div class="form-group form-group-sm  ">
+							<label for="attention_info" class="col-sm-3 control-label">
+								注意事项 </label>
+							<div class="col-sm-8">
+								<div class="row" id="attention_info">
+									<div class="input-group input-group-xs  online-input col-md-12"
+										style="padding-left: 15px;">
+										<button type="button" id="add_attention"
+											class="btn btn-info btn-sm">添加</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<hr />
+
+	<div class="col-sm-12">
+		<button type="button" id="btn_save"
+			class="btn btn-primary btn-lg center-block">提交</button>
+	</div>
+</div>
+<script>
+	$().ready(function() {
+
+		$("#start_time").click(function() {
+			laydate({
+				elem : '#start_time',
+				istime : true,
+				format : 'YYYY-MM-DD hh:mm', // 分隔符可以任意定义，该例子表示只显示年月
+				festival : true, //显示节日
+				choose : function(datas) { //选择日期完毕的回调
+					console.log(datas);
+				}
+			});
+		});
+
+		$("#start_time").val();
+
+		$("#end_time").click(function() {
+			laydate({
+				elem : '#end_time',
+				istime : true,
+				format : 'YYYY-MM-DD hh:mm', // 分隔符可以任意定义，该例子表示只显示年月
+				festival : true, //显示节日
+				choose : function(datas) { //选择日期完毕的回调
+
+					console.log(datas);
+				}
+			});
+		});
+		$("#end_time").val();
+
+		iniAttention();
+
+		$("#choose_client_btn").bind("click", popUpChooseClient);
+	});
+
+	function registRemoveOne() {
+		$(".btn-rm-box").click(function() {
+			$(this).css("border-radius", "3px!important");
+			$(this).closest('div.one_box').remove();
+		});
+	}
+
+	var addAttention = function(config) {
+
+		var order = $(".one_box", $("#attention_info")).length + 1;
+
+		var p = $.extend({ // apply default properties
+			ipt_w : '500px', // 输入框的宽度
+			ipt_val : '',
+			margin_l_button_w : '15px' // 按钮至输入框的边距
+		}, config);
+
+		var toAdd = '<div   data-order= "#ORDER#"                                                                            '
+					+ '			class="input-group input-group-xs  online-input col-md-12 one_box"                   '
+					+ '			style="padding-left: 15px; margin-top: 8px; width: 580px">                                 '
+				+ '			<textarea type="text" class="form-control "                              '
+					+ '				style="margin-left: 0px; width: #IPT_W# ;height: 60px">#IPT_VAL#</textarea>                                 '
+				+ '			<span                                                                        '
+					+ '				class="pull-right">                                                   '
+				+ '				<button class="btn btn-danger btn-sm btn-rm-box"  type="button" style="margin-left: #MARGIN_L_BUTTON_W#">删除</button>        '
+				+ '			</span>                                                                      '
+				+ '</div>                                                                            ';
+
+		toAdd = toAdd.replace("#IPT_W#", p.ipt_w);
+		toAdd = toAdd.replace("#MARGIN_L_BUTTON_W#", p.margin_l_button_w);
+		toAdd = toAdd.replace("#IPT_VAL#", p.ipt_val);
+		toAdd = toAdd.replace("#ORDER#", order);
+
+		$("#attention_info").append(toAdd);
+
+		registRemoveOne();
+	}
+
+	// 初始化注意事项信息
+	function iniAttention() {
+
+		var data_attention = eval('${client.attention_info }');
+		if (data_attention && data_attention.length > 0) {
+			for ( var item in data_attention) {
+				var attention_temp = data_attention[item];
+
+				var value = attention_temp["phone_number"];
+
+				addAttention({
+					ipt_val : value
+				});
+			}
+		} else {
+			addAttention();
+		}
+
+		$("#add_attention").click(function() {
+			addAttention();
+		})
+	}
+
+	function getAttentionInfo() {
+
+		var attention_info = [];
+		var attention_div = $("#attention_info");
+
+		$(".one_box", attention_div).each(function() {
+
+			var value_attention = $("textarea", $(this)).val().trim();
+
+			if (value_attention == "") {
+				return;
+			}
+
+			attention_info.push(value_attention);
+		});
+
+		if (attention_info.length > 0) {
+			return {
+				"attentions" : JSON.stringify(attention_info)
+			};
+		} else {
+			return {};
+		}
+	}
+
+	/****
+	 * 弹出选择客户窗口
+	 */
+	var popUpChooseClient = function() {
+		var url_to = $.getSitePath()
+				+ '/front/familly/choose_client?user_id=#USERID#&user_name=#USERNAME#&user_sex=#USERSEX#';
+
+		url_to = url_to.replaceAll("#USERID#", "${userid}");
+		url_to = url_to.replaceAll("#USERNAME#", "${username}");
+		url_to = url_to.replaceAll("#USERSEX#", "${user_sex}");
+
+		$.popUpWindow("选择客户", url_to, "90%", "90%", "choose_client",
+				$("#choose_client_div"));
+	}
+
+	//设置选择的客户		
+	function setSelectedClient(obj) {
+		//$.alertObjJson(obj);
+
+		$("#user_id").val(obj["_id_m"]);
+		$("#username").val(obj["client_name"]);
+
+		$("#choose_client").val(obj["client_name"]);
+
+		// 关闭选择客户弹出窗口
+		$.closeWindow("choose_client", $("#choose_client_div"));
+	}
+</script>
