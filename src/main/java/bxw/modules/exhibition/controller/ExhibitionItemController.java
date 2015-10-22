@@ -24,10 +24,10 @@ import com.mongodb.DBObject;
 
 import bxw.common.util.RegexPatternUtil;
 import bxw.modules.base.BaseController;
+import bxw.modules.exhibition.enums.ExhibitionCharacter;
 import bxw.modules.exhibition.enums.ExhibitionItemType;
-import bxw.modules.exhibition.model.Exhibition;
 import bxw.modules.exhibition.model.ExhibitionItem;
-import bxw.modules.exhibition.service.IExhibitionService;
+import bxw.modules.exhibition.service.IExhibitionItemService;
 import mou.web.webbase.domain.RequestResult;
 import mou.web.webbase.util.HttpServletRequestUtil;
 
@@ -43,8 +43,8 @@ public class ExhibitionItemController extends BaseController {
 
 	private static final Logger logger = LogManager.getLogger(ExhibitionItemController.class);
 
-	@Resource(name = "exhibitionService")
-	private IExhibitionService exhibitionService;
+	@Resource(name = "exhibitionItemService")
+	private IExhibitionItemService exhibitionItemService;
 
 	/****
 	 * 进入添加展业项页面
@@ -53,7 +53,9 @@ public class ExhibitionItemController extends BaseController {
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String add(@ModelAttribute("exhibitionitem") ExhibitionItem exhibitionitem, HttpServletRequest request,
-			String user_id, String type) {
+			String type, Model model) {
+
+		HttpServletRequestUtil.debugParams(request);
 
 		String path = "";
 		if (StringUtil.isNotEmpty(type)) {
@@ -72,9 +74,49 @@ public class ExhibitionItemController extends BaseController {
 				path = "other";
 			}
 		}
-
+		
 		// 开启modelDriven
 		return "front/exhibition/item/" + path + "/add";
+	}
+
+	/****
+	 * 添加
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@ResponseBody
+	public Object add(@Validated ExhibitionItem exhibitionitem, BindingResult br, HttpServletRequest request,
+			String type) {
+
+		HttpServletRequestUtil.debugParams(request);
+
+		logger.debug("传入的展业对象\n{}", exhibitionitem);
+
+		if (br.hasErrors()) {
+			return this.handleValidateFalse(br);
+		}
+		try {
+
+			String user_id = exhibitionitem.getUser_id();
+			if (StringUtil.isEmpty(user_id)) {
+				return this.handleValidateFalse("请选择客户!");
+			}
+
+			exhibitionitem.setTypeEnum(ExhibitionItemType.getByCode(type));
+			exhibitionitem.setCharacterEnum(ExhibitionCharacter.getByCode(exhibitionitem.getCharacter()));
+
+			// 2.新增
+			String _id = this.exhibitionItemService.add(exhibitionitem);
+
+			RequestResult rr = new RequestResult();
+			rr.setSuccess(true);
+			rr.setMessage(_id);
+
+			return rr;
+		} catch (Exception e) {
+			return this.handleException(e);
+		}
 	}
 
 	/****
@@ -139,11 +181,11 @@ public class ExhibitionItemController extends BaseController {
 			}
 
 			DBObject sort = new BasicDBObject();
-			sort.put("pinyin_name", 1);
+			sort.put("c_time", 1);
 
 			DBObject returnFields = null;
 
-			return this.exhibitionService.batchSearchPage(query, sort, returnFields);
+			return this.exhibitionItemService.batchSearchPage(query, sort, returnFields);
 
 		} catch (Exception e) {
 			return this.handleException(e);
@@ -160,9 +202,9 @@ public class ExhibitionItemController extends BaseController {
 	@RequestMapping(value = "/{_id}", method = RequestMethod.GET)
 	public String detail(@PathVariable String _id, Model model) {
 
-		Exhibition exhibition = this.exhibitionService.findExhibitionInfById(_id);
+		ExhibitionItem exhibitionitem = this.exhibitionItemService.findExhibitionItemInfById(_id);
 
-		model.addAttribute("exhibition", exhibition);
+		model.addAttribute("exhibitionitem", exhibitionitem);
 
 		return "front/exhibition/item/detail";
 	}
@@ -177,9 +219,9 @@ public class ExhibitionItemController extends BaseController {
 	@RequestMapping(value = "/{_id}/update", method = RequestMethod.GET)
 	public String update(@PathVariable String _id, Model model) {
 
-		Exhibition exhibition = this.exhibitionService.findExhibitionInfById(_id);
+		ExhibitionItem exhibitionitem = this.exhibitionItemService.findExhibitionItemInfById(_id);
 
-		model.addAttribute("exhibition", exhibition);
+		model.addAttribute("exhibitionitem", exhibitionitem);
 
 		model.addAttribute("_id", _id);
 
@@ -190,14 +232,14 @@ public class ExhibitionItemController extends BaseController {
 	 * 更新系统展业项 信息，返回json给客户端
 	 * 
 	 * @param _id
-	 * @param exhibition
+	 * @param exhibitionitem
 	 * @param br
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "/{_id}/update", method = RequestMethod.POST)
 	@ResponseBody
-	public Object update(@PathVariable String _id, @Validated Exhibition exhibition, BindingResult br,
+	public Object update(@PathVariable String _id, @Validated ExhibitionItem exhibitionitem, BindingResult br,
 			HttpServletRequest request) {
 
 		if (br.hasErrors()) {
@@ -205,8 +247,8 @@ public class ExhibitionItemController extends BaseController {
 		}
 
 		try {
-			exhibition.set_id_m(_id);
-			DBObject updateResult = this.exhibitionService.updatePart(null, exhibition);
+			exhibitionitem.set_id_m(_id);
+			DBObject updateResult = this.exhibitionItemService.updatePart(null, exhibitionitem);
 
 			logger.debug("更新后的结果[{}]", updateResult);
 
@@ -231,7 +273,7 @@ public class ExhibitionItemController extends BaseController {
 
 		try {
 			// 删除展业项
-			int removedCount = this.exhibitionService.RemoveOneById(_id);
+			int removedCount = this.exhibitionItemService.RemoveOneById(_id);
 			logger.debug("deleted--[{}]", removedCount);
 
 			RequestResult rr = new RequestResult();

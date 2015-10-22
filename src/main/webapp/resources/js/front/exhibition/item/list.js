@@ -5,7 +5,7 @@ $().ready(
 
 			$("#btn_add").click(
 					function() {
-						var url_to = $.getSitePath() + '/front/exhibition/add';
+						var url_to = $.getSitePath() + '/front/exhibition_item/add';
 
 						var params = [];
 						params.push("typecode=" + $("#typecode").val());
@@ -40,7 +40,7 @@ var data_manage_functions = {
 	 */
 	delOne : function(data) {
 
-		var url_to = $.getSitePath() + '/front/exhibition/' + data["_id_m"]
+		var url_to = $.getSitePath() + '/front/exhibition_item/' + data["_id_m"]
 				+ '/delete';
 
 		$.ajax({
@@ -80,7 +80,7 @@ var data_manage_functions = {
 	 */
 	toDetail : function(data) {
 
-		var url = $.getSitePath() + '/front/exhibition/' + data["_id_m"];
+		var url = $.getSitePath() + '/front/exhibition_item/' + data["_id_m"];
 
 		$.showDetailWindow("展业信息", url, "600px", "300px");
 	},
@@ -100,12 +100,10 @@ var data_manage_functions = {
 	createExhibitionItem : function(data,button) {
 		
 		var _id_m = data["_id_m"];
-		var username = data["username"];
 		var r_name = $(button).attr("r_name");
 		
 		var params = [];
 		params.push("user_id=" + _id_m);
-		params.push("username=" + username);
 		params.push("type=" + r_name);
 		params.push("ts=" + new Date().getTime());
 
@@ -139,7 +137,7 @@ var data_manage = {
 		params.push(exhibition_state);
 
 		data_manage.gridsetting.url = $.getSitePath()
-				+ '/front/exhibition/list?ts=' + new Date().getTime();
+				+ '/front/exhibition_item/list?ts=' + new Date().getTime();
 
 		if ($("#data_manage").attr("s_times")) {
 			params.push({
@@ -161,7 +159,7 @@ var data_manage = {
 	 */
 	init : function() {
 
-		var url = $.getSitePath() + '/front/exhibition/list';
+		var url = $.getSitePath() + '/front/exhibition_item/list';
 
 		var params = [];
 		params.push("typecode=" + $("#typecode").val());
@@ -220,6 +218,18 @@ var data_manage = {
 			hide : true,
 			callback : data_manage_functions.toDetail
 		}, {
+			display : '类型',
+			name : 'type_name',
+			width : 120
+		},{
+			display : '性质',
+			name : 'character_name',
+			width : 80
+		},{
+			display : '标题',
+			name : 'title',
+			width : 120
+		},{
 			display : '用户',
 			name : 'username',
 			width : 120
@@ -234,10 +244,11 @@ var data_manage = {
 		}, {
 			display : '开始日期',
 			name : 'start_date',
-			width : 80
+			width : 80,
+			hide:true
 		}, {
-			display : '开始时间',
-			name : 'start_time',
+			display : '时间',
+			name : 'time_info',
 			width : 140
 		}, {
 			display : '操作',
@@ -285,7 +296,7 @@ var data_manage = {
 					"data-name" : "OTHER"
 				}] ]
 			},
-			select : [ "_id_m" ,"username"],
+			select : [ "_id_m" ],
 			callback : data_manage_functions.createExhibitionItem
 		} ]
 	}

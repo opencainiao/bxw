@@ -1,5 +1,7 @@
 package bxw.modules.exhibition.enums;
 
+import org.mou.common.StringUtil;
+
 /****
  * 展业性质
  * 
@@ -39,5 +41,22 @@ public enum ExhibitionCharacter {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public static ExhibitionCharacter getByCode(String code) {
+
+		if (StringUtil.isEmpty(code)) {
+			return ExhibitionCharacter.OTHER;
+		}
+
+		ExhibitionCharacter[] exhibitionCharacters = ExhibitionCharacter.values();
+
+		for (ExhibitionCharacter exhibitionCharacter : exhibitionCharacters) {
+			if (exhibitionCharacter.getCode().equals(code)) {
+				return exhibitionCharacter;
+			}
+		}
+
+		return ExhibitionCharacter.OTHER;
 	}
 }

@@ -1,5 +1,7 @@
 package bxw.modules.exhibition.enums;
 
+import org.mou.common.StringUtil;
+
 public enum ExhibitionItemType {
 
 	RECORD_PHONE("RECORD_PHONE", "电话约访记录"), //
@@ -37,5 +39,27 @@ public enum ExhibitionItemType {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public static ExhibitionItemType getByCode(String code) {
+		
+		if (StringUtil.isEmpty(code)){
+			return ExhibitionItemType.OTHER;
+		}
+
+		ExhibitionItemType[] exhibitionItemTypes = ExhibitionItemType.values();
+
+		for (ExhibitionItemType exhibitionItemType : exhibitionItemTypes) {
+			if (exhibitionItemType.getCode().equals(code)) {
+				return exhibitionItemType;
+			}
+		}
+
+		return ExhibitionItemType.OTHER;
+	}
+
+	public static void main(String[] args) {
+		ExhibitionItemType aa = ExhibitionItemType.getByCode("PLAN_MEET");
+		System.out.println(aa.getName());
 	}
 }

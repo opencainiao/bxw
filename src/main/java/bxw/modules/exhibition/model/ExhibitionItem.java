@@ -2,12 +2,15 @@ package bxw.modules.exhibition.model;
 
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.mou.common.StringUtil;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.mou.mongodb.base.domain.BaseModel;
 
 import bxw.common.util.PinyinUtil;
+import bxw.modules.exhibition.enums.ExhibitionCharacter;
+import bxw.modules.exhibition.enums.ExhibitionItemType;
 import bxw.modules.exhibition.enums.ExhibitionStage;
 import bxw.modules.exhibition.enums.ExhibitionState;
 
@@ -136,7 +139,14 @@ public class ExhibitionItem extends BaseModel {
 	}
 
 	public void setType(String type) {
+
 		this.type = type;
+	}
+
+	public void setTypeEnum(ExhibitionItemType type) {
+
+		this.type = type.getCode();
+		this.type_name = type.getName();
 	}
 
 	public String getType_name() {
@@ -155,6 +165,11 @@ public class ExhibitionItem extends BaseModel {
 		this.character = character;
 	}
 
+	public void setCharacterEnum(ExhibitionCharacter character) {
+		this.character = character.getCode();
+		this.character_name = character.getName();
+	}
+
 	public String getCharacter_name() {
 		return character_name;
 	}
@@ -162,11 +177,12 @@ public class ExhibitionItem extends BaseModel {
 	public void setCharacter_name(String character_name) {
 		this.character_name = character_name;
 	}
-
+	
+	@NotEmpty(message = "请输入标题")
 	public String getTitle() {
 		return title;
 	}
-
+	
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -184,11 +200,27 @@ public class ExhibitionItem extends BaseModel {
 	}
 
 	public void setStart_time(String start_time) {
+
 		this.start_time = start_time;
 	}
 
 	public String getEnd_time() {
 		return end_time;
+	}
+
+	public void resetTime() {
+
+		if (StringUtil.isNotEmpty(start_time)) {
+			if (start_time.length() > 16) {
+				this.start_time = start_time.substring(0, 16);
+			}
+		}
+
+		if (StringUtil.isNotEmpty(end_time)) {
+			if (end_time.length() > 16) {
+				this.end_time = end_time.substring(0, 16);
+			}
+		}
 	}
 
 	public void setEnd_time(String end_time) {
@@ -235,4 +267,7 @@ public class ExhibitionItem extends BaseModel {
 		this.end_date = end_date;
 	}
 
+	public static void main(String[] args) {
+		System.out.println("2015-10-22 10:54".length());
+	}
 }

@@ -84,7 +84,7 @@
 										<div class="col-sm-8">
 											<div class="input-group" id="choose_client_div">
 												<input type="text" id="choose_client" name="choose_client"
-													class="form-control" readonly placeholder="请选择"> <span
+													class="form-control" readonly placeholder="请选择" value="${exhibitionitem.username}"> <span
 													class="input-group-btn">
 													<button class="btn btn-default btn-sm" id="choose_client_btn" type="button">
 														<span class="glyphicon glyphicon-chevron-right"
@@ -164,9 +164,8 @@
 				laydate({
 					elem : '#start_time',
 					istime : true,
-					format : 'YYYY-MM-DD hh:mm:ss', // 分隔符可以任意定义，该例子表示只显示年月
+					format : 'YYYY-MM-DD hh:mm', // 分隔符可以任意定义，该例子表示只显示年月
 					festival : true, //显示节日
-					min : laydate.now(),
 					choose : function(datas) { //选择日期完毕的回调
 						console.log(datas);
 					}
@@ -179,9 +178,8 @@
 				laydate({
 					elem : '#end_time',
 					istime : true,
-					format : 'YYYY-MM-DD hh:mm:ss', // 分隔符可以任意定义，该例子表示只显示年月
+					format : 'YYYY-MM-DD hh:mm', // 分隔符可以任意定义，该例子表示只显示年月
 					festival : true, //显示节日
-					min : laydate.now(),
 					choose : function(datas) { //选择日期完毕的回调
 
 						console.log(datas);
@@ -205,11 +203,11 @@
 
 			var successstr = "新增成功";
 
-			var url_to = $.getSitePath() + "/backend/sysconsttype/add";
-			var url_success = $.getSitePath() + "/backend/sysconsttype/list";
+			var url_to = $.getSitePath() + "/front/exhibition_item/add?type=PLAN_PHONE";
+			var url_success = $.getSitePath() + "/front/exhibition_item/list";
 
 			$.logJson(paramForm);
-			return;
+			//return;
 
 			// 控制按钮为禁用
 			$.disableButton("btn_save");
