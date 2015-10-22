@@ -6,6 +6,8 @@
 <script>
 	window.jQuery || document.write('<script src="${ctx}/resources/js/jquery-2.1.3.min.js" type="text/javascript"><\/script>');
 </script>
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/js/jquery.ba-resize.js"></script>
 <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/js/mou.ajax.js"></script>

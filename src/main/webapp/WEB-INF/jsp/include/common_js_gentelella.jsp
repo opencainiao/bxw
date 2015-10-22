@@ -6,7 +6,8 @@
 <script>
 	window.jQuery || document.write('<script src="${ctx}/resources/gentelella/production/js/jquery.min.js" type="text/javascript"><\/script>');
 </script>
-
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/js/jquery.ba-resize.js"></script>
 <script type="text/javascript"
 	src="http://cdn.bootcss.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 

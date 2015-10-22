@@ -23,10 +23,6 @@ function autoHeight() {
 
     var toShow = [];
 
-    var iframeContentH = $(window.frames["frame_content_id"].document).height();
-
-    toShow.push("iframeContentH[" + iframeContentH + "]");
-
     var toSetH = 0;
 
     var iframeContentH = 0;
@@ -37,28 +33,39 @@ function autoHeight() {
         iframeContentH = iframe.contentDocument.body.offsetHeight;
     }
 
+    iframeContentH = iframeContentH + 40;
+    
     toShow.push("iframeContentH[" + iframeContentH + "]");
+    
+    var frameH = $("#frame_content_id").height();
 
-    var divH = $("#home_content").height();
+    var windowH =  $(window).height();
+    
+    toShow.push("$(window).height["+ windowH +"]" );
+    toShow.push("frameH[" + frameH + "]");
 
-    toShow.push("divH[" + divH + "]");
-
-    if (iframeContentH > divH) {
-        toSetH = iframeContentH;
+    if (iframeContentH > frameH) {
+        toSetH = iframeContentH ;
     } else {
-        toSetH = divH - 5;
+    	if (iframeContentH > windowH){
+    		toSetH = iframeContentH ;
+    	}else{
+    		toSetH = frameH ;
+    	}
     }
     
-     alert(toShow.join("\n"));
-    iframe.height = toSetH;
+   // alert(toShow.join("\n"));
+    //iframe.height = toSetH;
     
-    if (iframe.Document) { //ie自有属性
-        iframeDoc = iframe.Document;
-    } else if (iframe.contentDocument) { //ie,firefox,chrome,opera,safari
-        iframeDoc = iframe.contentDocument;
-    }
+    $("#frame_content_id").height(toSetH);
     
-    iframeDoc.height = toSetH - 5;
+  //  if (iframe.Document) { //ie自有属性
+  //      iframeDoc = iframe.Document;
+  //  } else if (iframe.contentDocument) { //ie,firefox,chrome,opera,safari
+  //      iframeDoc = iframe.contentDocument;
+ //   }
+    
+   // iframeDoc.height = toSetH - 5;
 }
 
 </script>
@@ -121,6 +128,7 @@ function autoHeight() {
         	
         	//$.alertObjJson($.getConstantName("SYS_MODULE","02"));
         });
+        
     </script>
 </body>
 

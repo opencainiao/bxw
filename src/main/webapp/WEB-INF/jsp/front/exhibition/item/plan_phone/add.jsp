@@ -157,7 +157,12 @@
 
 	<script>
 		$().ready(function() {
-
+			
+			$("#attention_info").resize(function(){
+			
+					window.top.autoHeight();
+			});
+			
 			$("#btn_save").bind("click", save);
 
 			$("#start_time").click(function() {
