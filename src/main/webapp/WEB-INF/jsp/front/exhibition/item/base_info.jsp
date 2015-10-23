@@ -48,7 +48,6 @@
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 			<div class="row">
@@ -102,6 +101,26 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-6">
+					<div class="row">
+						<div class="form-group form-group-sm  " id="address_div">
+							<label for="address" class="col-sm-3 control-label"> 地点 </label>
+							<div class="col-xs-9">
+								<textarea type="text" class="form-control " id="address"
+									name="address" placeholder=""
+									style="width: 580px; height: 50px">${exhibitionitem.address }</textarea>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-sm  " id="gift_div">
+							<label for="gift" class="col-sm-3 control-label"> 随手礼 </label>
+							<div class="col-xs-9">
+								<textarea type="text" class="form-control " id="gift"
+									name="gift" placeholder=""
+									style="width: 580px; height: 80px">${exhibitionitem.gift }</textarea>
+							</div>
+						</div>
+					</div>
 					<div class="row">
 						<div class="form-group form-group-sm  ">
 							<label for="attention_info" class="col-sm-3 control-label">

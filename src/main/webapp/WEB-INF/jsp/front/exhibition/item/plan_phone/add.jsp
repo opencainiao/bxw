@@ -37,6 +37,9 @@
 			});
 
 			$("#btn_save").bind("click", save);
+			
+			$("#address_div").hide();
+			$("#gift_div").hide();
 
 		});
 

@@ -24,9 +24,6 @@
 	<script>
 		$().ready(function() {
 			$("#btn_save").bind("click", save);
-			
-			$("#address_div").hide();
-			$("#gift_div").hide();
 		});
 
 		var closeEditWindow = function() {

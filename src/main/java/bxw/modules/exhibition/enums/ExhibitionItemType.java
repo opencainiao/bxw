@@ -4,10 +4,10 @@ import org.mou.common.StringUtil;
 
 public enum ExhibitionItemType {
 
-	RECORD_PHONE("RECORD_PHONE", "电话约访记录"), //
-	RECORD_MEET("RECORD_MEET", "客户拜访记录"), //
-	PLAN_PHONE("PLAN_PHONE", "电话约访计划"), //
-	PLAN_MEET("PLAN_MEET", "客户拜访计划"), //
+	RECORD_PHONE("RECORD_PHONE", "（记录）电话约访"), //
+	RECORD_MEET("RECORD_MEET", "（记录）客户拜访"), //
+	PLAN_PHONE("PLAN_PHONE", "（计划）电话约访"), //
+	PLAN_MEET("PLAN_MEET", "（计划）客户拜访"), //
 	ACTION("ACTION", "活动"), //
 	OTHER("OTHER", "其他"); //
 	// HBBTG("07", "核保不通过"), //

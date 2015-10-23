@@ -49,7 +49,7 @@ public class ExhibitionItemController extends BaseController {
 
 	@Resource(name = "exhibitionItemService")
 	private IExhibitionItemService exhibitionItemService;
-	
+
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(List.class, "attentions", new StringListEditor());
@@ -140,11 +140,11 @@ public class ExhibitionItemController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Model model, String user_id,String username) {
+	public String list(Model model, String user_id, String username) {
 
 		model.addAttribute("user_id", user_id);
-		model.addAttribute("username", username);
-		
+		model.addAttribute("username_", username);
+
 		return "front/exhibition/item/list";
 	}
 
@@ -158,7 +158,7 @@ public class ExhibitionItemController extends BaseController {
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	@ResponseBody
 	public Object list(Model model, HttpServletRequest request, String user_id, String username,
-			String exhibition_stage, String exhibition_state) {
+			String exhibition_stage, String exhibition_state, String type) {
 
 		HttpServletRequestUtil.debugParams(request);
 		try {
@@ -189,16 +189,20 @@ public class ExhibitionItemController extends BaseController {
 			}
 
 			if (StringUtil.isNotEmpty(exhibition_stage)) {
-
 				if (!exhibition_stage.equals("-1")) {
 					query.put("stage", exhibition_stage);
 				}
 			}
 
 			if (StringUtil.isNotEmpty(exhibition_state)) {
-
 				if (!exhibition_state.equals("-1")) {
 					query.put("state", exhibition_state);
+				}
+			}
+
+			if (StringUtil.isNotEmpty(type)) {
+				if (!type.equals("-1")) {
+					query.put("type", type);
 				}
 			}
 
@@ -270,7 +274,7 @@ public class ExhibitionItemController extends BaseController {
 		}
 
 		try {
-			
+
 			exhibitionitem.setCharacterEnum(ExhibitionCharacter.getByCode(exhibitionitem.getCharacter()));
 
 			exhibitionitem.set_id_m(_id);

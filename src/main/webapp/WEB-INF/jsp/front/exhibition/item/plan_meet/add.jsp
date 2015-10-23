@@ -15,24 +15,30 @@
 </head>
 
 <body>
-	<div id="edit_div" class="onepage">
+	<input type="hidden" name="ctx" value="<%=request.getContextPath()%>" />
+
+	<ul class="breadcrumb">
+		<li><a href="<%=request.getContextPath()%>/front/exhibition/list">展业信息</a>
+			<span class="divider"></span></li>
+		<li class="active">制定拜访计划</li>
+	</ul>
+	<div id="add_div" class="onepage">
 		<sf:form modelAttribute="exhibitionitem" class="form-horizontal">
 			<jsp:include page="/WEB-INF/jsp/front/exhibition/item/base_info.jsp"></jsp:include>
 		</sf:form>
-
 	</div>
+
 	<script>
 		$().ready(function() {
-			$("#btn_save").bind("click", save);
-			
-			$("#address_div").hide();
-			$("#gift_div").hide();
-		});
 
-		var closeEditWindow = function() {
-			parent.data_manage_functions.refreshPage();
-			parent.data_manage_functions.closeEditWindow();
-		}
+			$("#attention_info").resize(function() {
+
+				window.top.autoHeight();
+			});
+
+			$("#btn_save").bind("click", save);
+
+		});
 
 		//保存
 		var save = function() {
@@ -42,9 +48,11 @@
 			var attention_info = getAttentionInfo();
 			paramForm = $.extend(paramForm, attention_info);
 
-			var successstr = "修改成功";
+			var successstr = "新增成功";
 
-			var url_to = window.location.href;
+			var url_to = $.getSitePath()
+					+ "/front/exhibition_item/add?type=PLAN_MEET";
+			var url_success = $.getSitePath() + "/front/exhibition_item/list";
 
 			$.logJson(paramForm);
 			//return;
@@ -65,13 +73,12 @@
 					if (data['success'] == 'n') {
 						if (data['brErrors']) {
 							$.showBRErrors_mou_abs(data['brErrors'],
-									$("#edit_div"));
+									$("#add_div"));
 						} else {
 							$.alertError(data['message']);
 						}
 					} else {
-						$.alertSuccessCallback("修改成功", successstr,
-								closeEditWindow);
+						$.alertSuccessNewPage("成功", successstr, url_success);
 					}
 				},
 				complete : function(XMLHttpRequest, textStatus) {
@@ -79,6 +86,7 @@
 				}
 			});
 		};
+
 	</script>
 </body>
 </html>

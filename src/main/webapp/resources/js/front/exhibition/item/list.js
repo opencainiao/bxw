@@ -134,10 +134,15 @@ var data_manage = {
 		exhibition_state["name"] = "exhibition_state";
 		exhibition_state["value"] = $("#exhibition_state").trim_value();
 
+		var type = {};
+		exhibition_state["name"] = "type";
+		exhibition_state["value"] = $("#type").trim_value();
+
 		var params = [];
 		params.push(username);
 		params.push(exhibition_stage);
 		params.push(exhibition_state);
+		params.push(type);
 
 		data_manage.gridsetting.url = $.getSitePath()
 				+ '/front/exhibition_item/list?ts=' + new Date().getTime();
@@ -194,7 +199,7 @@ var data_manage = {
 		nowrap : true, // 是否不换行
 		autoload : true,// 自动加载
 		usepager : true,
-		title : '展业信息列表',
+		title : '展业记录',
 		useRp : true,
 		rp : 20, // 默认分页条数
 		pagestat : '共有{total}条记录，显示{from} - {to}条记录',
