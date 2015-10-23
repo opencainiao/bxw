@@ -28,9 +28,9 @@ $().ready(
 var data_manage_functions = {
 		
 	itemList : function(data) {
-		var url = $.getSitePath() + '/front/exhibition_item/list?user_id=' + data["_id_m"]
+		var url = $.getSitePath() + '/front/exhibition_item/list?user_id=' + data["_id_m"] + "&username=" + data["username"];
 		
-		alert(url);
+		//alert(url);
 		window.location.href = url;
 	},
 	closeAddWindow : function() {
@@ -270,7 +270,7 @@ var data_manage = {
 				r_name : 'itemlist',
 				text : '展业记录',
 				callback : data_manage_functions.itemList,
-				paramConfig : [ "_id_m" ],
+				paramConfig : [ "_id_m" ,"username"],
 				css : "btn btn-xs btn-primary"
 			} ]
 		}, {

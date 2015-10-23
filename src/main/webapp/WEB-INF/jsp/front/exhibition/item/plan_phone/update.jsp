@@ -15,7 +15,7 @@
 </head>
 
 <body>
-	<div id="add_div" class="onepage">
+	<div id="edit_div" class="onepage">
 		<sf:form modelAttribute="exhibitionitem" class="form-horizontal">
 			<jsp:include page="/WEB-INF/jsp/front/exhibition/item/base_info.jsp"></jsp:include>
 		</sf:form>
@@ -25,6 +25,11 @@
 		$().ready(function() {
 			$("#btn_save").bind("click", save);
 		});
+
+		var closeEditWindow = function() {
+			parent.data_manage_functions.refreshPage();
+			parent.data_manage_functions.closeEditWindow();
+		}
 
 		//保存
 		var save = function() {
@@ -36,9 +41,9 @@
 
 			var successstr = "新增成功";
 
-			var url_to = $.getSitePath()
-					+ "/front/exhibition_item/add?type=PLAN_PHONE";
-			var url_success = $.getSitePath() + "/front/exhibition_item/list";
+			var url_to = window.location.href;
+
+			alert(url_to);
 
 			$.logJson(paramForm);
 			//return;
@@ -59,12 +64,13 @@
 					if (data['success'] == 'n') {
 						if (data['brErrors']) {
 							$.showBRErrors_mou_abs(data['brErrors'],
-									$("#add_div"));
+									$("#edit_div"));
 						} else {
 							$.alertError(data['message']);
 						}
 					} else {
-						$.alertSuccessNewPage("成功", successstr, url_success);
+						$.alertSuccessCallback("修改成功", successstr,
+								closeEditWindow);
 					}
 				},
 				complete : function(XMLHttpRequest, textStatus) {
@@ -72,7 +78,6 @@
 				}
 			});
 		};
-
 	</script>
 </body>
 </html>

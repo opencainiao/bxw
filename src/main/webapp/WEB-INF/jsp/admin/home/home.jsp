@@ -52,6 +52,49 @@
         $("#home_content").height(toSet);
     }
 
+    function setIframeHightToContentHeight(){
+    	 var iframe = document.getElementById("frame_content_id");
+
+         var toShow = [];
+
+         var iframeContentH = $(window.frames["frame_content_id"].document).height();
+
+         toShow.push("iframeContentH[" + iframeContentH + "]");
+
+         var toSetH = 0;
+
+         var iframeContentH = 0;
+
+         if (iframe.Document) { //ie自有属性
+             iframeContentH = iframe.Document.documentElement.scrollHeight;
+         } else if (iframe.contentDocument) { //ie,firefox,chrome,opera,safari
+             iframeContentH = iframe.contentDocument.body.offsetHeight;
+         }
+
+         var divH = $("#home_content").height();
+
+         if (iframeContentH > divH) {
+             toSetH = iframeContentH;
+         } else {
+             toSetH = divH - 5;
+         }
+         
+         toShow.push("divH[" + divH + "]");
+         toShow.push("toSetH[" + toSetH + "]");
+
+         
+         alert(toShow.join("\n"));
+         
+         iframe.height = toSetH;
+         
+         if (iframe.Document) { 
+             iframeDoc = iframe.Document;
+         } else if (iframe.contentDocument) { //ie,firefox,chrome,opera,safari
+             iframeDoc = iframe.contentDocument;
+         }
+         
+         iframeDoc.height = toSetH - 5;
+    }
     function autoHeight() {
         var iframe = document.getElementById("frame_content_id");
 

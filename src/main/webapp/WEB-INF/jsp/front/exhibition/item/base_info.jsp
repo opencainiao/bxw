@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <input type="hidden" name="_id" />
 <input type="hidden" id="user_id" name="user_id"
@@ -7,7 +8,7 @@
 <input type="hidden" id="username" name="username"
 	value="${exhibitionitem.username}">
 
-<div class="container-fluid" style="margin-top: 30px">
+<div class="container-fluid" style="margin-top: 10px; margin-bottom:15px">
 	<div class="panel panel-info">
 		<div class="panel-heading hide">创建电话约访计划</div>
 		<div class="panel-body">
@@ -205,19 +206,19 @@
 
 	// 初始化注意事项信息
 	function iniAttention() {
-
-		var data_attention = eval('${client.attention_info }');
-		if (data_attention && data_attention.length > 0) {
-			for ( var item in data_attention) {
-				var attention_temp = data_attention[item];
-
-				var value = attention_temp["phone_number"];
-
+		
+		var attentions = [];
+		<c:forEach var="i" items="${exhibitionitem.attentions}">
+			attentions.push("${i}");
+		</c:forEach>
+		
+		if (attentions.length > 0){
+			for (var i=0; i< attentions.length; ++i){
 				addAttention({
-					ipt_val : value
+					ipt_val : attentions[i]
 				});
 			}
-		} else {
+		}else{
 			addAttention();
 		}
 

@@ -104,10 +104,37 @@ public class ExhibitionItemService extends BaseService implements IExhibitionIte
 	 */
 	private DBObject makeUpdate(ExhibitionItem exhibitionItem) {
 
+		exhibitionItem.setPinYin();
+		exhibitionItem.resetTime();
+
 		DBObject update = new BasicDBObject();
 		DBObject updateSet = new BasicDBObject();
 
+		updateSet.put("user_id", exhibitionItem.getUser_id());
+		updateSet.put("username", exhibitionItem.getUsername());
 		updateSet.put("remark", exhibitionItem.getRemark());
+		updateSet.put("character", exhibitionItem.getCharacter());
+		updateSet.put("character_name", exhibitionItem.getCharacter_name());
+		updateSet.put("title", exhibitionItem.getTitle());
+		updateSet.put("content", exhibitionItem.getContent());
+		updateSet.put("address", exhibitionItem.getAddress());
+		updateSet.put("gift", exhibitionItem.getGift());
+
+		updateSet.put("stage", exhibitionItem.getStage());
+		updateSet.put("state", exhibitionItem.getState());
+		updateSet.put("stage_name", exhibitionItem.getStage_name());
+		updateSet.put("state_name", exhibitionItem.getState_name());
+
+		updateSet.put("start_date", exhibitionItem.getStart_date());
+		updateSet.put("end_date", exhibitionItem.getEnd_date());
+		updateSet.put("start_time", exhibitionItem.getStart_time());
+		updateSet.put("end_time", exhibitionItem.getEnd_time());
+		
+		updateSet.put("attentions", exhibitionItem.getAttentions());
+		
+		updateSet.put("pinyin_name", exhibitionItem.getPinyin_name());
+		updateSet.put("first_char_header", exhibitionItem.getFirst_char_header());
+		updateSet.put("all_char_header", exhibitionItem.getAll_char_header());
 
 		this.setModifyInfo(updateSet);
 		update.put("$set", updateSet);

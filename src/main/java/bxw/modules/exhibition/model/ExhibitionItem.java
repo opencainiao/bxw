@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.mou.mongodb.base.domain.BaseModel;
 
+import bxw.common.util.AgeUtil;
 import bxw.common.util.PinyinUtil;
 import bxw.modules.exhibition.enums.ExhibitionCharacter;
 import bxw.modules.exhibition.enums.ExhibitionItemType;
@@ -61,6 +62,22 @@ public class ExhibitionItem extends BaseModel {
 
 	public void setAttentions(List<String> attentions) {
 		this.attentions = attentions;
+	}
+
+	public String getPinyin_name() {
+		return pinyin_name;
+	}
+
+	public void setPinyin_name(String pinyin_name) {
+		this.pinyin_name = pinyin_name;
+	}
+
+	public String getAll_char_header() {
+		return all_char_header;
+	}
+
+	public void setAll_char_header(String all_char_header) {
+		this.all_char_header = all_char_header;
 	}
 
 	public String getUser_id() {
@@ -177,12 +194,12 @@ public class ExhibitionItem extends BaseModel {
 	public void setCharacter_name(String character_name) {
 		this.character_name = character_name;
 	}
-	
+
 	@NotEmpty(message = "请输入标题")
 	public String getTitle() {
 		return title;
 	}
-	
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -211,12 +228,18 @@ public class ExhibitionItem extends BaseModel {
 	public void resetTime() {
 
 		if (StringUtil.isNotEmpty(start_time)) {
+
+			this.setStart_date(AgeUtil.getDateFromTime(start_time));
+
 			if (start_time.length() > 16) {
 				this.start_time = start_time.substring(0, 16);
 			}
 		}
 
 		if (StringUtil.isNotEmpty(end_time)) {
+
+			this.setEnd_date(AgeUtil.getDateFromTime(end_time));
+
 			if (end_time.length() > 16) {
 				this.end_time = end_time.substring(0, 16);
 			}

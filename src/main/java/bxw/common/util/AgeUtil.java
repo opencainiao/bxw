@@ -5,11 +5,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.mou.common.StringUtil;
+
 public class AgeUtil {
 
 	public static void main(String[] args) throws Exception {
 
 		System.out.println(getAge("2014-1-08"));
+		
+		System.out.println(AgeUtil.getDateFromTime("2015-10-22 00:33"));
 	}
 
 	/****
@@ -66,4 +70,16 @@ public class AgeUtil {
 		}
 		return age;
 	}
+
+	public static String getDateFromTime(String time) {
+		if (StringUtil.isEmpty(time)) {
+			return null;
+		}
+
+		if (time.length() < 10) {
+			return null;
+		}
+		return time.substring(0, 10);
+	}
+	
 }

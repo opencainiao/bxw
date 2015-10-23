@@ -1,5 +1,6 @@
 package bxw.modules.exhibition.controller;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +27,7 @@ import com.mongodb.DBObject;
 
 import bxw.common.util.RegexPatternUtil;
 import bxw.modules.base.BaseController;
+import bxw.modules.client.model.propertyeidtor.StringListEditor;
 import bxw.modules.exhibition.enums.ExhibitionCharacter;
 import bxw.modules.exhibition.enums.ExhibitionItemType;
 import bxw.modules.exhibition.model.ExhibitionItem;
@@ -45,6 +49,11 @@ public class ExhibitionItemController extends BaseController {
 
 	@Resource(name = "exhibitionItemService")
 	private IExhibitionItemService exhibitionItemService;
+	
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+		binder.registerCustomEditor(List.class, "attentions", new StringListEditor());
+	}
 
 	/****
 	 * 进入添加展业项页面
@@ -103,10 +112,10 @@ public class ExhibitionItemController extends BaseController {
 		}
 		try {
 
-			String user_id = exhibitionitem.getUser_id();
-			if (StringUtil.isEmpty(user_id)) {
-				return this.handleValidateFalse("请选择客户!");
-			}
+			// String user_id = exhibitionitem.getUser_id();
+			// if (StringUtil.isEmpty(user_id)) {
+			// return this.handleValidateFalse("请选择客户!");
+			// }
 
 			exhibitionitem.setTypeEnum(ExhibitionItemType.getByCode(type));
 			exhibitionitem.setCharacterEnum(ExhibitionCharacter.getByCode(exhibitionitem.getCharacter()));
@@ -131,9 +140,11 @@ public class ExhibitionItemController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Model model, String user_id) {
+	public String list(Model model, String user_id,String username) {
 
 		model.addAttribute("user_id", user_id);
+		model.addAttribute("username", username);
+		
 		return "front/exhibition/item/list";
 	}
 
@@ -259,6 +270,9 @@ public class ExhibitionItemController extends BaseController {
 		}
 
 		try {
+			
+			exhibitionitem.setCharacterEnum(ExhibitionCharacter.getByCode(exhibitionitem.getCharacter()));
+
 			exhibitionitem.set_id_m(_id);
 			DBObject updateResult = this.exhibitionItemService.updatePart(null, exhibitionitem);
 

@@ -68,8 +68,10 @@ var data_manage_functions = {
 
 		var url = $.getSitePath() + '/front/exhibition_item/' + data["_id_m"]
 				+ "/update";
+		
+		var title = "编辑【" + data["type_name"]+ "】"
 
-		$.popUpWindow("编辑展业信息", url, "800px", "400px", "edit",
+		$.popUpWindow(title, url, "90%", "90%", "edit",
 				$("#data_manage"));
 	},
 	/***************************************************************************
@@ -91,8 +93,8 @@ var data_manage_functions = {
 		$.closeWindow("edit", $("#data_manage"));
 	},
 	refreshPage : function() {
-		window.location.reload();
-		// data_manage.search();
+		//window.location.reload();
+		data_manage.search();
 	},
 	/***************************************************************************
 	 * 创建展业事项
@@ -215,6 +217,11 @@ var data_manage = {
 			hide : true,
 			callback : data_manage_functions.toDetail
 		}, {
+			display : '类型码',
+			name : 'type',
+			width : 120,
+			hide : true
+		}, {
 			display : '类型',
 			name : 'type_name',
 			width : 120
@@ -262,7 +269,7 @@ var data_manage = {
 				r_name : 'toEdit',
 				text : '修改',
 				callback : data_manage_functions.toEdit,
-				paramConfig : [ "_id_m" ]
+				paramConfig : [ "_id_m" ,"type_name","username"]
 			} ]
 		}]
 	}

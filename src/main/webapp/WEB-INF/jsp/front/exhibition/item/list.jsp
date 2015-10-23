@@ -17,6 +17,8 @@
 	<input type="hidden" id="user_id" name="user_id" value="${user_id }" />
 
 	<ul class="breadcrumb">
+		<li><a href="<%=request.getContextPath()%>/front/exhibition/list">展业信息</a>
+			<span class="divider"></span></li>
 		<li class="active">展业记录</li>
 	</ul>
 
@@ -27,7 +29,7 @@
 					<span>姓名</span>
 					<input class="form-control input-sm" style="width: 300px"
 						type="text" id="username" name="username"
-						placeholder="输入客户姓名、拼音或是首字母">
+						placeholder="输入客户姓名、拼音或是首字母" value="${username }">
 				</div>
 				<button class="btn btn-info" type="button" id="btn_search">
 					查询</button>
