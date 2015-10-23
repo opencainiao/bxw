@@ -50,6 +50,30 @@ public class ExhibitionItem extends BaseModel {
 	private String stage_name; // 阶段名称
 	private String state_name; // 状态名称
 
+	private String next_action; // 下一步动作
+	private String next_action_name;
+	private String next_action_cmt;
+
+	private String client_exhibiton_state; // 客户展业状态
+	private String client_exhibiton_state_name; // 客户展业状态
+	private String client_exhibiton_state_cmt; //
+
+	public String getClient_exhibiton_state() {
+		return client_exhibiton_state;
+	}
+
+	public void setClient_exhibiton_state(String client_exhibiton_state) {
+		this.client_exhibiton_state = client_exhibiton_state;
+	}
+
+	public String getClient_exhibiton_state_name() {
+		return client_exhibiton_state_name;
+	}
+
+	public void setClient_exhibiton_state_name(String client_exhibiton_state_name) {
+		this.client_exhibiton_state_name = client_exhibiton_state_name;
+	}
+
 	private String pinyin_name;
 	private String first_char_header;// 姓名拼音第一个首字母， 比如：Z
 	private String all_char_header;// 姓名拼音首字母， 比如：ZS
@@ -288,6 +312,38 @@ public class ExhibitionItem extends BaseModel {
 
 	public void setEnd_date(String end_date) {
 		this.end_date = end_date;
+	}
+
+	public String getNext_action() {
+		return next_action;
+	}
+
+	public void setNext_action(String next_action) {
+		this.next_action = next_action;
+	}
+
+	public String getNext_action_name() {
+		return next_action_name;
+	}
+
+	public void setNext_action_name(String next_action_name) {
+		this.next_action_name = next_action_name;
+	}
+
+	public String getNext_action_cmt() {
+		return next_action_cmt;
+	}
+
+	public void setNext_action_cmt(String next_action_cmt) {
+		this.next_action_cmt = next_action_cmt;
+	}
+
+	public String getClient_exhibiton_state_cmt() {
+		return client_exhibiton_state_cmt;
+	}
+
+	public void setClient_exhibiton_state_cmt(String client_exhibiton_state_cmt) {
+		this.client_exhibiton_state_cmt = client_exhibiton_state_cmt;
 	}
 
 	public static void main(String[] args) {

@@ -283,16 +283,16 @@ var data_manage = {
 				text : '创建展业活动',
 				css : "btn btn-xs btn-success",
 				btns : [ [ {
-					"text" : "电话约访计划",
+					"text" : "（计划）电话约访",
 					"data-name" : "PLAN_PHONE"
 				}, {
-					"text" : "客户拜访计划",
+					"text" : "（计划）客户拜访",
 					"data-name" : "PLAN_MEET"
 				},{
-					"text" : "电话约访记录",
+					"text" : "（记录）电话约访",
 					"data-name" : "RECORD_PHONE"
 				} , {
-					"text" : "客户拜访记录",
+					"text" : "（记录）客户拜访",
 					"data-name" : "RECORD_MEET"
 				}, {
 					"text" : "活动",

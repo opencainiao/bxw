@@ -8,12 +8,33 @@
 <input type="hidden" id="username" name="username"
 	value="${exhibitionitem.username}">
 
-<div class="container-fluid" style="margin-top: 10px; margin-bottom:15px">
+<div class="container-fluid"
+	style="margin-top: 10px; margin-bottom: 15px">
 	<div class="panel panel-info">
 		<div class="panel-heading hide">创建电话约访计划</div>
 		<div class="panel-body">
 			<div class="row">
 				<div class="col-xs-6">
+					<div class="row">
+						<div class="form-group form-group-sm  ">
+							<label for="" class="col-sm-3 control-label">客户 </label>
+							<div class="col-sm-8">
+								<div class="input-group" id="choose_client_div"
+									style="width: 580px">
+									<input type="text" id="choose_client" name="choose_client"
+										class="form-control" readonly placeholder="请选择"
+										value="${exhibitionitem.username}"> <span
+										class="input-group-btn">
+										<button class="btn btn-default btn-sm" id="choose_client_btn"
+											type="button">
+											<span class="glyphicon glyphicon-chevron-right"
+												aria-hidden="true"></span>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
 					<div class="row">
 						<div class="form-group form-group-sm  ">
 							<label for="character" class="col-sm-3 control-label"> 性质
@@ -48,31 +69,68 @@
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-6">
 					<div class="row">
-						<div class="form-group form-group-sm  ">
-							<label for="" class="col-sm-3 control-label">客户 </label>
+						<div class="form-group form-group-sm ">
+							<label class="col-sm-3 control-label" for="next_info">
+								下一步 </label>
 							<div class="col-sm-8">
-								<div class="input-group" id="choose_client_div">
-									<input type="text" id="choose_client" name="choose_client"
-										class="form-control" readonly placeholder="请选择"
-										value="${exhibitionitem.username}"> <span
-										class="input-group-btn">
-										<button class="btn btn-default btn-sm" id="choose_client_btn"
-											type="button">
-											<span class="glyphicon glyphicon-chevron-right"
-												aria-hidden="true"></span>
-										</button>
-									</span>
+								<div id="_info" class="row"
+									style="width: 595px; padding-top: 6px;">
+									<div class="input-group input-group-xs online-input col-md-12"
+										style="padding-left: 15px;">
+										<select id="next_action" name="next_action"
+											class="form-control input-sm " data-src="constant"
+											data-typecode="EXHIBITION_CHARACTER"
+											data-value="${exhibitionitem.next_action}"
+											style="width: 580px">
+										</select>
+									</div>
+									<div class="input-group input-group-xs online-input col-md-12"
+										style="padding-left: 15px; padding-top: 15px">
+										<div style="width: 120px">动作说明</div>
+										<textarea type="text" class="form-control "
+											id="next_action_cmt" name="next_action_cmt" placeholder=""
+											style="width: 580px; height: 50px">${exhibitionitem.next_action_cmt }
+										</textarea>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group form-group-sm ">
+							<label class="col-sm-3 control-label" for="next_info">
+								客户状态 </label>
+							<div class="col-sm-8">
+								<div id="_info" class="row"
+									style="width: 595px; padding-top: 6px;">
+									<div class="input-group input-group-xs online-input col-md-12"
+										style="padding-left: 15px;">
+										<select id="client_exhibiton_state"
+											name="client_exhibiton_state" class="form-control input-sm"
+											data-src="constant" data-typecode="EXHIBITION_STATE"
+											data-value="" style="width: 580px"></select>
+
+									</div>
+									<div class="input-group input-group-xs online-input col-md-12"
+										style="padding-left: 15px; padding-top: 15px">
+										<div style="width: 120px">说明</div>
+										<textarea type="text" class="form-control "
+											id="client_exhibiton_state_cmt"
+											name="client_exhibiton_state_cmt" placeholder=""
+											style="width: 580px; height: 50px">${exhibitionitem.client_exhibiton_state_cmt }
+										</textarea>
+									</div>
+
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
 			<div class="row">
 				<div class="col-xs-6">
 					<div class="row">
@@ -116,8 +174,7 @@
 							<label for="gift" class="col-sm-3 control-label"> 随手礼 </label>
 							<div class="col-xs-9">
 								<textarea type="text" class="form-control " id="gift"
-									name="gift" placeholder=""
-									style="width: 580px; height: 80px">${exhibitionitem.gift }</textarea>
+									name="gift" placeholder="" style="width: 580px; height: 80px">${exhibitionitem.gift }</textarea>
 							</div>
 						</div>
 					</div>
@@ -225,19 +282,19 @@
 
 	// 初始化注意事项信息
 	function iniAttention() {
-		
+
 		var attentions = [];
 		<c:forEach var="i" items="${exhibitionitem.attentions}">
-			attentions.push("${i}");
+		attentions.push("${i}");
 		</c:forEach>
-		
-		if (attentions.length > 0){
-			for (var i=0; i< attentions.length; ++i){
+
+		if (attentions.length > 0) {
+			for (var i = 0; i < attentions.length; ++i) {
 				addAttention({
 					ipt_val : attentions[i]
 				});
 			}
-		}else{
+		} else {
 			addAttention();
 		}
 
