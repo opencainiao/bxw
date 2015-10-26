@@ -53,6 +53,10 @@ public class ExhibitionItemController extends BaseController {
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(List.class, "attentions", new StringListEditor());
+
+		binder.registerCustomEditor(List.class, "acclaim_points", new StringListEditor());
+		binder.registerCustomEditor(List.class, "grateful_points", new StringListEditor());
+		binder.registerCustomEditor(List.class, "client_questions", new StringListEditor());
 	}
 
 	/****

@@ -45,12 +45,19 @@
 
 		//保存
 		var save = function() {
-
+			
 			var paramForm = $('form').getFormParam_ux();
 
 			var attention_info = getAttentionInfo();
+			var client_question_info = $.getTextAreaInfo("client_question_info","client_questions");
+			var acclaim_points_info = $.getTextAreaInfo("acclaim_points_info","acclaim_points");
+			var grateful_points_info = $.getTextAreaInfo("grateful_points_info","grateful_points");
+	
 			paramForm = $.extend(paramForm, attention_info);
-
+			paramForm = $.extend(paramForm, client_question_info);
+			paramForm = $.extend(paramForm, acclaim_points_info);
+			paramForm = $.extend(paramForm, grateful_points_info);
+			
 			var successstr = "新增成功";
 
 			var url_to = $.getSitePath()
@@ -58,7 +65,7 @@
 			var url_success = $.getSitePath() + "/front/exhibition_item/list";
 
 			$.logJson(paramForm);
-			//return;
+			return;
 
 			// 控制按钮为禁用
 			$.disableButton("btn_save");

@@ -58,6 +58,16 @@ public class ExhibitionItem extends BaseModel {
 	private String client_exhibiton_state_name; // 客户展业状态
 	private String client_exhibiton_state_cmt; //
 
+	private String pinyin_name;
+	private String first_char_header;// 姓名拼音第一个首字母， 比如：Z
+	private String all_char_header;// 姓名拼音首字母， 比如：ZS
+
+	private List<String> attentions; // 注意事项
+
+	private List<String> acclaim_points; // 对客户的赞美
+	private List<String> grateful_points; // 对客户的感恩点
+	private List<String> client_questions; // 客户提出的问题
+
 	public String getClient_exhibiton_state() {
 		return client_exhibiton_state;
 	}
@@ -73,12 +83,6 @@ public class ExhibitionItem extends BaseModel {
 	public void setClient_exhibiton_state_name(String client_exhibiton_state_name) {
 		this.client_exhibiton_state_name = client_exhibiton_state_name;
 	}
-
-	private String pinyin_name;
-	private String first_char_header;// 姓名拼音第一个首字母， 比如：Z
-	private String all_char_header;// 姓名拼音首字母， 比如：ZS
-
-	private List<String> attentions; // 注意事项
 
 	public List<String> getAttentions() {
 		return attentions;
@@ -344,6 +348,30 @@ public class ExhibitionItem extends BaseModel {
 
 	public void setClient_exhibiton_state_cmt(String client_exhibiton_state_cmt) {
 		this.client_exhibiton_state_cmt = client_exhibiton_state_cmt;
+	}
+
+	public List<String> getAcclaim_points() {
+		return acclaim_points;
+	}
+
+	public void setAcclaim_points(List<String> acclaim_points) {
+		this.acclaim_points = acclaim_points;
+	}
+
+	public List<String> getGrateful_points() {
+		return grateful_points;
+	}
+
+	public void setGrateful_points(List<String> grateful_points) {
+		this.grateful_points = grateful_points;
+	}
+
+	public List<String> getClient_questions() {
+		return client_questions;
+	}
+
+	public void setClient_questions(List<String> client_questions) {
+		this.client_questions = client_questions;
 	}
 
 	public static void main(String[] args) {

@@ -50,6 +50,10 @@ public final class common_005fjs_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${ctx}", java.lang.String.class, (PageContext)_jspx_page_context, null));
       out.write("/resources/js/jquery-2.1.3.min.js\" type=\"text/javascript\"><\\/script>');\r\n");
       out.write("</script>\r\n");
+      out.write("<script type=\"text/javascript\"\r\n");
+      out.write("\tsrc=\"");
+      out.print(request.getContextPath());
+      out.write("/resources/js/jquery.ba-resize.js\"></script>\r\n");
       out.write("<script src=\"http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js\"></script>\r\n");
       out.write("<script type=\"text/javascript\"\r\n");
       out.write("\tsrc=\"");

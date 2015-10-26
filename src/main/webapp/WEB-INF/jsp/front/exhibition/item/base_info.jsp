@@ -50,6 +50,27 @@
 					</div>
 					<div class="row">
 						<div class="form-group form-group-sm  ">
+							<label for="start_time" class="col-sm-3 control-label">开始
+							</label>
+							<div class="col-sm-8">
+								<input id="start_time" name="start_time" placeholder="请输入日期"
+									class="laydate-icon form-control dateipt" style="width: 580px"
+									value="${exhibitionitem.start_time }">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-sm  ">
+							<label for="end_time" class="col-sm-3 control-label">结束 </label>
+							<div class="col-sm-8">
+								<input id="end_time" name="end_time" placeholder="请输入日期"
+									class="laydate-icon form-control dateipt" style="width: 580px"
+									value="${exhibitionitem.end_time }">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-sm  ">
 							<label for="title" class="col-sm-3 control-label"> 标题 </label>
 							<div class="col-xs-9">
 								<div class="input-group input-group-xs " style="width: 580px">
@@ -66,6 +87,16 @@
 								<textarea type="text" class="form-control " id="content"
 									name="content" placeholder="请输入说明"
 									style="width: 580px; height: 120px">${exhibitionitem.content }</textarea>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-sm  ">
+							<label for="remark" class="col-sm-3 control-label"> 其他 </label>
+							<div class="col-xs-9">
+								<textarea type="text" class="form-control " id="remark"
+									name="content" placeholder=""
+									style="width: 580px; height: 120px">${exhibitionitem.remark }</textarea>
 							</div>
 						</div>
 					</div>
@@ -130,33 +161,6 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="row">
-				<div class="col-xs-6">
-					<div class="row">
-						<div class="form-group form-group-sm  ">
-							<label for="start_time" class="col-sm-3 control-label">开始
-							</label>
-							<div class="col-sm-8">
-								<input id="start_time" name="start_time" placeholder="请输入日期"
-									class="laydate-icon form-control dateipt"
-									value="${exhibitionitem.start_time }">
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="form-group form-group-sm  ">
-							<label for="end_time" class="col-sm-3 control-label">结束 </label>
-							<div class="col-sm-8">
-								<input id="end_time" name="end_time" placeholder="请输入日期"
-									class="laydate-icon form-control dateipt"
-									value="${exhibitionitem.end_time }">
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-xs-6"></div>
-			</div>
 			<div class="row">
 				<div class="col-xs-6">
 					<div class="row">
@@ -193,7 +197,51 @@
 							</div>
 						</div>
 					</div>
-
+					<div class="row">
+						<div class="form-group form-group-sm  ">
+							<label for="client_question_info" class="col-sm-3 control-label">
+								客户问题 </label>
+							<div class="col-sm-8">
+								<div class="row" id="client_question_info">
+									<div class="input-group input-group-xs  online-input col-md-12"
+										style="padding-left: 15px;">
+										<button type="button" id="add_client_question"
+											class="btn btn-info btn-sm">添加</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-sm  ">
+							<label for="acclaim_points_info" class="col-sm-3 control-label">
+								赞美点 </label>
+							<div class="col-sm-8">
+								<div class="row" id="acclaim_points_info">
+									<div class="input-group input-group-xs  online-input col-md-12"
+										style="padding-left: 15px;">
+										<button type="button" id="add_acclaim_points"
+											class="btn btn-info btn-sm">添加</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-sm  ">
+							<label for="grateful_points_info" class="col-sm-3 control-label">
+								感恩点 </label>
+							<div class="col-sm-8">
+								<div class="row" id="grateful_points_info">
+									<div class="input-group input-group-xs  online-input col-md-12"
+										style="padding-left: 15px;">
+										<button type="button" id="add_grateful_points"
+											class="btn btn-info btn-sm">添加</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -238,6 +286,9 @@
 		$("#end_time").val();
 
 		iniAttention();
+		iniClient_questions();
+		iniAcclaim_points();
+		iniGrateful_points();
 
 		$("#choose_client_btn").bind("click", popUpChooseClient);
 	});
@@ -354,5 +405,86 @@
 
 		// 关闭选择客户弹出窗口
 		$.closeWindow("choose_client", $("#choose_client_div"));
+	}
+
+	//初始化客户赞美点信息
+	function iniAcclaim_points() {
+
+		var config = {
+			container_id : "acclaim_points_info"
+		};
+
+		var values = [];
+		<c:forEach var="i" items="${exhibitionitem.acclaim_points}">
+		values.push("${i}");
+		</c:forEach>
+
+		if (values.length > 0) {
+			for (var i = 0; i < values.length; ++i) {
+				$.addOneTextArea({
+					ipt_val : values[i]
+				});
+			}
+		} else {
+			$.addOneTextArea(config);
+		}
+
+		$("#add_acclaim_points").click(function() {
+			$.addOneTextArea(config);
+		})
+	}
+
+	// 初始化客户问题信息
+	function iniClient_questions() {
+
+		var config = {
+			container_id : "client_question_info"
+		};
+
+		var values = [];
+		<c:forEach var="i" items="${exhibitionitem.client_questions}">
+		values.push("${i}");
+		</c:forEach>
+
+		if (values.length > 0) {
+			for (var i = 0; i < values.length; ++i) {
+				$.addOneTextArea({
+					ipt_val : values[i]
+				});
+			}
+		} else {
+			$.addOneTextArea(config);
+		}
+
+		$("#add_client_question").click(function() {
+			$.addOneTextArea(config);
+		})
+	}
+
+	// 初始化客户感恩信息
+	function iniGrateful_points() {
+
+		var config = {
+			container_id : "grateful_points_info"
+		};
+
+		var values = [];
+		<c:forEach var="i" items="${exhibitionitem.grateful_points}">
+		values.push("${i}");
+		</c:forEach>
+
+		if (values.length > 0) {
+			for (var i = 0; i < values.length; ++i) {
+				$.addOneTextArea({
+					ipt_val : values[i]
+				});
+			}
+		} else {
+			$.addOneTextArea(config);
+		}
+
+		$("#add_grateful_points").click(function() {
+			$.addOneTextArea(config);
+		})
 	}
 </script>
