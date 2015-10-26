@@ -1,0 +1,28 @@
+
+.box-mou1 {
+    border-color: #e5e5e5 #eee #eee;
+    border-style: solid;
+    border-width: 1px 0;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05) inset;
+    margin: 0 0 10px;
+    padding: 8px 15px 8px;
+    position: relative;
+}
+.box-mou1::after {
+    color: #959595;
+    font-size: 12px;
+    font-weight: 700;
+    left: 15px;
+    letter-spacing: 1px;
+    position: absolute;
+    text-transform: uppercase;
+    top: 15px;
+}
+.box-mou1-padded-bottom {
+    padding-bottom: 24px;
+}
+.box-mou1 + .highlight, .box-mou1 + .zero-clipboard + .highlight {
+    border-radius: 0;
+    border-width: 0 0 1px;
+    margin: -15px -15px 15px;
+}

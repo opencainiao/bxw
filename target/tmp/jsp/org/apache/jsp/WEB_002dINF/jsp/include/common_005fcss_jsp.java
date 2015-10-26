@@ -51,6 +51,11 @@ public final class common_005fcss_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("/resources/css/idialog.css\"\r\n");
       out.write("\trel=\"stylesheet\" type=\"text/css\">\r\n");
       out.write("\r\n");
+      out.write("<link href=\"");
+      out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${ctx }", java.lang.String.class, (PageContext)_jspx_page_context, null));
+      out.write("/resources/css/doc.css\" rel=\"stylesheet\"\r\n");
+      out.write("\ttype=\"text/css\">\r\n");
+      out.write("\r\n");
       out.write("<style>\r\n");
       out.write("<!--\r\n");
       out.write(".error {\r\n");
@@ -79,9 +84,11 @@ public final class common_005fcss_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("a {\r\n");
       out.write("\toutline: none;\r\n");
       out.write("}\r\n");
+      out.write("\r\n");
       out.write("a:active {\r\n");
       out.write("\tstar: expression(this.onFocus = this.blur ());\r\n");
       out.write("}\r\n");
+      out.write("\r\n");
       out.write("a:focus {\r\n");
       out.write("\toutline: 0;\r\n");
       out.write("}\r\n");

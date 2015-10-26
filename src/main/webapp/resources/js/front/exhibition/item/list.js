@@ -23,6 +23,21 @@ $().ready(
 			$("#btn_search").click(function(e) {
 				data_manage.search();
 			});
+			
+			$("a",$("#action_buttons")).click(function(e){
+				e.preventDefault();
+				
+				var r_name = $(this).attr("data-name");
+				
+				var params = [];
+				params.push("type=" + r_name);
+				params.push("ts=" + new Date().getTime());
+
+				var url_to = $.getSitePath() + '/front/exhibition_item/add';
+				url_to = url_to + "?" + params.join("&");
+
+				window.location.href = url_to;
+			});
 		});
 
 var data_manage_functions = {

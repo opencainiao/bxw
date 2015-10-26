@@ -138,20 +138,21 @@ public class ExhibitionItemController extends BaseController {
 	}
 
 	/****
-	 * 查看所有系统展业项 信息
+	 * 查看所有系统展业项 信息(从“展业信息进入的页面”)
 	 * 
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Model model, String user_id, String username) {
+	public String list(Model model, String user_id, String username,String source) {
 
 		model.addAttribute("user_id", user_id);
 		model.addAttribute("username_", username);
+		model.addAttribute("source", source);
 
 		return "front/exhibition/item/list";
 	}
-
+	
 	/****
 	 * 查询系统展业项信息（条件查询，查询多笔，按照系统展业项码或名称）
 	 * 

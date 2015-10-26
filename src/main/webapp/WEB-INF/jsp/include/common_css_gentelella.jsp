@@ -28,6 +28,9 @@
 	rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/resources/css/idialog.css"
 	rel="stylesheet" type="text/css">
+
+<link href="${ctx }/resources/css/doc.css" rel="stylesheet"
+	type="text/css">
 <style>
 <!--
 .error {
@@ -68,9 +71,11 @@
 a {
 	outline: none;
 }
+
 a:active {
 	star: expression(this.onFocus = this.blur ());
 }
+
 a:focus {
 	outline: 0;
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,43 +18,62 @@
 	<input type="hidden" id="user_id" name="user_id" value="${user_id }" />
 
 	<ul class="breadcrumb">
-		<li><a href="<%=request.getContextPath()%>/front/exhibition/list">展业信息</a>
-			<span class="divider"></span></li>
+		<c:if test="${source == null}">
+			<li><a
+				href="<%=request.getContextPath()%>/front/exhibition/list">展业信息</a>
+				<span class="divider"></span></li>
+		</c:if>
+
 		<li class="active">展业记录</li>
 	</ul>
 
 	<div id="content_inner_page" class="innercontent">
+		<div class="box-mou1" id="action_buttons">
+			<div class="btn-group ">
+				<button type="button" class="btn btn-primary btn-sm">创建展业计划</button>
+				<button type="button" class="btn btn-primary dropdown-toggle btn-sm"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span class="caret"></span> <span class="sr-only">创建展业计划</span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="#" data-name="PLAN_PHONE">（计划）电话约访</a></li>
+					<li><a href="#" data-name="PLAN_MEET">（计划）客户拜访</a></li>
+				</ul>
+			</div>
+			<div class="btn-group ">
+				<button type="button" class="btn btn-success btn-sm">创建展业记录</button>
+				<button type="button" class="btn btn-success dropdown-toggle btn-sm"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span class="caret"></span> <span class="sr-only">创建展业记录</span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="#" data-name="RECORD_PHONE">（记录）-电话约访</a></li>
+					<li><a href="#" data-name="RECORD_MEET">（记录）-客户拜访</a></li>
+				</ul>
+			</div>
+		</div>
+
 		<div class="navbar navbar-default ">
 			<form class="navbar-form navbar-left">
 				<div class="form-group ">
-					<span>姓名</span>
-					<input class="form-control input-sm" style="width: 200px"
-						type="text" id="username" name="username"
+					<span>姓名</span> <input class="form-control input-sm"
+						style="width: 200px" type="text" id="username" name="username"
 						placeholder="输入客户姓名、拼音或是首字母" value="${username_ }">
 				</div>
 				<button class="btn btn-info" type="button" id="btn_search">
 					查询</button>
-					
-				<span>类型</span>
-				<select id="type" name="type"
-					class="form-control input-sm" data-src="constant"
-					data-typecode="EXHIBITION_TYPE"
-					data-value="" data-allownull></select>
 
-				<span>阶段</span>
-				<select id="exhibition_stage" name="exhibition_stage"
+				<span>类型</span> <select id="type" name="type"
 					class="form-control input-sm" data-src="constant"
-					data-typecode="EXHIBITION_STAGE"
-					data-value="" data-allownull></select>
+					data-typecode="EXHIBITION_TYPE" data-value="" data-allownull></select>
 
-				<span>状态</span>
-				<select id="exhibition_state" name="exhibition_state"
+				<span>阶段</span> <select id="exhibition_stage"
+					name="exhibition_stage" class="form-control input-sm"
+					data-src="constant" data-typecode="EXHIBITION_STAGE" data-value=""
+					data-allownull></select> <span>状态</span> <select
+					id="exhibition_state" name="exhibition_state"
 					class="form-control input-sm" data-src="constant"
-					data-typecode="EXHIBITION_STATE" 
-					data-value="" data-allownull></select>
-
-				<button class="btn btn-primary" type="button" id="btn_add"
-					style="margin-left: 50px;">开启新展业</button>
+					data-typecode="EXHIBITION_STATE" data-value="" data-allownull></select>
 			</form>
 		</div>
 

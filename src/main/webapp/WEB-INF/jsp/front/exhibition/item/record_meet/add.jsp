@@ -20,7 +20,7 @@
 	<ul class="breadcrumb">
 		<li><a href="<%=request.getContextPath()%>/front/exhibition/list">展业信息</a>
 			<span class="divider"></span></li>
-		<li class="active">记录-拜访</li>
+		<li class="active">记录-拜访客户</li>
 	</ul>
 	<div id="add_div" class="onepage">
 		<sf:form modelAttribute="exhibitionitem" class="form-horizontal">

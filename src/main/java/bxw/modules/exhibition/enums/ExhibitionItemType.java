@@ -10,12 +10,6 @@ public enum ExhibitionItemType {
 	PLAN_MEET("PLAN_MEET", "（计划）客户拜访"), //
 	ACTION("ACTION", "活动"), //
 	OTHER("OTHER", "其他"); //
-	// HBBTG("07", "核保不通过"), //
-	// JB("08", "拒保"), //
-	// YCB("09", "已承保"), //
-	// TB("10", "退保"), //
-	// TZ("11", "停滞"), //
-	// LS("12", "流失"); //
 
 	private String code;
 	private String name;
