@@ -144,11 +144,12 @@ public class ExhibitionItemController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Model model, String user_id, String username,String source) {
+	public String list(Model model, String user_id, String username,String source,HttpServletRequest request) {
 
 		model.addAttribute("user_id", user_id);
 		model.addAttribute("username_", username);
-		model.addAttribute("source", source);
+		//model.addAttribute("source", source);
+		request.getSession().setAttribute("source", source);
 
 		return "front/exhibition/item/list";
 	}

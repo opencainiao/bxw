@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,8 +18,16 @@
 	<input type="hidden" name="ctx" value="<%=request.getContextPath()%>" />
 
 	<ul class="breadcrumb">
-		<li><a href="<%=request.getContextPath()%>/front/exhibition/list">展业信息</a>
-			<span class="divider"></span></li>
+		<c:if test="${source == null}">
+			<li><a
+				href="<%=request.getContextPath()%>/front/exhibition/list">展业信息</a>
+				<span class="divider"></span></li>
+		</c:if>
+		<c:if test="${source != null}">
+			<li><a
+				href="<%=request.getContextPath()%>/front/exhibition_item/list?source=1">展业记录</a>
+				<span class="divider"></span></li>
+		</c:if>
 		<li class="active">记录-电话约访</li>
 	</ul>
 	<div id="add_div" class="onepage">
