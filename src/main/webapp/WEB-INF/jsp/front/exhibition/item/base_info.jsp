@@ -121,8 +121,7 @@
 										<div style="width: 120px">动作说明</div>
 										<textarea type="text" class="form-control "
 											id="next_action_cmt" name="next_action_cmt" placeholder=""
-											style="width: 580px; height: 50px">${exhibitionitem.next_action_cmt }
-										</textarea>
+											style="width: 580px; height: 50px">${exhibitionitem.next_action_cmt }</textarea>
 									</div>
 
 								</div>
@@ -151,8 +150,7 @@
 										<textarea type="text" class="form-control "
 											id="client_exhibiton_state_cmt"
 											name="client_exhibiton_state_cmt" placeholder=""
-											style="width: 580px; height: 50px">${exhibitionitem.client_exhibiton_state_cmt }
-										</textarea>
+											style="width: 580px; height: 50px">${exhibitionitem.client_exhibiton_state_cmt }</textarea>
 									</div>
 
 								</div>
