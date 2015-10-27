@@ -132,6 +132,9 @@
 				$.alertMsg(obj, callback);
 			}
 		},
+		alertSuccessNewPageMask:function(title, message, newpage){
+			$.alertSuccessNewPage(title, message, newpage,[0.5, '#000']);
+		},
 		alertSuccessNewPage : function(title, message, newpage, shade) {
 			var obj = {};
 

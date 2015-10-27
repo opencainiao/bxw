@@ -48,6 +48,8 @@
 			
 			$("#address_div").hide();
 			$("#gift_div").hide();
+			
+			$("#title").val("（计划）约访客户");
 
 		});
 
@@ -57,7 +59,14 @@
 			var paramForm = $('form').getFormParam_ux();
 
 			var attention_info = getAttentionInfo();
+			var client_question_info = $.getTextAreaInfo("client_question_info","client_questions");
+			var acclaim_points_info = $.getTextAreaInfo("acclaim_points_info","acclaim_points");
+			var grateful_points_info = $.getTextAreaInfo("grateful_points_info","grateful_points");
+	
 			paramForm = $.extend(paramForm, attention_info);
+			paramForm = $.extend(paramForm, client_question_info);
+			paramForm = $.extend(paramForm, acclaim_points_info);
+			paramForm = $.extend(paramForm, grateful_points_info);
 
 			var successstr = "新增成功";
 
