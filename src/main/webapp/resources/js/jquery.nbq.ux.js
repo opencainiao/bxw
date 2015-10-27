@@ -547,7 +547,7 @@ $.browser = {
 			var oEle = oFrm.elements[i];
 			
 			var key = oEle.id || oEle.name;
-			var value = $.htmlDecode(oEle.value.trim());
+			var value = oEle.value.trim();
 			
 			if (oEle.type === "radio") {
 				if (oEle.checked) {

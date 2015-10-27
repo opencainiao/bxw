@@ -51,6 +51,12 @@
 		}
 	});
 	
+	if(!String.prototype.trim){
+		String.prototype.trim = function(){
+			return this.replace(/^\s+|\s+$/g, '');
+		}
+	} 
+	
 	/**
 	 * 扩展String方法
 	 */
@@ -79,9 +85,6 @@
 		},
 		isNumber: function(value, element) {
 			return (new RegExp(/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$/).test(this));
-		},
-		trim:function(){
-			return this.replace(/(^\s*)|(\s*$)|\r|\n/g, "");
 		},
 		startsWith:function (pattern){
 			return this.indexOf(pattern) === 0;

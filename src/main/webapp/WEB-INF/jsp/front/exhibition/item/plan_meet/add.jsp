@@ -46,7 +46,7 @@
 			});
 
 			$("#btn_save").bind("click", save);
-
+			$("#title").val("（计划）拜访客户");
 		});
 
 		//保存
