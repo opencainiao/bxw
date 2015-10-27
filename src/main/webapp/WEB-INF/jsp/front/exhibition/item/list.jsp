@@ -51,6 +51,10 @@
 					<li><a href="#" data-name="RECORD_MEET">（记录）-客户拜访</a></li>
 				</ul>
 			</div>
+			<button class="btn btn-info btn-sm" type="button" id="create_action" data-name="ACTION">
+				创建活动</button>
+			<button class="btn btn-warning btn-sm" type="button" id="create_other" data-name="OTHER">
+				创建其他记录</button>
 		</div>
 
 		<div class="navbar navbar-default ">

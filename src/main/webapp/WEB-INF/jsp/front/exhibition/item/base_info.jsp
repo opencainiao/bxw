@@ -70,6 +70,16 @@
 						</div>
 					</div>
 					<div class="row">
+						<div class="form-group form-group-sm  " id="address_div">
+							<label for="address" class="col-sm-3 control-label"> 地点 </label>
+							<div class="col-xs-9">
+								<textarea type="text" class="form-control " id="address"
+									name="address" placeholder=""
+									style="width: 580px; height: 50px">${exhibitionitem.address }</textarea>
+							</div>
+						</div>
+					</div>
+					<div class="row">
 						<div class="form-group form-group-sm  ">
 							<label for="title" class="col-sm-3 control-label"> 标题 </label>
 							<div class="col-xs-9">
@@ -100,7 +110,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row" id="next_info_div">
 						<div class="form-group form-group-sm ">
 							<label class="col-sm-3 control-label" for="next_info">
 								下一步 </label>
@@ -129,9 +139,9 @@
 						</div>
 					</div>
 
-					<div class="row">
+					<div class="row" id="client_exhibiton_state_div">
 						<div class="form-group form-group-sm ">
-							<label class="col-sm-3 control-label" for="next_info">
+							<label class="col-sm-3 control-label" for="">
 								客户状态 </label>
 							<div class="col-sm-8">
 								<div id="_info" class="row"
@@ -161,19 +171,10 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-6">
-					<div class="row">
-						<div class="form-group form-group-sm  " id="address_div">
-							<label for="address" class="col-sm-3 control-label"> 地点 </label>
-							<div class="col-xs-9">
-								<textarea type="text" class="form-control " id="address"
-									name="address" placeholder=""
-									style="width: 580px; height: 50px">${exhibitionitem.address }</textarea>
-							</div>
-						</div>
-					</div>
+					
 					<div class="row">
 						<div class="form-group form-group-sm  " id="gift_div">
-							<label for="gift" class="col-sm-3 control-label"> 随手礼 </label>
+							<label id="gift_label" for="gift" class="col-sm-3 control-label"> 随手礼 </label>
 							<div class="col-xs-9">
 								<textarea type="text" class="form-control " id="gift"
 									name="gift" placeholder="" style="width: 580px; height: 80px">${exhibitionitem.gift }</textarea>
@@ -195,7 +196,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row" id="client_question_div">
 						<div class="form-group form-group-sm  ">
 							<label for="client_question_info" class="col-sm-3 control-label">
 								客户问题 </label>
@@ -210,7 +211,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row" id="acclaim_points_div">
 						<div class="form-group form-group-sm  ">
 							<label for="acclaim_points_info" class="col-sm-3 control-label">
 								赞美点 </label>
@@ -225,7 +226,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row" id="grateful_points_div">
 						<div class="form-group form-group-sm  ">
 							<label for="grateful_points_info" class="col-sm-3 control-label">
 								感恩点 </label>

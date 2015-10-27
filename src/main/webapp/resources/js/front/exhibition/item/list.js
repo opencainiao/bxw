@@ -5,7 +5,8 @@ $().ready(
 
 			$("#btn_add").click(
 					function() {
-						var url_to = $.getSitePath() + '/front/exhibition_item/add';
+						var url_to = $.getSitePath()
+								+ '/front/exhibition_item/add';
 
 						var params = [];
 						params.push("typecode=" + $("#typecode").val());
@@ -23,12 +24,12 @@ $().ready(
 			$("#btn_search").click(function(e) {
 				data_manage.search();
 			});
-			
-			$("a",$("#action_buttons")).click(function(e){
+
+			$("a", $("#action_buttons")).click(function(e) {
 				e.preventDefault();
-				
+
 				var r_name = $(this).attr("data-name");
-				
+
 				var params = [];
 				params.push("type=" + r_name);
 				params.push("ts=" + new Date().getTime());
@@ -38,6 +39,37 @@ $().ready(
 
 				window.location.href = url_to;
 			});
+
+			$("#create_action").click(function(e) {
+				e.preventDefault();
+
+				var r_name = $(this).attr("data-name");
+
+				var params = [];
+				params.push("type=" + r_name);
+				params.push("ts=" + new Date().getTime());
+
+				var url_to = $.getSitePath() + '/front/exhibition_item/add';
+				url_to = url_to + "?" + params.join("&");
+
+				window.location.href = url_to;
+			});
+			
+			$("#create_other").click(function(e) {
+				e.preventDefault();
+
+				var r_name = $(this).attr("data-name");
+
+				var params = [];
+				params.push("type=" + r_name);
+				params.push("ts=" + new Date().getTime());
+
+				var url_to = $.getSitePath() + '/front/exhibition_item/add';
+				url_to = url_to + "?" + params.join("&");
+
+				window.location.href = url_to;
+			});
+
 		});
 
 var data_manage_functions = {
@@ -55,8 +87,8 @@ var data_manage_functions = {
 	 */
 	delOne : function(data) {
 
-		var url_to = $.getSitePath() + '/front/exhibition_item/' + data["_id_m"]
-				+ '/delete';
+		var url_to = $.getSitePath() + '/front/exhibition_item/'
+				+ data["_id_m"] + '/delete';
 
 		$.ajax({
 			type : 'POST',
@@ -83,11 +115,10 @@ var data_manage_functions = {
 
 		var url = $.getSitePath() + '/front/exhibition_item/' + data["_id_m"]
 				+ "/update?type=" + data["type"];
-		
-		var title = "编辑【" + data["type_name"]+ "】"
 
-		$.popUpWindow(title, url, "90%", "90%", "edit",
-				$("#data_manage"));
+		var title = "编辑【" + data["type_name"] + "】"
+
+		$.popUpWindow(title, url, "90%", "90%", "edit", $("#data_manage"));
 	},
 	/***************************************************************************
 	 * 进入详细信息页面
@@ -108,24 +139,24 @@ var data_manage_functions = {
 		$.closeWindow("edit", $("#data_manage"));
 	},
 	refreshPage : function() {
-		//window.location.reload();
+		// window.location.reload();
 		data_manage.search();
 	},
 	/***************************************************************************
 	 * 创建展业事项
 	 */
-	createExhibitionItem : function(data,button) {
-		
+	createExhibitionItem : function(data, button) {
+
 		var _id_m = data["_id_m"];
 		var r_name = $(button).attr("r_name");
-		
+
 		var params = [];
 		params.push("user_id=" + _id_m);
 		params.push("type=" + r_name);
 		params.push("ts=" + new Date().getTime());
 
-		//alert(_id_m + "---" + r_name);
-		
+		// alert(_id_m + "---" + r_name);
+
 		var url_to = $.getSitePath() + '/front/exhibition_item/add';
 		url_to = url_to + "?" + params.join("&");
 
@@ -136,7 +167,7 @@ var data_manage_functions = {
 var data_manage = {
 
 	search : function() {
-		
+
 		var username = {};
 		username["name"] = "username";
 		username["value"] = $("#username").trim_value();
@@ -162,14 +193,14 @@ var data_manage = {
 		data_manage.gridsetting.url = $.getSitePath()
 				+ '/front/exhibition_item/list?ts=' + new Date().getTime();
 
-		//$.logJson(params);
-		
+		// $.logJson(params);
+
 		params.push({
 			name : 'reload',
 			value : true
 		});
 		data_manage.gridsetting.params = params;
-		
+
 		$("#list").flexReload(data_manage.gridsetting);
 	},
 	/***************************************************************************
@@ -180,14 +211,14 @@ var data_manage = {
 		var url = $.getSitePath() + '/front/exhibition_item/list';
 
 		var params = [];
-		params.push("user_id=" + $("#user_id").trim_value()) ;
+		params.push("user_id=" + $("#user_id").trim_value());
 		params.push("ts=" + new Date().getTime());
 
 		url = url + "?" + params.join("&");
 
 		data_manage.gridsetting.url = url;
 
-		//alert(data_manage.gridsetting.url);
+		// alert(data_manage.gridsetting.url);
 		$("#list").flexigrid(data_manage.gridsetting);
 		$("#data_manage").attr("s_times", 1);
 
@@ -245,15 +276,15 @@ var data_manage = {
 			display : '类型',
 			name : 'type_name',
 			width : 120
-		},{
+		}, {
 			display : '性质',
 			name : 'character_name',
 			width : 80
-		},{
+		}, {
 			display : '标题',
 			name : 'title',
 			width : 120
-		},{
+		}, {
 			display : '用户',
 			name : 'username',
 			width : 120
@@ -269,7 +300,7 @@ var data_manage = {
 			display : '开始日期',
 			name : 'start_date',
 			width : 80,
-			hide:true
+			hide : true
 		}, {
 			display : '时间',
 			name : 'time_info',
@@ -289,8 +320,8 @@ var data_manage = {
 				r_name : 'toEdit',
 				text : '编辑',
 				callback : data_manage_functions.toEdit,
-				paramConfig : [ "_id_m" ,"type","type_name","username"]
+				paramConfig : [ "_id_m", "type", "type_name", "username" ]
 			} ]
-		}]
+		} ]
 	}
 };
