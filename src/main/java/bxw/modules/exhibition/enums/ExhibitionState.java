@@ -1,5 +1,7 @@
 package bxw.modules.exhibition.enums;
 
+import org.mou.common.StringUtil;
+
 public enum ExhibitionState {
 
 	CONTACT("01", "沟通了解"), //
@@ -37,5 +39,23 @@ public enum ExhibitionState {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+
+	public static ExhibitionState getByCode(String code) {
+
+		if (StringUtil.isEmpty(code)) {
+			return null;
+		}
+
+		ExhibitionState[] enums = ExhibitionState.values();
+
+		for (ExhibitionState eNum : enums) {
+			if (eNum.getCode().equals(code)) {
+				return eNum;
+			}
+		}
+
+		return null;
 	}
 }

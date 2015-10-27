@@ -141,7 +141,7 @@
 										<select id="client_exhibiton_state"
 											name="client_exhibiton_state" class="form-control input-sm"
 											data-src="constant" data-typecode="EXHIBITION_STATE"
-											data-value="" style="width: 580px"></select>
+											data-value="${exhibitionitem.client_exhibiton_state}" style="width: 580px"></select>
 
 									</div>
 									<div class="input-group input-group-xs online-input col-md-12"
@@ -419,9 +419,8 @@
 
 		if (values.length > 0) {
 			for (var i = 0; i < values.length; ++i) {
-				$.addOneTextArea({
-					ipt_val : values[i]
-				});
+				config["ipt_val"] = values[i];
+				$.addOneTextArea(config);
 			}
 		} else {
 			$.addOneTextArea(config);
@@ -446,9 +445,8 @@
 
 		if (values.length > 0) {
 			for (var i = 0; i < values.length; ++i) {
-				$.addOneTextArea({
-					ipt_val : values[i]
-				});
+				config["ipt_val"] = values[i];
+				$.addOneTextArea(config);
 			}
 		} else {
 			$.addOneTextArea(config);
@@ -473,9 +471,8 @@
 
 		if (values.length > 0) {
 			for (var i = 0; i < values.length; ++i) {
-				$.addOneTextArea({
-					ipt_val : values[i]
-				});
+				config["ipt_val"] = values[i];
+				$.addOneTextArea(config);
 			}
 		} else {
 			$.addOneTextArea(config);

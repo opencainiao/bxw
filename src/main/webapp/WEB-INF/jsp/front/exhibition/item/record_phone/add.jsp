@@ -69,11 +69,11 @@
 			var successstr = "新增成功";
 
 			var url_to = $.getSitePath()
-					+ "/front/exhibition_item/add?type=PLAN_PHONE";
+					+ "/front/exhibition_item/add?type=RECORD_PHONE";
 			var url_success = $.getSitePath() + "/front/exhibition_item/list";
 
 			$.logJson(paramForm);
-			return;
+			//return;
 
 			// 控制按钮为禁用
 			$.disableButton("btn_save");
@@ -93,11 +93,11 @@
 							$.showBRErrors_mou_abs(data['brErrors'],
 									$("#add_div"));
 						} else {
-							$.alertError(data['message']);
+							$.alertErrorMask(data['message']);
 						}
 					} else {
-						$.alertSuccessNewPage("成功", successstr, url_success);
-					}
+						$.alertSuccessNewPage("成功", successstr, url_success,[0.5, '#000']);
+					} 
 				},
 				complete : function(XMLHttpRequest, textStatus) {
 					$.enableButton("btn_save");

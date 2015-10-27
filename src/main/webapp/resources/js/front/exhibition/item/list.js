@@ -82,7 +82,7 @@ var data_manage_functions = {
 	toEdit : function(data) {
 
 		var url = $.getSitePath() + '/front/exhibition_item/' + data["_id_m"]
-				+ "/update";
+				+ "/update?type=" + data["type"];
 		
 		var title = "编辑【" + data["type_name"]+ "】"
 
@@ -287,9 +287,9 @@ var data_manage = {
 				css : "btn btn-xs btn-danger"
 			}, {
 				r_name : 'toEdit',
-				text : '修改',
+				text : '编辑',
 				callback : data_manage_functions.toEdit,
-				paramConfig : [ "_id_m" ,"type_name","username"]
+				paramConfig : [ "_id_m" ,"type","type_name","username"]
 			} ]
 		}]
 	}

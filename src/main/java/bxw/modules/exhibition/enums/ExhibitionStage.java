@@ -1,5 +1,7 @@
 package bxw.modules.exhibition.enums;
 
+import org.mou.common.StringUtil;
+
 /****
  * 展业阶段
  * 
@@ -37,4 +39,22 @@ public enum ExhibitionStage {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public static ExhibitionStage getByCode(String code) {
+
+		if (StringUtil.isEmpty(code)) {
+			return null;
+		}
+
+		ExhibitionStage[] enums = ExhibitionStage.values();
+
+		for (ExhibitionStage exhibitionstage : enums) {
+			if (exhibitionstage.getCode().equals(code)) {
+				return exhibitionstage;
+			}
+		}
+
+		return null;
+	}
+
 }

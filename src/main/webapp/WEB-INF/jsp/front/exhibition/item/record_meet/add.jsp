@@ -88,12 +88,16 @@
 						if (data['brErrors']) {
 							$.showBRErrors_mou_abs(data['brErrors'],
 									$("#add_div"));
+						}if (data['success'] == 'n') {
+							if (data['brErrors']) {
+								$.showBRErrors_mou_abs(data['brErrors'],
+										$("#add_div"));
+							} else {
+								$.alertErrorMask(data['message']);
+							}
 						} else {
-							$.alertError(data['message']);
-						}
-					} else {
-						$.alertSuccessNewPage("成功", successstr, url_success);
-					}
+							$.alertSuccessNewPage("成功", successstr, url_success,[0.5, '#000']);
+						} 
 				},
 				complete : function(XMLHttpRequest, textStatus) {
 					$.enableButton("btn_save");
