@@ -45,6 +45,8 @@
 			});
 
 			$("#btn_save").bind("click", save);
+			
+			$("#title").val("（记录）拜访客户");
 		});
 
 		//保存
@@ -65,11 +67,10 @@
 			var successstr = "新增成功";
 
 			var url_to = $.getSitePath()
-					+ "/front/exhibition_item/add?type=PLAN_PHONE";
+					+ "/front/exhibition_item/add?type=RECORD_MEET";
 			var url_success = $.getSitePath() + "/front/exhibition_item/list";
 
 			$.logJson(paramForm);
-			return;
 
 			// 控制按钮为禁用
 			$.disableButton("btn_save");
@@ -88,16 +89,12 @@
 						if (data['brErrors']) {
 							$.showBRErrors_mou_abs(data['brErrors'],
 									$("#add_div"));
-						}if (data['success'] == 'n') {
-							if (data['brErrors']) {
-								$.showBRErrors_mou_abs(data['brErrors'],
-										$("#add_div"));
-							} else {
-								$.alertErrorMask(data['message']);
-							}
 						} else {
-							$.alertSuccessNewPage("成功", successstr, url_success,[0.5, '#000']);
-						} 
+							$.alertErrorMask(data['message']);
+						}
+					} else {
+						$.alertSuccessNewPage("成功", successstr, url_success,[0.5, '#000']);
+					} 
 				},
 				complete : function(XMLHttpRequest, textStatus) {
 					$.enableButton("btn_save");

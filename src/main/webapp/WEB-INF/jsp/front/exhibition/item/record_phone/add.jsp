@@ -48,6 +48,8 @@
 			
 			$("#address_div").hide();
 			$("#gift_div").hide();
+			
+			$("#title").val("（记录）约访客户");
 
 		});
 
