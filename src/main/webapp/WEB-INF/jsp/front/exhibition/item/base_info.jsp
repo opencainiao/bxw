@@ -406,6 +406,49 @@
 		$.closeWindow("choose_client", $("#choose_client_div"));
 	}
 
+	/****
+	 * 弹出选择客户窗口
+	 */
+	var popUpChooseClientMulti = function() {
+		var url_to = $.getSitePath()
+				+ '/reference/choose_client?user_id=#USERID#&user_name=#USERNAME#&user_sex=#USERSEX#&single_flg=1';
+
+		url_to = url_to.replaceAll("#USERID#", "${userid}");
+		url_to = url_to.replaceAll("#USERNAME#", "${username}");
+		url_to = url_to.replaceAll("#USERSEX#", "${user_sex}");
+
+		$.popUpWindow("选择客户", url_to, "90%", "90%", "choose_client",
+				$("#choose_client_div"));
+	}
+
+	//设置选择的客户		
+	function setSelectedClientMulti(objs) {
+		//$.alertObjJson(obj);
+
+		var ids = "";
+		var usernames = "";
+		for (var i=0 ; i<objs.length; ++i){
+			var obj = objs[i];
+			
+			ids = ";" + obj["_id_m"] + ids  ;
+			usernames = ";" + obj["client_name"] + usernames  ;
+		}
+		
+	//	$.logJson(ids);
+	//	$.logJson(usernames);
+		
+		ids = ids.substring(1);
+		usernames = usernames.substring(1);
+		
+		$("#user_id").val(ids);
+		$("#username").val(usernames);
+
+		$("#choose_client").val(usernames);
+
+		// 关闭选择客户弹出窗口
+		$.closeWindow("choose_client", $("#choose_client_div"));
+	}
+	
 	//初始化客户赞美点信息
 	function iniAcclaim_points() {
 

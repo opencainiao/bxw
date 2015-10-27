@@ -561,7 +561,7 @@ var mou_grid_ux = {
 		
 		return html_rtn;
 	},
-	createMenuList:function(config,title,tr_no){
+	createMenuList:function(config,title,tr_no,top){
 		
 		var firstClass = config["css"] || "btn btn-primary";
 		var firstBtnName = config["text"];
@@ -584,7 +584,7 @@ var mou_grid_ux = {
 		
 		var createdHtml = '' + 
 		''+
-		'<div class="btn-group" style="position:absolute;left:#LEFT#px;top:0px;">                                                                                                                 ' +
+		'<div class="btn-group" style="position:absolute;left:#LEFT#px;top:#TOP#px;">                                                                                                                 ' +
 		'		   <button class="#firstClass#" name="#firstBtnTitle#" type="button">#firstBtnName#</button>                                                                      ' +
 		'		   <button class="btn btn-success btn-xs dropdown-toggle "  data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">   ' +
 		'		   	<span class="caret"></span>                                                                                                      ' +
@@ -602,8 +602,8 @@ var mou_grid_ux = {
 		createdHtml = createdHtml.replaceAll("#LIHTML#",html_all_list);
 		
 		var left = $("th[name_cm="+ title +"]").offset().left - 11;
-		console.log("left--" + left); 
 		createdHtml = createdHtml.replaceAll("#LEFT#",left);
+		createdHtml = createdHtml.replaceAll("#TOP#",top);
 		
 		return createdHtml;
 	}
@@ -1276,7 +1276,7 @@ var mou_grid_ux = {
 										var nameBtn = btncfg.r_name;
 										var css = btncfg.css || "btn btn-xs btn-primary";
 
-										var btns_html = mou_grid_ux.createMenuList(btncfg,colModelTmp.name,i);
+										var btns_html = mou_grid_ux.createMenuList(btncfg,colModelTmp.name,i,0);
 										
 										var btn = $(btns_html);
 
@@ -1335,6 +1335,24 @@ var mou_grid_ux = {
 				$('tr', t).unbind();
 				$(t).empty();
 				$(t).append(tbody);
+				
+				var height_pre = 0;
+				$('.btn-group',tbody).each(function(i,e){
+					
+					var top = $(this).css("top");
+					
+					var toSetTop = height_pre + 10;
+					if (i>0){
+						$(this).css("top",toSetTop);
+					}
+					
+					var height_this = $(this).closest('tr').height();
+					height_pre = height_pre + height_this;
+					
+				//	$.logJson("top -- " + top);
+				//	$.logJson('height_pre -- ' + height_pre);
+				});
+				
 				this.addCellProp();
 				this.addRowProp();
 				this.rePosDrag();

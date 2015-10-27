@@ -54,8 +54,11 @@
 			$("#client_question_div").hide();
 			$("#acclaim_points_div").hide();
 			$("#grateful_points_div").hide();
+			
+			$("#choose_client_btn").unbind();  
+			$("#choose_client_btn").bind("click", popUpChooseClientMulti);
 		});
-
+		
 		//保存
 		var save = function() {
 			
