@@ -491,6 +491,9 @@
 			$(iframe).height(toSetH + 8);
 
 			return iframeDoc.height;
+		},
+		time2minut:function(time){
+			return time.substring(0, 16);
 		}
 	});
 })(jQuery);
