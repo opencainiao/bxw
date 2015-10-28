@@ -137,7 +137,7 @@ var submnusetting = {
 		width : 100,
 		sortable : false,
 		align : 'left',
-		link : true,
+		m_type : link,
 		callback : toMnuDetail,
 		linkConfig : [ "mnucod" ]
 	}, {

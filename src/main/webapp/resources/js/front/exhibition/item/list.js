@@ -130,7 +130,7 @@ var data_manage_functions = {
 
 		var url = $.getSitePath() + '/front/exhibition_item/' + data["_id_m"];
 
-		$.showDetailWindow("展业信息", url, "600px", "300px");
+		$.showDetailWindow(data["type_name"], url, "98%", "98%");
 	},
 	/***************************************************************************
 	 * 关闭编辑窗口
@@ -266,7 +266,6 @@ var data_manage = {
 			name : '_id_m',
 			width : 150,
 			hide : true,
-			callback : data_manage_functions.toDetail
 		}, {
 			display : '类型码',
 			name : 'type',
@@ -275,7 +274,12 @@ var data_manage = {
 		}, {
 			display : '类型',
 			name : 'type_name',
-			width : 120
+			width : 120,
+			align : 'left',
+			m_type : 'link',
+			sortable : false,
+			callback : data_manage_functions.toDetail,
+			linkConfig : [ "_id_m","type_name" ]
 		}, {
 			display : '性质',
 			name : 'character_name',
