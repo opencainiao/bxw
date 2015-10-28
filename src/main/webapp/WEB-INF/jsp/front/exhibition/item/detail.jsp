@@ -19,6 +19,9 @@
 span{
 	padding: 0 0;
 }
+label{
+	color: #428bca;
+}
 </style>
 </head>
 
