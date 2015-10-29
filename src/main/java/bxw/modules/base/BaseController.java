@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
@@ -23,6 +24,7 @@ import mou.web.webbase.domain.ValidResult;
 import mou.web.webbase.domain.exception.ValidateException;
 import mou.web.webbase.handler.ErrorHandler;
 import mou.web.webbase.handler.PageSearchResultHandler;
+import mou.web.webbase.util.HttpServletRequestUtil;
 import mou.web.webbase.util.ValidateUtil;
 
 public class BaseController {
@@ -69,6 +71,9 @@ public class BaseController {
 		return validresult;
 	}
 
+	public void debugParams(HttpServletRequest request){
+		HttpServletRequestUtil.debugParams(request);
+	}
 	/****
 	 * 判断是否合法的objectId
 	 * 
