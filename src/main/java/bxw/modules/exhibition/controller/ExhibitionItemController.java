@@ -40,7 +40,7 @@ import mou.web.webbase.util.HttpServletRequestUtil;
  * 
  * @author NBQ
  *
- */
+ */    
 @Controller
 @RequestMapping("/front/exhibition_item")
 public class ExhibitionItemController extends BaseController {
@@ -144,16 +144,16 @@ public class ExhibitionItemController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Model model, String user_id, String username,String source,HttpServletRequest request) {
+	public String list(Model model, String user_id, String username, String source, HttpServletRequest request) {
 
 		model.addAttribute("user_id", user_id);
 		model.addAttribute("username_", username);
-		//model.addAttribute("source", source);
+		// model.addAttribute("source", source);
 		request.getSession().setAttribute("source", source);
 
 		return "front/exhibition/item/list";
 	}
-	
+
 	/****
 	 * 查询系统展业项信息（条件查询，查询多笔，按照系统展业项码或名称）
 	 * 
@@ -319,5 +319,24 @@ public class ExhibitionItemController extends BaseController {
 		} catch (Exception e) {
 			return this.handleException(e);
 		}
+	}
+
+	/****
+	 * 查看单个展业项的记录数
+	 * 
+	 * @param _id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/{_id}/note_count", method = RequestMethod.POST)
+	@ResponseBody
+	public Object noteCount(@PathVariable String _id, Model model) {
+
+		int noteCount = this.exhibitionItemService.findExhibitionItemNoteCount(_id);
+
+		RequestResult rr = new RequestResult();
+		rr.setSuccess(true);
+		rr.setMessage(String.valueOf(noteCount));
+		return rr;
 	}
 }

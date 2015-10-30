@@ -12,6 +12,14 @@ import bxw.modules.exhibition.model.ExhibitionItem;
  *
  */
 public interface IExhibitionItemService {
+	
+	/****
+	 * 根据_id获取展业信息
+	 * 
+	 * @param _id
+	 * @return
+	 */
+	public int findExhibitionItemNoteCount(String _id);
 
 	/****
 	 * 插入对象，返回插入后的生成的ObjectId

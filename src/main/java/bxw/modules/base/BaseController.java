@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 
 import com.mongodb.DBObject;
+import com.mou.mongodb.base.domain.BaseModel;
 import com.mou.mongodb.base.domain.PageVO;
+import com.mou.mongodb.base.util.PageSearchResultUtil;
 
 import bxw.common.cash.context.Contexkeys;
 import bxw.modules.user.model.User;
@@ -71,9 +73,10 @@ public class BaseController {
 		return validresult;
 	}
 
-	public void debugParams(HttpServletRequest request){
+	public void debugParams(HttpServletRequest request) {
 		HttpServletRequestUtil.debugParams(request);
 	}
+
 	/****
 	 * 判断是否合法的objectId
 	 * 
@@ -153,6 +156,10 @@ public class BaseController {
 
 		return PageSearchResultHandler.handleDBObjList(list, 1, num, num);
 
+	}
+
+	public <T extends BaseModel> PageVO handleBaseModelListOnePage(List<T> list) {
+		return PageSearchResultUtil.handleBaseModelListOnePage(list, new PageVO());
 	}
 
 	/****

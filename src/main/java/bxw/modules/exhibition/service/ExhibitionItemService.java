@@ -199,4 +199,19 @@ public class ExhibitionItemService extends BaseService implements IExhibitionIte
 
 		return this.commonDaoMongo.removeById(_id, ExhibitionItem.class);
 	}
+
+	@Override
+	public int findExhibitionItemNoteCount(String _id) {
+		
+		DBObject returnFields = new BasicDBObject();
+		returnFields.put("note_count", 1);
+		
+		ExhibitionItem exhibitionItem = this.commonDaoMongo.findOnePartById(_id, returnFields, ExhibitionItem.class);
+		
+		if (exhibitionItem == null){
+			return 0;
+		}
+		
+		return exhibitionItem.getNote_count();
+	}
 }

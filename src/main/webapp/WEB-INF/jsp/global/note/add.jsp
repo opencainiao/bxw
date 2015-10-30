@@ -8,10 +8,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title></title>
 <link rel="stylesheet"
-	href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" />
 	<link id="xheCSS_default"
 		href="http://xheditor.com/js/xheditor_skin/default/ui.css"
-		type="text/css" rel="stylesheet">
+		type="text/css" rel="stylesheet" />
 		<link rel="stylesheet"
 			href="${ctx }/resources/xheditor-1.2.2/demos/common.css"
 			type="text/css" media="screen" />
@@ -30,6 +30,8 @@
 			value="${note.user_id }" />
 		<input type="hidden" id="target_id" name="target_id"
 			value="${note.target_id }" />
+		<input type="hidden" id="target_type" name="target_type"
+			value="${note.target_type }" />
 		<div class="panel panel-info" style="margin-bottom: 0px;">
 			<div class="panel-heading hide">
 				<h3 class="panel-title">记一下</h3>
@@ -97,8 +99,15 @@
 					} else {
 
 						var callback = parent.closeAddNoteWindow;
-
-						$.alertSuccessCallback("成功", successstr, callback);
+						
+						layer.open({
+							title: ['成功', 'font-size:18px;background-color: #dff0d8;'],
+						    content: '添加成功',
+						    yes: function(index){
+						    	parent.refresh_note_count();
+						    	parent.closeAddNoteWindow(); //一般设定yes回调，必须进行手工关闭
+						    }
+						});                
 					}
 				},
 				complete : function(XMLHttpRequest, textStatus) {

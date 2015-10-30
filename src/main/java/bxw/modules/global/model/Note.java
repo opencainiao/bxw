@@ -11,6 +11,7 @@ import com.mou.mongodb.base.domain.BaseModel;
 public class Note extends BaseModel {
 
 	private String user_id;
+	private String target_type;// 目标类型
 	private String target_id;
 	private String title;//
 	private String content;//
@@ -45,6 +46,14 @@ public class Note extends BaseModel {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getTarget_type() {
+		return target_type;
+	}
+
+	public void setTarget_type(String target_type) {
+		this.target_type = target_type;
 	}
 
 }

@@ -11,6 +11,7 @@
 
 <jsp:include page="/WEB-INF/jsp/include/common_css.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/jsp/include/common_js.jsp"></jsp:include>
+<script type="text/javascript" src="${ctx}/resources/laytpl/laytpl.js"></script>
 
 <style>
 .row {
@@ -180,32 +181,184 @@ label {
 		</div>
 		<div class="panel-footer">
 			<div class="row ">
-				<button type="button" id="btn_note"
-					class="btn btn-primary btn-sm center-block">记一下</button>
+				<div class="btn-group  pull-right">
+					<button class="btn btn-primary btn-sm" type="button">
+						<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+						<span class="badge" id="badge">${exhibitionitem.note_count }</span>
+					</button>
+					
+					<button type="button" id="btn_note" style="margin-left: 10px; margin-right: 10px;"
+						class="btn btn-primary btn-sm center-block">记一下</button>
+				</div>
 			</div>
 		</div>
 	</div>
 
+	<div class="panel panel-danger" style="margin: 3px">
+		<div class="panel-heading">全部回复</div>
+		<div class="panel-body" id="all_notes">
+
+			<div class="panel panel-default" style="margin: 3px">
+				<div class="panel-heading" >回复1</div>
+				<div class="panel-body" id="content">11111</div>
+				<div class="panel-footer">
+					<div class="row ">
+						<div class="btn-group  btn-group-xs pull-left">
+							<button class="btn btn-primary btn-sm" type="button">
+								<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+								<span class="badge" id="badge">${exhibitionitem.note_count }</span>
+							</button>
+
+							<button type="button" id="btn_note"
+								style="margin-left: 10px; margin-right: 10px;"
+								class="btn btn-primary btn-sm center-block">记一下</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="panel panel-default" style="margin: 3px">
+				<div class="panel-heading" >回复1</div>
+				<div class="panel-body" id="content">11111</div>
+				<div class="panel-footer">
+					<div class="row ">
+						<div class="btn-group  btn-group-xs pull-left">
+							<button class="btn btn-primary btn-sm" type="button">
+								<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+								<span class="badge" id="badge">${exhibitionitem.note_count }</span>
+							</button>
+
+							<button type="button" id="btn_note"
+								style="margin-left: 10px; margin-right: 10px;"
+								class="btn btn-primary btn-sm center-block">记一下</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<!-- 第一步：编写模版。你可以使用一个script标签存放模板，如： -->
+	<script id="note_tpl" type="text/html">
+		{{# for(var i = 0, len = d.rows.length; i < len; i++){ }}
+			<div class="panel panel-default" style="margin: 3px">
+				<div class="panel-heading" >{{ d.rows[i].c_time }}</div>
+				<div class="panel-body" id="content">{{ d.rows[i].content }}</div>
+				<div class="panel-footer">
+					<div class="row ">
+						<div class="btn-group  btn-group-xs pull-left">
+							<button class="btn btn-primary btn-sm" type="button">
+								<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+								<span class="badge" id="badge">{{ d.rows[i].note_count }} </span>
+							</button>
+
+							<button type="button" id="btn_note"
+								style="margin-left: 10px; margin-right: 10px;"
+								class="btn btn-primary btn-sm center-block">记一下</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		{{# } }}
+	</script>
+
 	<script>
 		$().ready(function() {
-			
+
 			$("#btn_note").bind("click", addNote);
-			
+
 			var exhibitionitem = ${exhibitionitem};
 			showDetail(exhibitionitem);
+			showNotes();
 		});
+		
+		
+		
+		function showNotes() {
+
+			var url_to = $.getSitePath()
+					+ "/note/notes_of_target?target_id=${exhibitionitem._id_m}";
+
+			$.ajax({
+				type : 'POST',
+				url : url_to,
+				data : {
+					ts : new Date().getTime()
+				},
+				dataType : 'json',
+				success : function(data) {
+
+					$.logJson(data);
+					if (data['success'] == 'n') {
+					} else {
+						
+						var gettpl = document.getElementById('note_tpl').innerHTML;
+						laytpl(gettpl).render(data, function(html) {
+							document.getElementById('all_notes').innerHTML = html;
+						});
+					}
+				}
+			});
+
+			var data = {
+				title : '前端攻城师',
+				list : [ {
+					c_time : '贤心',
+					content : '杭州',
+					note_count : 10
+
+				}, {
+					c_time : '谢亮',
+					content : '北京',
+					note_count : 10
+				}, {
+					c_time : '浅浅',
+					content : '杭州',
+					note_count : 10
+				}, {
+					c_time : 'Dem',
+					content : '北京',
+					note_count : 10
+				} ]
+			};
+		}
 
 		function addNote() {
 
 			var params = [];
 			params.push("user_id=${userid}");
-			params.push("target_id=${exhibitionitem._id_m}" );
+			params.push("target_id=${exhibitionitem._id_m}");
+			params.push("target_type=exhibitionitem");
+
 			params.push("ts=" + new Date().getTime());
 
 			var url_to = $.getSitePath() + '/note/add/';
 			url_to = url_to + "?" + params.join("&");
 
 			$.popUpWindow("记一下", url_to, "800", "360", "add", $("#btn_note"));
+		}
+
+		function refresh_note_count() {
+
+			var url_to = $.getSitePath()
+					+ "/front/exhibition_item/${exhibitionitem._id_m}/note_count";
+
+			$.ajax({
+				type : 'POST',
+				url : url_to,
+				data : {
+					ts : new Date().getTime()
+				},
+				dataType : 'json',
+				success : function(data) {
+
+					if (data['success'] == 'n') {
+					} else {
+						var note_count = data["message"];
+						$("#badge").html(note_count);
+					}
+				}
+			});
 		}
 
 		function closeAddNoteWindow() {
@@ -217,9 +370,10 @@ label {
 			if (!exhibitionitem) {
 				return;
 			}
-			//$.logJson(exhibitionitem);
+			$.logJson(exhibitionitem);
 
 			var type = exhibitionitem.type;
+			$.logJson(type);
 			if (type.startsWith("PLAN")) {
 				$("#type_icon").addClass("glyphicon glyphicon-time");
 				$("#type_icon").css("color", "#f0ad4e");

@@ -58,6 +58,8 @@ public class ExhibitionItem extends BaseModel {
 	private String client_exhibiton_state_name; // 客户展业状态
 	private String client_exhibiton_state_cmt; //
 
+	private int note_count;// 记录数
+
 	private String pinyin_name;
 	private String first_char_header;// 姓名拼音第一个首字母， 比如：Z
 	private String all_char_header;// 姓名拼音首字母， 比如：ZS
@@ -372,6 +374,14 @@ public class ExhibitionItem extends BaseModel {
 
 	public void setClient_questions(List<String> client_questions) {
 		this.client_questions = client_questions;
+	}
+
+	public int getNote_count() {
+		return note_count;
+	}
+
+	public void setNote_count(int note_count) {
+		this.note_count = note_count;
 	}
 
 	public static void main(String[] args) {
