@@ -15,6 +15,7 @@ public class Note extends BaseModel {
 	private String target_id;
 	private String title;//
 	private String content;//
+	private int note_count;// 记录数
 
 	public String getUser_id() {
 		return user_id;
@@ -54,6 +55,14 @@ public class Note extends BaseModel {
 
 	public void setTarget_type(String target_type) {
 		this.target_type = target_type;
+	}
+
+	public int getNote_count() {
+		return note_count;
+	}
+
+	public void setNote_count(int note_count) {
+		this.note_count = note_count;
 	}
 
 }

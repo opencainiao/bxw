@@ -194,72 +194,35 @@ label {
 		</div>
 	</div>
 
-	<div class="panel panel-danger" style="margin: 3px">
-		<div class="panel-heading">全部回复</div>
-		<div class="panel-body" id="all_notes">
-
-			<div class="panel panel-default" style="margin: 3px">
-				<div class="panel-heading" >回复1</div>
-				<div class="panel-body" id="content">11111</div>
-				<div class="panel-footer">
-					<div class="row ">
-						<div class="btn-group  btn-group-xs pull-left">
-							<button class="btn btn-primary btn-sm" type="button">
-								<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-								<span class="badge" id="badge">${exhibitionitem.note_count }</span>
-							</button>
-
-							<button type="button" id="btn_note"
-								style="margin-left: 10px; margin-right: 10px;"
-								class="btn btn-primary btn-sm center-block">记一下</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="panel panel-default" style="margin: 3px">
-				<div class="panel-heading" >回复1</div>
-				<div class="panel-body" id="content">11111</div>
-				<div class="panel-footer">
-					<div class="row ">
-						<div class="btn-group  btn-group-xs pull-left">
-							<button class="btn btn-primary btn-sm" type="button">
-								<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-								<span class="badge" id="badge">${exhibitionitem.note_count }</span>
-							</button>
-
-							<button type="button" id="btn_note"
-								style="margin-left: 10px; margin-right: 10px;"
-								class="btn btn-primary btn-sm center-block">记一下</button>
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-	</div>
+	<div id="all_notes"></div>
+	
 	<!-- 第一步：编写模版。你可以使用一个script标签存放模板，如： -->
 	<script id="note_tpl" type="text/html">
-		{{# for(var i = 0, len = d.rows.length; i < len; i++){ }}
-			<div class="panel panel-default" style="margin: 3px">
-				<div class="panel-heading" >{{ d.rows[i].c_time }}</div>
-				<div class="panel-body" id="content">{{ d.rows[i].content }}</div>
-				<div class="panel-footer">
-					<div class="row ">
-						<div class="btn-group  btn-group-xs pull-left">
-							<button class="btn btn-primary btn-sm" type="button">
-								<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-								<span class="badge" id="badge">{{ d.rows[i].note_count }} </span>
-							</button>
-
-							<button type="button" id="btn_note"
-								style="margin-left: 10px; margin-right: 10px;"
-								class="btn btn-primary btn-sm center-block">记一下</button>
+		<div class="panel panel-danger" style="margin: 3px">
+			<div class="panel-heading">全部记录{{ d.total }}</div>
+			<div class="panel-body" id="all_notes">
+				{{# for(var i = 0, len = d.rows.length; i < len; i++){ }}
+				<div class="panel panel-default" style="margin: 3px">
+					<div class="panel-heading" >{{ d.rows[i].c_time }}</div>
+					<div class="panel-body" id="content">{{ d.rows[i].content }}</div>
+					<div class="panel-footer">
+						<div class="row ">
+							<div class="btn-group  btn-group-xs pull-left">
+								<button class="btn btn-primary btn-sm" type="button">
+									<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+									<span class="badge" id="badge">{{ d.rows[i].note_count }} </span>
+								</button>
+	
+								<button type="button" id="btn_note"
+									style="margin-left: 10px; margin-right: 10px;"
+									class="btn btn-primary btn-sm center-block">记一下</button>
+							</div>
 						</div>
 					</div>
 				</div>
+			{{# } }}
 			</div>
-		{{# } }}
+		</div>
 	</script>
 
 	<script>
@@ -272,13 +235,13 @@ label {
 			showNotes();
 		});
 		
-		
-		
 		function showNotes() {
 
 			var url_to = $.getSitePath()
 					+ "/note/notes_of_target?target_id=${exhibitionitem._id_m}";
 
+			var note_count = 0;
+			
 			$.ajax({
 				type : 'POST',
 				url : url_to,
@@ -286,41 +249,25 @@ label {
 					ts : new Date().getTime()
 				},
 				dataType : 'json',
+				async : false,
 				success : function(data) {
 
 					$.logJson(data);
 					if (data['success'] == 'n') {
 					} else {
-						
 						var gettpl = document.getElementById('note_tpl').innerHTML;
 						laytpl(gettpl).render(data, function(html) {
 							document.getElementById('all_notes').innerHTML = html;
 						});
+						
+						note_count = data.total;
 					}
 				}
 			});
-
-			var data = {
-				title : '前端攻城师',
-				list : [ {
-					c_time : '贤心',
-					content : '杭州',
-					note_count : 10
-
-				}, {
-					c_time : '谢亮',
-					content : '北京',
-					note_count : 10
-				}, {
-					c_time : '浅浅',
-					content : '杭州',
-					note_count : 10
-				}, {
-					c_time : 'Dem',
-					content : '北京',
-					note_count : 10
-				} ]
-			};
+			
+			$("#badge").html(note_count);
+			
+			return note_count;
 		}
 
 		function addNote() {
@@ -340,6 +287,10 @@ label {
 
 		function refresh_note_count() {
 
+			var note_count = showNotes();
+			$("#badge").html(note_count);
+			
+			return; 
 			var url_to = $.getSitePath()
 					+ "/front/exhibition_item/${exhibitionitem._id_m}/note_count";
 
