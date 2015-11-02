@@ -29,7 +29,7 @@ label {
 </head>
 
 <body>
-	<div class="panel panel-default" style="margin: 3px">
+	<div id="item_detail" class="panel panel-default" style="margin: 3px">
 		<div class="panel-body" style="padding: 0 0 8px 0">
 			<div class="row bg-info"
 				style="padding: 0 0 8px 0; margin-bottom: 8px">
@@ -182,13 +182,23 @@ label {
 		<div class="panel-footer">
 			<div class="row ">
 				<div class="btn-group  pull-right">
-					<button class="btn btn-primary btn-sm" type="button">
-						<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+					<button class="btn btn-primary btn-sm hide" type="button" style="margin-right: 10px; border-radius:3px!important">
+						<span class="glyphicon glyphicon-comment" aria-hidden="true"  style="margin-right: 5px;"></span>
 						<span class="badge" id="badge">${exhibitionitem.note_count }</span>
+						查看记录
 					</button>
 					
-					<button type="button" id="btn_note" style="margin-left: 10px; margin-right: 10px;"
-						class="btn btn-primary btn-sm center-block">记一下</button>
+					<button type="button" id="btn_edit" style="margin-left: 10px; margin-right: 10px;border-radius:3px!important"
+						class="btn btn-primary btn-sm center-block">
+						<span class="glyphicon glyphicon-edit" aria-hidden="true"  style="margin-right: 5px;"></span>		
+						编辑
+					</button>
+					
+					<button type="button" id="btn_note" style="margin-left: 10px; margin-right: 10px;border-radius:3px!important"
+						class="btn btn-primary btn-sm center-block">
+						<span class="glyphicon glyphicon-pencil" aria-hidden="true"  style="margin-right: 5px;"></span>		
+						记一下
+					</button>
 				</div>
 			</div>
 		</div>
@@ -199,23 +209,44 @@ label {
 	<!-- 第一步：编写模版。你可以使用一个script标签存放模板，如： -->
 	<script id="note_tpl" type="text/html">
 		<div class="panel panel-danger" style="margin: 3px">
-			<div class="panel-heading">全部记录{{ d.total }}</div>
+			<div class="panel-heading">全部记录【<span id="all_notes_count">{{ d.total }}</span>】条</div>
 			<div class="panel-body" id="all_notes">
 				{{# for(var i = 0, len = d.rows.length; i < len; i++){ }}
-				<div class="panel panel-default" style="margin: 3px">
-					<div class="panel-heading" >{{ d.rows[i].c_time }}</div>
+				<div class="panel panel-default" style="margin: 3px" id="notes_{{ d.rows[i]._id_m }}">
+					<div class="panel-heading hide" >{{ d.rows[i].c_time }}</div>
 					<div class="panel-body" id="content">{{ d.rows[i].content }}</div>
 					<div class="panel-footer">
 						<div class="row ">
-							<div class="btn-group  btn-group-xs pull-left">
-								<button class="btn btn-primary btn-sm" type="button">
-									<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-									<span class="badge" id="badge">{{ d.rows[i].note_count }} </span>
+							<span class="pull-left">{{ d.rows[i].c_time }}</span>
+							<div class="btn-group  btn-group-xs pull-right" data_id="{{ d.rows[i]._id_m }}">
+								
+								<button type="button" id="btn_note" r_name="note" 
+									style="margin-left: 10px; margin-right: 10px; border-radius:3px!important"
+									class="btn btn-primary btn-sm center-block">
+									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>									
+									记一下
 								</button>
-	
-								<button type="button" id="btn_note"
-									style="margin-left: 10px; margin-right: 10px;"
-									class="btn btn-primary btn-sm center-block">记一下</button>
+
+								<button type="button" id="btn_edit" r_name="edit"
+									style="margin-right: 10px; border-radius:3px!important"
+									class="btn btn-info btn-sm center-block" >
+									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+									编辑
+								</button>
+
+								<button class="btn btn-primary btn-sm" r_name="detail" type="button" style="margin-right: 10px; border-radius:3px!important">
+									<span class="glyphicon glyphicon-comment" aria-hidden="true" ></span>
+									<span class="badge" id="badge">{{ d.rows[i].note_count }}</span>
+ 									查看记录
+								</button>
+
+								<button type="button" id="btn_note" r_name="delete"
+									style="margin-right: 10px; border-radius:3px!important"
+									class="btn btn-danger btn-sm center-block" >
+									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+									删除
+								</button>
+								
 							</div>
 						</div>
 					</div>
@@ -233,7 +264,76 @@ label {
 			var exhibitionitem = ${exhibitionitem};
 			showDetail(exhibitionitem);
 			showNotes();
+			
+			$("#btn_edit",$("#item_detail")).bind("click",function(){
+				toEditExhibitionItem(exhibitionitem);
+			});
 		});
+		
+		function iniNotesButtonEvent(){
+			$("button",$("#all_notes")).bind("click",function(){
+				var name = $(this).attr("r_name");
+				var _id = $(this).closest(".btn-group").attr("data_id");
+				
+				var params = [];
+				params.push("name=" + name);
+				params.push("_id=" + _id);
+				//alert(params.join("\n"));
+				
+				if (name=="delete"){
+					var url_to = $.getSitePath() + "/note/" + _id + "/delete";
+
+					$.ajax({
+						type : 'POST',
+						url : url_to,
+						data : {
+							ts : new Date().getTime()
+						},
+						dataType : 'json',
+						async : false,
+						success : function(data) {
+
+							$.logJson(data);
+							if (data['success'] == 'n') {
+							} else {
+								var segId = "#notes_" + _id;
+								$(segId).remove();
+								
+								var ori_count = $("#all_notes_count").html();
+								$("#all_notes_count").html(ori_count - 1);
+							}
+						}
+					});
+				}
+				
+				if (name=="edit"){
+					var url_to = $.getSitePath() + "/note/" + _id + "/update";
+
+					var title = "编辑【记录】"
+
+					$.popUpWindow(title, url_to, "800", "360", "edit", $("#btn_edit"));
+				}
+				
+				if (name=="note"){
+
+					var params = [];
+					params.push("user_id=${userid}");
+					params.push("target_id=" + _id);
+					params.push("target_type=note");
+
+					params.push("ts=" + new Date().getTime());
+
+					var url_to = $.getSitePath() + '/note/add/';
+					url_to = url_to + "?" + params.join("&");
+
+					$.popUpWindow("记一下", url_to, "800", "360", "add", $("#btn_note"));
+				}
+			});
+		}
+		
+		function closeEditNoteWindow(){
+			$.closeWindow("edit", $("#btn_edit"));
+		}
 		
 		function showNotes() {
 
@@ -267,6 +367,8 @@ label {
 			
 			$("#badge").html(note_count);
 			
+			iniNotesButtonEvent();
+			
 			return note_count;
 		}
 
@@ -291,25 +393,6 @@ label {
 			$("#badge").html(note_count);
 			
 			return; 
-			var url_to = $.getSitePath()
-					+ "/front/exhibition_item/${exhibitionitem._id_m}/note_count";
-
-			$.ajax({
-				type : 'POST',
-				url : url_to,
-				data : {
-					ts : new Date().getTime()
-				},
-				dataType : 'json',
-				success : function(data) {
-
-					if (data['success'] == 'n') {
-					} else {
-						var note_count = data["message"];
-						$("#badge").html(note_count);
-					}
-				}
-			});
 		}
 
 		function closeAddNoteWindow() {
@@ -321,7 +404,7 @@ label {
 			if (!exhibitionitem) {
 				return;
 			}
-			$.logJson(exhibitionitem);
+			//$.logJson(exhibitionitem);
 
 			var type = exhibitionitem.type;
 			$.logJson(type);
@@ -404,6 +487,55 @@ label {
 				$("#attentions_info").hide();
 			}
 		}
+		
+		
+		/***************************************************************************
+		 * 进入修改页面
+		 * 
+		 * @param data
+		 */
+		var toEditExhibitionItem= function(exhibitionitem) {
+			
+			var _id_m = exhibitionitem._id_m;
+			var type = exhibitionitem.type;
+			var type_name = exhibitionitem.type_name;
+
+			var url = $.getSitePath() + '/front/exhibition_item/' + _id_m
+					+ "/update?type=" + type;
+
+			var title = "编辑【" + type_name + "】"
+
+			$.popUpWindow(title, url, "90%", "90%", "edit", $("#btn_edit"));
+		}
+		
+		var data_manage_functions = {
+
+			/***************************************************************************
+			 * 关闭编辑窗口
+			 */
+			closeEditWindow : function() {
+				$.closeWindow("edit", $("#btn_edit"));
+			},
+			refreshPage : function() {
+				
+				var url_to = $.getSitePath() + '/front/exhibition_item/${exhibitionitem._id_m}/json';
+				
+				$.ajax({
+					type : 'POST',
+					url : url_to,
+					data : {
+						ts : new Date().getTime()
+					},
+					dataType : 'json',
+					async : false,
+					success : function(data) {
+						$.logJson(data);
+						showDetail(data);
+					}
+				});
+			}
+		};
+
 	</script>
 </body>
 </html>

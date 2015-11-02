@@ -1,5 +1,7 @@
 package bxw.modules.global.model;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.mou.mongodb.base.domain.BaseModel;
 
 /****
@@ -8,6 +10,7 @@ import com.mou.mongodb.base.domain.BaseModel;
  * @author NBQ
  *
  */
+@Document(collection = "note")
 public class Note extends BaseModel {
 
 	private String user_id;

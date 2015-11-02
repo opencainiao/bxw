@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,6 +22,8 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
 import bxw.modules.base.BaseController;
+import bxw.modules.exhibition.enums.ExhibitionCharacter;
+import bxw.modules.exhibition.model.ExhibitionItem;
 import bxw.modules.global.model.Note;
 import bxw.modules.global.service.INoteService;
 import mou.web.webbase.domain.RequestResult;
@@ -121,6 +124,80 @@ public class NoteController extends BaseController {
 			List<Note> notes = this.noteService.batchSearch(query, sort, returnFields);
 
 			return this.handleBaseModelListOnePage(notes);
+		} catch (Exception e) {
+			return this.handleException(e);
+		}
+	}
+	
+	/****
+	 * 删除一条记录
+	 * 
+	 * @param zzdhid
+	 * @return
+	 */
+	@RequestMapping(value = "/{_id}/delete", method = RequestMethod.POST)
+	@ResponseBody
+	public Object delete(@PathVariable String _id, HttpServletRequest request) {
+
+		try {
+			// 删除展业项
+			int removedCount = this.noteService.RemoveOneById(_id);
+			logger.debug("deleted--[{}]", removedCount);
+
+			RequestResult rr = new RequestResult();
+			rr.setSuccess(true);
+			rr.setMessage(_id);
+			return rr;
+		} catch (Exception e) {
+			return this.handleException(e);
+		}
+	}
+	
+	/****
+	 * 进入更新页面
+	 * 
+	 * @param zzdhid
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/{_id}/update", method = RequestMethod.GET)
+	public String update(@PathVariable String _id, Model model) {
+
+		Note note = this.noteService.findOneByIdObject(_id);
+
+		model.addAttribute("note", note);
+
+		model.addAttribute("_id", _id);
+
+		return "global/note/update";
+	}
+	
+	/****
+	 * 更新系统展业项 信息，返回json给客户端
+	 * 
+	 * @param _id
+	 * @param exhibitionitem
+	 * @param br
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/{_id}/update", method = RequestMethod.POST)
+	@ResponseBody
+	public Object update(@PathVariable String _id, @Validated Note note , BindingResult br,
+			HttpServletRequest request) {
+
+		if (br.hasErrors()) {
+			return this.handleValidateFalse(br);
+		}
+
+		try {
+			note.set_id_m(_id);
+			DBObject updateResult = this.noteService.updatePart(null, note);
+			
+			RequestResult rr = new RequestResult();
+			rr.setSuccess(true);
+			rr.setObject(updateResult);
+			return rr;
 		} catch (Exception e) {
 			return this.handleException(e);
 		}

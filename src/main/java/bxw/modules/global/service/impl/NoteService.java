@@ -89,6 +89,8 @@ public class NoteService extends BaseService implements INoteService {
 		Class rtnClazz = null;
 		if ("exhibitionitem".equals(target_type)) {
 			rtnClazz = ExhibitionItem.class;
+		}else if ("note".equals(target_type)) {
+			rtnClazz = Note.class;
 		}
 		return rtnClazz;
 	}
@@ -112,7 +114,7 @@ public class NoteService extends BaseService implements INoteService {
 		DBObject update = new BasicDBObject();
 		DBObject updateSet = new BasicDBObject();
 
-		updateSet.put("val", note.getContent());
+		updateSet.put("content", note.getContent());
 
 		this.setModifyInfo(updateSet);
 		update.put("$set", updateSet);
@@ -123,6 +125,17 @@ public class NoteService extends BaseService implements INoteService {
 
 	@Override
 	public int RemoveOneById(String _id) {
+		
+		Note note = this.findOneByIdObject(_id);
+		
+		DBObject update = new BasicDBObject();
+		update.put("$inc", new BasicDBObject("note_count", -1));
+
+		String target_id = note.getTarget_id();
+		String target_type = note.getTarget_type();
+		Class clazz = getClass(target_type);
+		DBObject result = commonDaoMongo.updateOneById(target_id, null, update, clazz);
+
 		return this.commonDaoMongo.removeById(_id, Note.class);
 	}
 

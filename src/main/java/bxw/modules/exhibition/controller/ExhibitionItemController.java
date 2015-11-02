@@ -240,6 +240,22 @@ public class ExhibitionItemController extends BaseController {
 
 		return "front/exhibition/item/detail";
 	}
+	
+	/****
+	 * 查看单个展业项 信息
+	 * 
+	 * @param _id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/{_id}/json", method = RequestMethod.POST)
+	@ResponseBody
+	public Object detailJson(@PathVariable String _id, Model model) {
+
+		ExhibitionItem exhibitionitem = this.exhibitionItemService.findExhibitionItemInfById(_id);
+
+		return exhibitionitem;
+	}
 
 	/****
 	 * 进入更新页面
