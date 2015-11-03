@@ -57,6 +57,5 @@ public class SysConstInitor implements Initializable {
 
 		// 全局上下文路径
 		servletContext.setAttribute("ALLCONSTANT", JsonUtil.toJsonStr(allConstantsMap));
-
 	}
 }

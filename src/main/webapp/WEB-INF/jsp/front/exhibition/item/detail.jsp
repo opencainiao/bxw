@@ -222,19 +222,19 @@ label {
 								
 								<button type="button" id="btn_note" r_name="note" 
 									style="margin-left: 10px; margin-right: 10px; border-radius:3px!important"
-									class="btn btn-primary btn-sm center-block">
+									class="btn btn-primary btn-sm center-block hide">
 									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>									
 									记一下
 								</button>
 
 								<button type="button" id="btn_edit" r_name="edit"
 									style="margin-right: 10px; border-radius:3px!important"
-									class="btn btn-info btn-sm center-block" >
+									class="btn btn-primary btn-sm center-block" >
 									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
 									编辑
 								</button>
 
-								<button class="btn btn-primary btn-sm" r_name="detail" type="button" style="margin-right: 10px; border-radius:3px!important">
+								<button class="btn btn-primary btn-sm hide" r_name="detail" type="button" style="margin-right: 10px; border-radius:3px!important">
 									<span class="glyphicon glyphicon-comment" aria-hidden="true" ></span>
 									<span class="badge" id="badge">{{ d.rows[i].note_count }}</span>
  									查看记录

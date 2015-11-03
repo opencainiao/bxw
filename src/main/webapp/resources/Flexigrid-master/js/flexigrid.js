@@ -1136,7 +1136,16 @@ var mou_grid_ux = {
 								var m_type = mou_grid_ux.getCMType(colModelTmp);
 								// console.log("m_type----"
 								// + m_type);
-								if (m_type == 'normal') {
+								if (m_type == 'tpl') {
+									var tpl_id = colModelTmp['tpl_id'];
+									console.log("tpl_id----" + tpl_id);
+									
+									var tpl = document.getElementById(tpl_id).innerHTML; //读取模版
+									//方式一：异步渲染（推荐）
+									laytpl(tpl).render(row, function(render){
+										td.innerHTML = render;
+									});
+								}else if (m_type == 'normal') {
 									var colModelName_ = colModelTmp.name;
 									var inner_value = "";
 									if (colModelName_.indexOf(".") < 0) {

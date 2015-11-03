@@ -11,6 +11,7 @@
 <jsp:include page="/WEB-INF/jsp/include/common_css.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/jsp/include/common_js.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/jsp/include/common_flexigrid.jsp"></jsp:include>
+<script type="text/javascript" src="${ctx}/resources/laytpl/laytpl.js"></script>
 
 </head>
 
@@ -84,11 +85,47 @@
 		<div id="data_manage">
 			<table id="list"></table>
 		</div>
+		
+		<div id="tpl_list"></div>
 	</div>
 
+	<!-- 第一步：编写模版。你可以使用一个script标签存放模板，如： -->
+	<script id="list_tpl" type="text/html">
+				
+		<div class="container-fluid" style="padding:12px">
+			<div class="row">
+				<a href="#" data-type="detail" data-id="{{d._id_m}}" data-type-name="{{d.type_name}}">
+					<span class="pull-left" style='font: 18px/25px  "微软雅黑","simhei"; margin-top: -20px;'>{{ d.title }}</span>
+				</a>
+				<span class="pull-right" style="margin-top: -15px;">{{ d.start_time }} - {{d.end_time}}</span>
+			</div>
+			<div class="row">
+				<span class="pull-left" style="color: #818181">{{ d.content }}</span>
+			</div>
+		</div>
+	</script>
+	
+	<script id="discrib_tpl" type="text/html">
+		<div class="container-fluid" style="padding-left:8px">
+			<div class="row">
+				<span class="pull-left">
+					<span class="glyphicon glyphicon-user" aria-hidden="true" style="margin-right:3px"></span>
+					{{ d.username }}
+				</span>
+			</div>
+			<div class="row">
+				<span class="pull-left" >{{ d.type_name }}</span>
+			</div>
+			<div class="row " >
+				<span class="pull-left bg-danger" style="padding:3px 9px 3px 9px;   border-radius: 4px;">{{ d.character_name }}</span>
+			</div>
+		</div>
+	</script>
+	
 	<script type="text/javascript"
 		src="<%=request.getContextPath()%>/resources/js/front/exhibition/item/list.js"></script>
 
+	
 	<script>
 		/****
 		 * 弹出选择客户窗口
@@ -117,6 +154,7 @@
 			// 关闭选择客户弹出窗口
 			$.closeWindow("choose_client", $("#btn_add"));
 		}
+		
 	</script>
 </body>
 

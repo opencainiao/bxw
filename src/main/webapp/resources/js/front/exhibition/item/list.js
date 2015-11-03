@@ -69,8 +69,22 @@ $().ready(
 
 				window.location.href = url_to;
 			});
-
+			
 		});
+
+function initEventInTpl(){
+	$("a[data-type=detail]").unbind();
+	$("a[data-type=detail]").bind("click",function(e) {
+		e.preventDefault();
+
+		var _id_m = $(this).attr("data-id");
+		var type_name = $(this).attr("data-type-name");
+
+		var url = $.getSitePath() + '/front/exhibition_item/' + _id_m;
+
+		$.showDetailWindow(type_name, url, "98%", "98%");
+	});
+}
 
 var data_manage_functions = {
 
@@ -251,6 +265,7 @@ var data_manage = {
 		pagestat : '共有{total}条记录，显示{from} - {to}条记录',
 		procmsg : '正在查询，请稍候 ...',
 		nomsg : '没有符合条件的数据',
+		onSuccess:initEventInTpl,
 		colModel : [ {
 			display : '选择',
 			hide : true,
@@ -279,27 +294,48 @@ var data_manage = {
 			m_type : 'link',
 			sortable : false,
 			callback : data_manage_functions.toDetail,
-			linkConfig : [ "_id_m","type_name" ]
+			linkConfig : [ "_id_m","type_name" ],
+			hide:true
+		},{
+			display : '概要',
+			name : 'tpl_discrib',
+			width : 120,
+			align : 'left',
+			m_type : 'tpl',
+			tpl_id:'discrib_tpl'
+		}, {
+			display : '内容',
+			name : 'tpl_content',
+			width : 550,
+			align : 'left',
+			m_type : 'tpl',
+			tpl_id:'list_tpl'
 		}, {
 			display : '性质',
 			name : 'character_name',
-			width : 80
+			width : 80,
+			hide:true
 		}, {
 			display : '标题',
 			name : 'title',
-			width : 120
+			width : 120,
+			hide:true
 		}, {
 			display : '用户',
 			name : 'username',
-			width : 120
+			width : 120,
+			hide:true
+				
 		}, {
 			display : '阶段',
 			name : 'stage_name',
-			width : 120
+			width : 120,
+			hide:true
 		}, {
 			display : '状态',
 			name : 'state_name',
-			width : 120
+			width : 120,
+			hide:true
 		}, {
 			display : '开始日期',
 			name : 'start_date',
@@ -308,7 +344,8 @@ var data_manage = {
 		}, {
 			display : '时间',
 			name : 'time_info',
-			width : 140
+			width : 140,
+			hide:true
 		}, {
 			display : '操作',
 			name : 'operation',
