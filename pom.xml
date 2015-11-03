@@ -11,7 +11,7 @@
 
 	<artifactId>bxw</artifactId>
 	<packaging>war</packaging>
-	<name>mou01-web</name>
+	<name>mou-web</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
