@@ -31,6 +31,15 @@ public interface IExhibitionService {
 	public Exhibition findExhibitionInfById(String _id);
 
 	/****
+	 * 根据条件，查询一个客户
+	 * 
+	 * @param query
+	 * @param isRedisplay
+	 * @return
+	 */
+	public Exhibition findOneByCondition(DBObject query);
+
+	/****
 	 * 条件查询，分页
 	 * 
 	 * @param query

@@ -24,6 +24,7 @@ import bxw.modules.exhibition.enums.ExhibitionState;
 @Document(collection = "exhibition_item")
 public class ExhibitionItem extends BaseModel {
 
+	private String exhibition_id;// 关联的展业id
 	private String user_id; // 用户id
 	private String username; // 用户名
 	private String remark; // 说明
@@ -274,6 +275,14 @@ public class ExhibitionItem extends BaseModel {
 				this.end_time = end_time.substring(0, 16);
 			}
 		}
+	}
+
+	public String getExhibition_id() {
+		return exhibition_id;
+	}
+
+	public void setExhibition_id(String exhibition_id) {
+		this.exhibition_id = exhibition_id;
 	}
 
 	public void setEnd_time(String end_time) {

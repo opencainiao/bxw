@@ -57,7 +57,7 @@ function autoHeight() {
    // alert(toShow.join("\n"));
     //iframe.height = toSetH;
     
-    $("#frame_content_id").height(toSetH);
+    $("#frame_content_id").height(toSetH + 10);
     
   //  if (iframe.Document) { //ie自有属性
   //      iframeDoc = iframe.Document;
@@ -82,7 +82,7 @@ function autoHeight() {
 			<div id="home_content" class="right_col" role="main">
 				<iframe id="frame_content_id" name="frame_content_id"
 					class="frame_content_container" width="100%"
-					style="min-height: 500px" frameborder="0"> </iframe>
+					style="min-height: 500px" frameborder="0" onload="handIframeLoad()"> </iframe>
 
 				<jsp:include
 					page="/WEB-INF/jsp/admin/include/common_nav_footer_gentelella.jsp"></jsp:include>

@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mou.common.DateUtil;
+import org.mou.common.JsonUtil;
 import org.mou.common.StringUtil;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,10 @@ import com.mou.mongodb.base.domain.PageVO;
 import com.mou.mongodb.base.springdb.dao.IBaseDaoMongo;
 
 import bxw.modules.base.BaseService;
+import bxw.modules.exhibition.enums.ExhibitionGlobalState;
 import bxw.modules.exhibition.enums.ExhibitionStage;
 import bxw.modules.exhibition.enums.ExhibitionState;
+import bxw.modules.exhibition.model.Exhibition;
 import bxw.modules.exhibition.model.ExhibitionItem;
 import bxw.modules.infrustructure.enums.SysConstTypeEnum;
 import bxw.modules.infrustructure.service.ISysConstService;
@@ -36,6 +39,9 @@ public class ExhibitionItemService extends BaseService implements IExhibitionIte
 
 	@Resource(name = "sysConstService")
 	private ISysConstService sysConstService;
+
+	@Resource(name = "exhibitionService")
+	private IExhibitionService exhibitionService;
 
 	private final Logger logger = LogManager.getLogger(ExhibitionItemService.class);
 
@@ -72,6 +78,49 @@ public class ExhibitionItemService extends BaseService implements IExhibitionIte
 
 	@Override
 	public String add(ExhibitionItem exhibitionItem) {
+
+		String user_id = exhibitionItem.getUser_id();
+
+		if (StringUtil.isNotEmpty(user_id)) {
+
+			String[] user_ids = user_id.split(";");
+			String[] user_names = exhibitionItem.getUsername().split(";");
+
+			for (int i = 0; i < user_ids.length; ++i) {
+
+				String user_id_this = user_ids[i];
+				String user_name_this = user_names[i];
+
+				if (this.isValidObjId(user_id_this)) {
+
+					DBObject query = new BasicDBObject();
+					query.put("user_id", user_id_this);
+					query.put("global_state", ExhibitionGlobalState.STARTED.getCode());
+
+					Exhibition exhibition = exhibitionService.findOneByCondition(query);
+					String exhibition_id = null;
+
+					// 判断是否有一个已经开启的展业，如果有，则设置为该展业项目的id
+					// 如果没有，则开启一个展业，并设置为该展业项目的id
+					if (exhibition == null) {
+
+						exhibition = new Exhibition();
+						exhibition.setUser_id(user_id);
+						exhibition.setUsername(user_name_this);
+
+						exhibition_id = this.exhibitionService.add(exhibition);
+					} else {
+						exhibition_id = exhibition.get_id_m();
+					}
+
+					// 对于多个人的情况，不设置exhibition_id
+					if (user_ids.length == 1) {
+						exhibitionItem.setExhibition_id(exhibition_id);
+					}
+				}
+			}
+		}
+
 		setNames(exhibitionItem);
 		exhibitionItem.setStart_date(DateUtil.getCurdate());
 		exhibitionItem.setStart_time(DateUtil.getCurrentTimsmp());
@@ -202,16 +251,24 @@ public class ExhibitionItemService extends BaseService implements IExhibitionIte
 
 	@Override
 	public int findExhibitionItemNoteCount(String _id) {
-		
+
 		DBObject returnFields = new BasicDBObject();
 		returnFields.put("note_count", 1);
-		
+
 		ExhibitionItem exhibitionItem = this.commonDaoMongo.findOnePartById(_id, returnFields, ExhibitionItem.class);
-		
-		if (exhibitionItem == null){
+
+		if (exhibitionItem == null) {
 			return 0;
 		}
-		
+
 		return exhibitionItem.getNote_count();
+	}
+	
+	public static void main(String[] args) {
+		
+		String user_id = "aa";
+		String[] user_ids = user_id.split(";");
+		
+		System.out.println(JsonUtil.toJsonStr(user_ids));
 	}
 }

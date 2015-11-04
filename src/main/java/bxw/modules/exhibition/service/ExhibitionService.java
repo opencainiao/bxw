@@ -16,6 +16,7 @@ import com.mou.mongodb.base.domain.PageVO;
 import com.mou.mongodb.base.springdb.dao.IBaseDaoMongo;
 
 import bxw.modules.base.BaseService;
+import bxw.modules.exhibition.enums.ExhibitionGlobalState;
 import bxw.modules.exhibition.enums.ExhibitionStage;
 import bxw.modules.exhibition.enums.ExhibitionState;
 import bxw.modules.exhibition.model.Exhibition;
@@ -37,6 +38,7 @@ public class ExhibitionService extends BaseService implements IExhibitionService
 	@Override
 	public String add(Exhibition exhibition) {
 
+		exhibition.setGlobal_state(ExhibitionGlobalState.STARTED);
 		exhibition.setStage(ExhibitionStage.CONTACT);
 		exhibition.setState(ExhibitionState.CONTACT);
 		exhibition.setStart_date(DateUtil.getCurdate());
@@ -114,5 +116,15 @@ public class ExhibitionService extends BaseService implements IExhibitionService
 	public int RemoveOneById(String _id) {
 
 		return this.commonDaoMongo.removeById(_id, Exhibition.class);
+	}
+
+	@Override
+	public Exhibition findOneByCondition(DBObject query) {
+
+		query.put("del_flg", "0");
+
+		Exhibition exhibition = this.commonDaoMongo.findOnePart(Exhibition.class, query, null);
+
+		return exhibition;
 	}
 }

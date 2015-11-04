@@ -17,13 +17,12 @@
 <body>
 	<input type="hidden" name="ctx" value="<%=request.getContextPath()%>" />
 
-	<ul class="breadcrumb">
+	<ul class="breadcrumb"  style="margin-bottom: 5px;">
 		<li><a href="<%=request.getContextPath()%>/front/client/list">客户管理</a>
 			<span class="divider"></span></li>
 		<li class="active">添加用户</li>
 	</ul>
-	<div id="add_div">
-
+	<div id="add_div" style="padding-left: 5px; border-right-width: 5px; padding-right: 5px;">
 		<input type="hidden" name="_id" />
 		<sf:form modelAttribute="client" class="form-horizontal">
 
@@ -41,15 +40,15 @@
 					page="/WEB-INF/jsp/front/client/client_info/include_seg/xg_info.jsp"></jsp:include>
 
 				<hr />
-
-
-				<div class="col-sm-12">
-					<button type="button" id="btn_save"
-						class="btn btn-primary btn-lg center-block">提交</button>
-				</div>
-
 		</sf:form>
 	</div>
+	<div class="row" style="margin-right: 0px; margin-left: 0px;">
+		<div class="col-sm-12">
+			<button type="button" id="btn_save"
+				class="btn btn-primary btn-lg center-block">提交</button>
+		</div>
+	</div>
+	
 
 	<script>
 		$().ready(function() {
@@ -61,6 +60,7 @@
 					return false;
 				}
 			}
+			
 		});
 
 		//保存

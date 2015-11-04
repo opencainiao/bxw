@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.mou.mongodb.base.domain.BaseModel;
 
 import bxw.common.util.PinyinUtil;
+import bxw.modules.exhibition.enums.ExhibitionGlobalState;
 import bxw.modules.exhibition.enums.ExhibitionStage;
 import bxw.modules.exhibition.enums.ExhibitionState;
 
@@ -22,6 +23,9 @@ public class Exhibition extends BaseModel {
 	private String username; // 用户名
 	private String remark; // 说明
 
+	private String global_state; // 总体状态
+	private String global_state_name;
+
 	private String stage; // 展业阶段
 	private String state; // 展业状态
 
@@ -34,6 +38,7 @@ public class Exhibition extends BaseModel {
 	private String pinyin_name;
 	private String first_char_header;// 姓名拼音第一个首字母， 比如：Z
 	private String all_char_header;// 姓名拼音首字母， 比如：ZS
+	
 
 	public String getStart_time() {
 		return start_time;
@@ -120,6 +125,19 @@ public class Exhibition extends BaseModel {
 			String headerFirst = PinyinUtil.str2PinyinHeaderFirst(this.username);
 			this.first_char_header = headerFirst;
 		}
+	}
+
+	public void setGlobal_state(ExhibitionGlobalState state) {
+		this.global_state = state.getCode();
+		this.global_state_name = state.getName();
+	}
+	
+	public String getGlobal_state() {
+		return global_state;
+	}
+
+	public void setGlobal_state(String global_state) {
+		this.global_state = global_state;
 	}
 
 }
