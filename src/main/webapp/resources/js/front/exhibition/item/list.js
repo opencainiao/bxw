@@ -222,15 +222,32 @@ var data_manage = {
 	 */
 	init : function() {
 
-		var url = $.getSitePath() + '/front/exhibition_item/list';
+		var username = {};
+		username["name"] = "username";
+		username["value"] = $("#username").trim_value();
+
+		var exhibition_stage = {};
+		exhibition_stage["name"] = "exhibition_stage";
+		exhibition_stage["value"] = $("#exhibition_stage").val();
+
+		var exhibition_state = {};
+		exhibition_state["name"] = "exhibition_state";
+		exhibition_state["value"] = $("#exhibition_state").val();
+
+		var type = {};
+		exhibition_state["name"] = "type";
+		exhibition_state["value"] = $("#type").val();
 
 		var params = [];
-		params.push("user_id=" + $("#user_id").trim_value());
-		params.push("ts=" + new Date().getTime());
+		params.push(username);
+		params.push(exhibition_stage);
+		params.push(exhibition_state);
+		params.push(type);
 
-		url = url + "?" + params.join("&");
+		var url = $.getSitePath() + '/front/exhibition_item/list?ts=' + new Date().getTime();
 
 		data_manage.gridsetting.url = url;
+		data_manage.gridsetting.params = params;
 
 		// alert(data_manage.gridsetting.url);
 		$("#list").flexigrid(data_manage.gridsetting);

@@ -104,12 +104,12 @@ var data_manage_functions = {
 	 */
 	createExhibitionItem : function(data,button) {
 		
-		var _id_m = data["_id_m"];
+		var user_id = data["user_id"];
 		var username = data["username"];
 		var r_name = $(button).attr("r_name");
 		
 		var params = [];
-		params.push("user_id=" + _id_m);
+		params.push("user_id=" + user_id);
 		params.push("username=" + username);
 		params.push("type=" + r_name);
 		params.push("ts=" + new Date().getTime());
@@ -225,6 +225,11 @@ var data_manage = {
 			hide : true,
 			callback : data_manage_functions.toDetail
 		}, {
+			display : 'user_id',
+			name : 'user_id',
+			width : 120,
+			hide:true
+		}, {
 			display : '用户',
 			name : 'username',
 			width : 120
@@ -302,7 +307,7 @@ var data_manage = {
 					"data-name" : "OTHER"
 				}] ]
 			},
-			select : [ "_id_m" ,"username"],
+			select : [ "user_id" ,"username"],
 			callback : data_manage_functions.createExhibitionItem
 		} ]
 	}

@@ -109,7 +109,9 @@ public class ExhibitionController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Model model) {
+	public String list(Model model,HttpServletRequest request) {
+		
+		request.getSession().setAttribute("source", null);
 
 		return "front/exhibition/exhibition/list";
 	}
