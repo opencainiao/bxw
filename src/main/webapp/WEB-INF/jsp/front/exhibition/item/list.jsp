@@ -121,7 +121,12 @@ font-weight: bold;
 				<span class="pull-left" style="color: #818181">{{ d.content }}</span>
 			</div>
 			<div class="row">
-				<span class="pull-right" style="color: #818181">最后编辑于【{{ d.last_op_time }}】</span>
+				<span class="pull-right" style="color: #818181">
+					<span style="color: #563d7c;font-weight:bold;">
+						记录数【{{ d.note_count }}】
+					</span>
+					最后编辑于【{{ d.last_op_time }}】
+				</span>
 			</div>
 		</div>
 	</script>

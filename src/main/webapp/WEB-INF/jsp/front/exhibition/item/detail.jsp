@@ -11,6 +11,8 @@
 
 <jsp:include page="/WEB-INF/jsp/include/common_css.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/jsp/include/common_js.jsp"></jsp:include>
+
+
 <script type="text/javascript" src="${ctx}/resources/laytpl/laytpl.js"></script>
 
 <style>
@@ -24,6 +26,10 @@ span {
 
 label {
 	color: #428bca;
+}
+
+.btn-round {
+    border-radius: 30px!important;
 }
 </style>
 </head>
@@ -188,6 +194,15 @@ label {
 						查看记录
 					</button>
 					
+					<button id="btn_accomplished" class="btn btn-round btn-success" type="button" 
+							style="margin-left: 10px; margin-right: 10px; padding-top: 5px; padding-bottom: 5px;">
+						<span class="glyphicon glyphicon-ok" aria-hidden="true" ></span>
+					</button>
+					<button id="btn_failed" class="btn btn-round btn-danger " type="button" 
+							style="margin-left: 10px; margin-right: 10px; padding-top: 5px; padding-bottom: 5px;" >
+						<span class="glyphicon glyphicon-remove" aria-hidden="true" ></span>
+					</button>
+					
 					<button type="button" id="btn_edit" style="margin-left: 10px; margin-right: 10px;border-radius:3px!important"
 						class="btn btn-primary btn-sm center-block">
 						<span class="glyphicon glyphicon-edit" aria-hidden="true"  style="margin-right: 5px;"></span>		
@@ -226,7 +241,7 @@ label {
 									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>									
 									记一下
 								</button>
-
+								
 								<button type="button" id="btn_edit" r_name="edit"
 									style="margin-right: 10px; border-radius:3px!important"
 									class="btn btn-primary btn-sm center-block" >
@@ -268,6 +283,11 @@ label {
 			$("#btn_edit",$("#item_detail")).bind("click",function(){
 				toEditExhibitionItem(exhibitionitem);
 			});
+			
+			if (!exhibitionitem.type.startsWith("PLAN")){
+				$("#btn_accomplished").hide();
+				$("#btn_failed").hide();
+			}
 		});
 		
 		function iniNotesButtonEvent(){
