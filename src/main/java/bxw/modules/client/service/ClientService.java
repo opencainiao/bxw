@@ -152,7 +152,7 @@ public class ClientService extends BaseService implements IClientService {
 
 		client.setClient_name(client_name);
 		setClientInf(client);
-		this.setCreateInfoWithUserId(client, client.getOwner_user_id());
+		this.setCreateInfoWithUser(client, client.getOwner_user_id(), this.getUsername());
 		String client_id = this.commonDaoMongo.insertOne(client);
 
 		// 地址信息

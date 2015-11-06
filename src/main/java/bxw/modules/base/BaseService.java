@@ -124,6 +124,11 @@ public class BaseService {
 		model.setC_time(time);
 		model.setC_date(date);
 		model.setDel_flg(false);// 未删除
+
+		model.setLast_op_user_id(userid);
+		model.setLast_op_user_name(username);
+		model.setLast_op_date(date);
+		model.setLast_op_time(time);
 	}
 
 	/****
@@ -140,6 +145,11 @@ public class BaseService {
 		model.setC_time(time);
 		model.setC_date(time.substring(0, 10));
 		model.setDel_flg(false);// 未删除
+
+		model.setLast_op_user_id(userid);
+		model.setLast_op_user_name(username);
+		model.setLast_op_date(time.substring(0, 10));
+		model.setLast_op_time(time);
 	}
 
 	/****
@@ -152,21 +162,21 @@ public class BaseService {
 		dbObject.put("last_op_date", DateUtil.getCurdate());
 		dbObject.put("last_op_time", DateUtil.getCurrentTimsmp());
 	}
-	
+
 	/****
 	 * 设置更新信息
 	 */
-	public void setModifyInfo(DBObject dbObject,String time) {
+	public void setModifyInfo(DBObject dbObject, String time) {
 
 		dbObject.put("last_op_user_id", this.getUserId());
 		dbObject.put("last_op_user_name", this.getUsername());
 		dbObject.put("last_op_date", DateUtil.getCurdate());
-		if (StringUtil.isEmpty(time)){
+		if (StringUtil.isEmpty(time)) {
 			dbObject.put("last_op_time", DateUtil.getCurrentTimsmp());
-		}else{
+		} else {
 			dbObject.put("last_op_time", time);
 		}
-		
+
 	}
 
 	/****
@@ -185,16 +195,20 @@ public class BaseService {
 	 * 
 	 * @param model
 	 */
-	public void setCreateInfoWithUserId(BaseModel model, String user_id) {
+	public void setCreateInfoWithUser(BaseModel model, String user_id, String username) {
 		String date = DateUtil.getCurdate();
 		String time = DateUtil.getCurrentTimsmp();
-		String username = this.getUsername();
 
 		model.setC_user_id(user_id);
 		model.setC_user_name(username);
 		model.setC_time(time);
 		model.setC_date(date);
 		model.setDel_flg(false);// 未删除
+
+		model.setLast_op_user_id(user_id);
+		model.setLast_op_user_name(username);
+		model.setLast_op_date(date);
+		model.setLast_op_time(time);
 	}
 
 	/****
@@ -202,17 +216,20 @@ public class BaseService {
 	 * 
 	 * @param model
 	 */
-	public void setCreateInfoWithUserId(BaseModel model, String time,
-			String user_id) {
-		String username = this.getUsername();
-		
+	public void setCreateInfoWithUser(BaseModel model, String time, String user_id, String username) {
+
 		model.setC_user_id(user_id);
 		model.setC_user_name(username);
 		model.setC_time(time);
 		model.setC_date(time.substring(0, 10));
 		model.setDel_flg(false);// 未删除
+
+		model.setLast_op_user_id(user_id);
+		model.setLast_op_user_name(username);
+		model.setLast_op_date(time.substring(0, 10));
+		model.setLast_op_time(time);
 	}
-	
+
 	/****
 	 * 取查询中的分页参数
 	 * 

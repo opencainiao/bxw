@@ -250,8 +250,8 @@ public class SysMenuService extends BaseService implements ISysMenuService {
 
 		PageVO pageVO = this.getParamPageVO();
 
-		List<DBObject> menus = this.commonDaoMongo.findBatchPagePartDBObject(SysMenu.class, queryCondition, sort,
-				null, pageVO);
+		List<DBObject> menus = this.commonDaoMongo.findBatchPagePartDBObject(SysMenu.class, queryCondition, sort, null,
+				pageVO);
 
 		return this.handleDBObjList(commonDaoMongo, SysMenu.class, queryCondition, menus, pageVO);
 	}
@@ -268,8 +268,28 @@ public class SysMenuService extends BaseService implements ISysMenuService {
 		return root;
 	}
 
+	public void setMenuTreeBySupMnuCod(SysMenu sysMenu) {
+
+		String supMnuCod = sysMenu.getMenu_code();
+		List<SysMenu> menuList = this.findChildren(supMnuCod);
+		sysMenu.setChild_menu_List(menuList);
+		
+		if (menuList != null && !menuList.isEmpty()) {
+
+			for (SysMenu sysMenuTemp : menuList) {
+
+				if (!sysMenuTemp.isLeaf()) {
+					// 不是叶子节点，则递归查询
+					setMenuTreeBySupMnuCod(sysMenuTemp);
+				}
+			}
+		}
+	}
+
 	/****
 	 * 根据上级菜单码和角色列表，读取该菜单的菜单树
+	 * 
+	 * 改成最多5层查找
 	 * 
 	 * @param supMnuCod
 	 * @return
@@ -278,7 +298,7 @@ public class SysMenuService extends BaseService implements ISysMenuService {
 
 		List<SysMenu> menuList = this.findChildren(supMnuCod);
 
-		if (menuList == null) {
+		if (menuList == null || menuList.isEmpty()) {
 			return null;
 		}
 
@@ -286,7 +306,7 @@ public class SysMenuService extends BaseService implements ISysMenuService {
 
 			if (!sysMenu.isLeaf()) {
 				// 不是叶子节点，则递归查询
-				sysMenu.setChild_menu_List(findMenuTreeBySupMnuCod(sysMenu.getMenu_code()));
+				setMenuTreeBySupMnuCod(sysMenu);
 			}
 		}
 

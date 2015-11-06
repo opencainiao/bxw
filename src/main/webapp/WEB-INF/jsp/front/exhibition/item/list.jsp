@@ -13,6 +13,12 @@
 <jsp:include page="/WEB-INF/jsp/include/common_flexigrid.jsp"></jsp:include>
 <script type="text/javascript" src="${ctx}/resources/laytpl/laytpl.js"></script>
 
+<style>
+.navbar-form span{
+color: #c7254e;
+font-weight: bold;
+}
+</style>
 </head>
 
 <body>
@@ -59,7 +65,7 @@
 		</div>
 
 		<div class="navbar navbar-default ">
-			<form class="navbar-form navbar-left">
+			<form class="navbar-form navbar-left ">
 				<div class="form-group ">
 					<span>姓名</span> <input class="form-control input-sm"
 						style="width: 200px" type="text" id="username" name="username"
@@ -68,17 +74,24 @@
 				<button class="btn btn-info" type="button" id="btn_search">
 					查询</button>
 
-				<span>类型</span> <select id="type" name="type"
+				<span>性质</span> <select id="character" name="character"
 					class="form-control input-sm" data-src="constant"
-					data-typecode="EXHIBITION_TYPE" data-value="" data-allownull></select>
-
-				<span>阶段</span> <select id="exhibition_stage"
-					name="exhibition_stage" class="form-control input-sm"
-					data-src="constant" data-typecode="EXHIBITION_STAGE" data-value=""
-					data-allownull></select> <span>状态</span> <select
-					id="exhibition_state" name="exhibition_state"
-					class="form-control input-sm" data-src="constant"
-					data-typecode="EXHIBITION_STATE" data-value="" data-allownull></select>
+					data-typecode="EXHIBITION_CHARACTER" data-value="" data-allownull></select>
+				
+				<span class="hide">
+					<span>类型</span> <select id="type" name="type"
+						class="form-control input-sm" data-src="constant"
+						data-typecode="EXHIBITION_TYPE" data-value="" data-allownull></select>
+	
+					<span>阶段</span> <select id="exhibition_stage"
+						name="exhibition_stage" class="form-control input-sm"
+						data-src="constant" data-typecode="EXHIBITION_STAGE" data-value=""
+						data-allownull></select> <span>状态</span> <select
+						id="exhibition_state" name="exhibition_state"
+						class="form-control input-sm" data-src="constant"
+						data-typecode="EXHIBITION_STATE" data-value="" data-allownull></select>
+				</span>
+				
 			</form>
 		</div>
 
@@ -95,12 +108,20 @@
 		<div class="container-fluid" style="padding:12px">
 			<div class="row">
 				<a href="#" data-type="detail" data-id="{{d._id_m}}" data-type-name="{{d.type_name}}">
-					<span class="pull-left" style='font: 18px/25px  "微软雅黑","simhei"; margin-top: -20px;'>{{ d.title }}</span>
+					<span class="pull-left" style='font: 18px/25px  "微软雅黑","simhei"; margin-top: -20px;'>
+						{{ d.title }}
+					</span>
 				</a>
-				<span class="pull-right" style="margin-top: -15px;">{{ d.start_time }} - {{d.end_time}}</span>
+				<span class="pull-right" style="margin-top: -15px;">
+					<span class="glyphicon glyphicon-time" aria-hidden="true" style="margin-right:3px"></span>
+					{{ d.start_time }} - {{d.end_time}}
+				</span>
 			</div>
 			<div class="row">
 				<span class="pull-left" style="color: #818181">{{ d.content }}</span>
+			</div>
+			<div class="row">
+				<span class="pull-right" style="color: #818181">最后编辑于【{{ d.last_op_time }}】</span>
 			</div>
 		</div>
 	</script>

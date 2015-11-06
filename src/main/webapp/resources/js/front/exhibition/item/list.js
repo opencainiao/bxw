@@ -188,21 +188,26 @@ var data_manage = {
 
 		var exhibition_stage = {};
 		exhibition_stage["name"] = "exhibition_stage";
-		exhibition_stage["value"] = $("#exhibition_stage").trim_value();
+		exhibition_stage["value"] = $("#exhibition_stage").val();
 
 		var exhibition_state = {};
 		exhibition_state["name"] = "exhibition_state";
-		exhibition_state["value"] = $("#exhibition_state").trim_value();
+		exhibition_state["value"] = $("#exhibition_state").val();
 
 		var type = {};
-		exhibition_state["name"] = "type";
-		exhibition_state["value"] = $("#type").trim_value();
+		type["name"] = "type";
+		type["value"] = $("#type").val();
+		
+		var character = {};
+		character["name"] = "character";
+		character["value"] = $("#character").val();
 
 		var params = [];
 		params.push(username);
 		params.push(exhibition_stage);
 		params.push(exhibition_state);
 		params.push(type);
+		params.push(character);
 
 		data_manage.gridsetting.url = $.getSitePath()
 				+ '/front/exhibition_item/list?ts=' + new Date().getTime();
@@ -235,14 +240,19 @@ var data_manage = {
 		exhibition_state["value"] = $("#exhibition_state").val();
 
 		var type = {};
-		exhibition_state["name"] = "type";
-		exhibition_state["value"] = $("#type").val();
+		type["name"] = "type";
+		type["value"] = $("#type").val();
+
+		var character = {};
+		character["name"] = "character";
+		character["value"] = $("#character").val();
 
 		var params = [];
 		params.push(username);
 		params.push(exhibition_stage);
 		params.push(exhibition_state);
 		params.push(type);
+		params.push(character);
 
 		var url = $.getSitePath() + '/front/exhibition_item/list?ts=' + new Date().getTime();
 

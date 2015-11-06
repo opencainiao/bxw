@@ -48,11 +48,6 @@
 			<appender-ref ref="Console" />
 			<appender-ref ref="RollingFile" />
 		</root>
-		<!-- 3rdparty Loggers trace -->
-		<logger name="io.netty" level="error" additivity="false">
-			<appender-ref ref="Console" />
-			<appender-ref ref="DevLog" />
-		</logger>
 		<logger name="product-analyse" level="INFO">
 			<appender-ref ref="ProductLog" />
 		</logger>

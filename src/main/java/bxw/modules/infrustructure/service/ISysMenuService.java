@@ -75,4 +75,11 @@ public interface ISysMenuService {
 	 */
 	public List<SysMenu> findMenuTreeBySupMnuCod(String supMnuCod);
 
+	/****
+	 * 设置子菜单树
+	 * 
+	 * @param sysMenu
+	 */
+	public void setMenuTreeBySupMnuCod(SysMenu sysMenu);
+
 }

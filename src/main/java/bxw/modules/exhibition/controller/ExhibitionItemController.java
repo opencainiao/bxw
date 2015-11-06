@@ -40,7 +40,7 @@ import mou.web.webbase.util.HttpServletRequestUtil;
  * 
  * @author NBQ
  *
- */    
+ */
 @Controller
 @RequestMapping("/front/exhibition_item")
 public class ExhibitionItemController extends BaseController {
@@ -164,7 +164,7 @@ public class ExhibitionItemController extends BaseController {
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	@ResponseBody
 	public Object list(Model model, HttpServletRequest request, String user_id, String username,
-			String exhibition_stage, String exhibition_state, String type) {
+			String exhibition_stage, String exhibition_state, String type, String character) {
 
 		HttpServletRequestUtil.debugParams(request);
 		try {
@@ -206,6 +206,12 @@ public class ExhibitionItemController extends BaseController {
 				}
 			}
 
+			if (StringUtil.isNotEmpty(character)) {
+				if (!character.equals("-1")) {
+					query.put("character", character);
+				}
+			}
+
 			if (StringUtil.isNotEmpty(type)) {
 				if (!type.equals("-1")) {
 					query.put("type", type);
@@ -240,7 +246,7 @@ public class ExhibitionItemController extends BaseController {
 
 		return "front/exhibition/item/detail";
 	}
-	
+
 	/****
 	 * 查看单个展业项 信息
 	 * 
