@@ -13,6 +13,9 @@
 <jsp:include page="/WEB-INF/jsp/include/common_flexigrid.jsp"></jsp:include>
 <script type="text/javascript" src="${ctx}/resources/laytpl/laytpl.js"></script>
 
+<link href="${ctx}/resources/css/cus/cus-style.css" rel="stylesheet"
+	type="text/css">
+	
 <style>
 .navbar-form span{
 color: #c7254e;
@@ -110,6 +113,9 @@ font-weight: bold;
 				<a href="#" data-type="detail" data-id="{{d._id_m}}" data-type-name="{{d.type_name}}">
 					<span class="pull-left" style='font: 18px/25px  "微软雅黑","simhei"; margin-top: -20px;'>
 						{{ d.title }}
+						<span class="glyphicon accomplish_status_icon" aria-hidden="true" data-type={{d.type}} data-accomplishflg={{d.accomplish_flg}}
+							style="position: relative; top: 0px; left: 25px;  font-size: 20px;  margin-top: 0px;margin-right: 40px; ">
+						</span>
 					</span>
 				</a>
 				<span class="pull-right" style="margin-top: -15px;">

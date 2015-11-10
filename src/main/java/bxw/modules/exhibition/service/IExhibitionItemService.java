@@ -12,7 +12,7 @@ import bxw.modules.exhibition.model.ExhibitionItem;
  *
  */
 public interface IExhibitionItemService {
-	
+
 	/****
 	 * 根据_id获取展业信息
 	 * 
@@ -63,5 +63,14 @@ public interface IExhibitionItemService {
 	 * @return
 	 */
 	public int RemoveOneById(String _id);
+
+	/****
+	 * 设定完成情况
+	 * 
+	 * @param exhibitionItemId
+	 * @param flg
+	 *            - true-完成 false-未完成
+	 */
+	public void accomplish(String exhibitionItemId, boolean flg);
 
 }

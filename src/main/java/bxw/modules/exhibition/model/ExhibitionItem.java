@@ -10,6 +10,7 @@ import com.mou.mongodb.base.domain.BaseModel;
 
 import bxw.common.util.AgeUtil;
 import bxw.common.util.PinyinUtil;
+import bxw.modules.exhibition.enums.AccomplishFlg;
 import bxw.modules.exhibition.enums.ExhibitionCharacter;
 import bxw.modules.exhibition.enums.ExhibitionItemType;
 import bxw.modules.exhibition.enums.ExhibitionStage;
@@ -64,6 +65,10 @@ public class ExhibitionItem extends BaseModel {
 	private String pinyin_name;
 	private String first_char_header;// 姓名拼音第一个首字母， 比如：Z
 	private String all_char_header;// 姓名拼音首字母， 比如：ZS
+
+	private String accomplish_flg; // 完成标志
+	private String accomplish_flg_name; // 完成标志名称
+	private String accomplish_time; // 完成情况登记时间
 
 	private List<String> attentions; // 注意事项
 
@@ -391,6 +396,35 @@ public class ExhibitionItem extends BaseModel {
 
 	public void setNote_count(int note_count) {
 		this.note_count = note_count;
+	}
+
+	public String getAccomplish_flg() {
+		return accomplish_flg;
+	}
+
+	public void setAccomplish_flg(String accomplish_flg) {
+		this.accomplish_flg = accomplish_flg;
+	}
+
+	public void setAccomplish_flg(AccomplishFlg accomplishFlg) {
+		this.accomplish_flg = accomplishFlg.getCode();
+		this.accomplish_flg_name = accomplishFlg.getName();
+	}
+
+	public String getAccomplish_flg_name() {
+		return accomplish_flg_name;
+	}
+
+	public void setAccomplish_flg_name(String accomplish_flg_name) {
+		this.accomplish_flg_name = accomplish_flg_name;
+	}
+
+	public String getAccomplish_time() {
+		return accomplish_time;
+	}
+
+	public void setAccomplish_time(String accomplish_time) {
+		this.accomplish_time = accomplish_time;
 	}
 
 	public static void main(String[] args) {

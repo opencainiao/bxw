@@ -1,0 +1,62 @@
+[class^="cus-"],
+[class*=" cus-"] {
+  display: inline-block;
+  width: 17px;
+  height: 16px;
+  *margin-right: .3em;
+  line-height: 14px;
+  vertical-align: text-top;
+  background-image: url("cus-icons.png");
+  background-position: 14px 14px;
+  background-repeat: no-repeat;
+}
+[class^="cus-"]:last-child,
+[class*=" cus-"]:last-child {
+  *margin-left: 0;
+}
+
+.cus {
+    background-image: url(cus-icons.png);
+    background-repeat: no-repeat;
+    display: block;
+}
+
+.cus-kelian {
+    width: 100px;
+    height: 100px;
+    background-position: -55px -55px;
+}
+
+.cus-ok {
+    width: 48px;
+    height: 48px;
+    background-position: -215px -5px;
+}
+
+.cus-oyeah {
+    width: 1024px;
+    height: 641px;
+    background-position: -273px -5px;
+}
+
+
+.fill img{width:100%;height:100%;}
+
+.ok {
+    background-image: url(ok.png);
+    background-repeat: no-repeat;
+    display: block;
+    background-size:100% 100%;
+    width:100%;
+    height:100%
+}
+
+.not_ok {
+    background-image: url(not_ok.png);
+    background-repeat: no-repeat;
+    display: block;
+    background-size:100% 100%;
+    width:100%;
+    height:100%
+}
+

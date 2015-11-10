@@ -12,9 +12,11 @@
 <jsp:include page="/WEB-INF/jsp/include/common_css.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/jsp/include/common_js.jsp"></jsp:include>
 
-
+<link href="${ctx}/resources/css/cus/cus-style.css" rel="stylesheet"
+	type="text/css">
 <script type="text/javascript" src="${ctx}/resources/laytpl/laytpl.js"></script>
 
+	
 <style>
 .row {
 	margin: 0 0 0 0;
@@ -31,6 +33,7 @@ label {
 .btn-round {
     border-radius: 30px!important;
 }
+
 </style>
 </head>
 
@@ -68,6 +71,10 @@ label {
 							<span id="c_time"> </span>
 						</div>
 					</div>
+					
+					<span id="accomplish_status_icon" class="glyphicon" aria-hidden="true" 
+						style="position: absolute; top: 0px; right: 25px; color: rgb(240, 173, 78); font-size: 50px;  margin-top: 0px;margin-right: 40px; ">
+					</span>
 				</div>
 			</div>
 			<div class="row">
@@ -128,10 +135,10 @@ label {
 								style="text-align: left; padding-left: 0px;"> 下一步 </label>
 							<div class="col-xs-9" style="padding-left: 0px;">
 								<div class="row">
-									<span id="next_action_name">2222</span>
+									<span id="next_action_name"></span>
 								</div>
 								<div class="row">
-									<span id="next_action_cmt">3333</span>
+									<span id="next_action_cmt"></span>
 								</div>
 							</div>
 						</div>
@@ -287,8 +294,86 @@ label {
 			if (!exhibitionitem.type.startsWith("PLAN")){
 				$("#btn_accomplished").hide();
 				$("#btn_failed").hide();
+			}else{
+				var accomplish_flg = exhibitionitem.accomplish_flg;
+				
+				if (accomplish_flg && accomplish_flg=="01"){
+					showOk();
+				}
+				
+				if (accomplish_flg && accomplish_flg=="02"){
+					showNotOk();
+				}
 			}
+			
+			$("#btn_accomplished").click(function (){
+				
+				var url_to = $.getSitePath() + "/front/exhibition_item/${exhibitionitem._id_m}/accomplish";
+				
+				$.ajax({
+					type : 'POST',
+					url : url_to,
+					data : {
+						ts : new Date().getTime()
+					},
+					dataType : 'json',
+					async : false,
+					success : function(data) {
+
+						$.logJson(data);
+						if (data['success'] == 'n') {
+						} else {
+							showOk();
+						}
+					}
+				});
+			});
+			
+			$("#btn_failed").click(function (){
+				
+				var url_to = $.getSitePath() + "/front/exhibition_item/${exhibitionitem._id_m}/not_accomplish";
+				
+				$.ajax({
+					type : 'POST',
+					url : url_to,
+					data : {
+						ts : new Date().getTime()
+					},
+					dataType : 'json',
+					async : false,
+					success : function(data) {
+
+						$.logJson(data);
+						if (data['success'] == 'n') {
+						} else {
+							showNotOk();
+							//	$("#accomplish_status_icon").css("color", "#5cb85c");
+						}
+					}
+				});
+			});
 		});
+		
+		function hideOpButtons(){
+			$("#btn_accomplished").hide();
+			$("#btn_failed").hide();
+		}
+		
+		function showOk(){
+			
+			hideOpButtons();
+			
+			$("#accomplish_status_icon").addClass("glyphicon-ok");
+			$("#accomplish_status_icon").css("color", "#5cb85c");
+			$("#accomplish_status_icon").css("margin-top", "8px");
+		}
+		
+		function showNotOk(){
+			
+			hideOpButtons();
+			
+			$("#accomplish_status_icon").append('<i class="not_ok" style="width:70px;height:70px"></i>');
+		}
 		
 		function iniNotesButtonEvent(){
 			$("button",$("#all_notes")).bind("click",function(){

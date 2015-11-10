@@ -17,6 +17,7 @@ import com.mou.mongodb.base.domain.PageVO;
 import com.mou.mongodb.base.springdb.dao.IBaseDaoMongo;
 
 import bxw.modules.base.BaseService;
+import bxw.modules.exhibition.enums.AccomplishFlg;
 import bxw.modules.exhibition.enums.ExhibitionGlobalState;
 import bxw.modules.exhibition.enums.ExhibitionStage;
 import bxw.modules.exhibition.enums.ExhibitionState;
@@ -263,12 +264,36 @@ public class ExhibitionItemService extends BaseService implements IExhibitionIte
 
 		return exhibitionItem.getNote_count();
 	}
-	
+
 	public static void main(String[] args) {
-		
+
 		String user_id = "aa";
 		String[] user_ids = user_id.split(";");
-		
+
 		System.out.println(JsonUtil.toJsonStr(user_ids));
+	}
+
+	@Override
+	public void accomplish(String exhibitionItemId, boolean flg) {
+
+		AccomplishFlg accomplishFlg = null;
+
+		if (flg) {
+			accomplishFlg = AccomplishFlg.ACCOMPLISHED;
+		} else {
+			accomplishFlg = AccomplishFlg.NOT_ACCOMPLISHED;
+		}
+
+		DBObject toUpdate = new BasicDBObject();
+		DBObject updateSet = new BasicDBObject();
+
+		updateSet.put("accomplish_flg", accomplishFlg.getCode());
+		updateSet.put("accomplish_flg_name", accomplishFlg.getName());
+		updateSet.put("accomplish_time", DateUtil.getCurrentTimsmp());
+
+		this.setModifyInfo(updateSet);
+		toUpdate.put("$set", updateSet);
+
+		this.commonDaoMongo.updateOneById(exhibitionItemId, null, toUpdate, ExhibitionItem.class);
 	}
 }

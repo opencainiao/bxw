@@ -55,7 +55,7 @@ $().ready(
 				window.location.href = url_to;
 			});
 			
-			$("#create_other").click(function(e) {
+			$("#create_other").click(function(e){
 				e.preventDefault();
 
 				var r_name = $(this).attr("data-name");
@@ -69,8 +69,44 @@ $().ready(
 
 				window.location.href = url_to;
 			});
-			
 		});
+
+function initOnGridLoad(){
+	initEventInTpl();
+	initIcon();
+}
+function initIcon(){
+	
+	$(".accomplish_status_icon").each(function(){
+		var _this = $(this);
+		
+		var type = _this.attr("data-type");
+		var accomplish_flg= _this.attr("data-accomplishflg"); 
+		
+		console.log(type);
+		if (type.startsWith("PLAN")){
+			
+			if (accomplish_flg && accomplish_flg=="01"){
+				showOk(_this);
+			}
+			
+			if (accomplish_flg && accomplish_flg=="02"){
+				showNotOk(_this);
+			}
+		}
+	});
+}	
+
+function showOk(span){
+	$(span).addClass("glyphicon-ok");
+	$(span).css("color", "#5cb85c");
+	$(span).css("margin-top", "8px");
+}
+
+function showNotOk(span){
+	$(span).append('<i class="not_ok" style="width:30px;height:30px"></i>');
+	$(span).css("top","8px");
+}
 
 function initEventInTpl(){
 	$("a[data-type=detail]").unbind();
@@ -292,7 +328,7 @@ var data_manage = {
 		pagestat : '共有{total}条记录，显示{from} - {to}条记录',
 		procmsg : '正在查询，请稍候 ...',
 		nomsg : '没有符合条件的数据',
-		onSuccess:initEventInTpl,
+		onSuccess:initOnGridLoad,
 		colModel : [ {
 			display : '选择',
 			hide : true,

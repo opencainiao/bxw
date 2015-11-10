@@ -361,4 +361,50 @@ public class ExhibitionItemController extends BaseController {
 		rr.setMessage(String.valueOf(noteCount));
 		return rr;
 	}
+
+	/****
+	 * 登记系统展业项 "已完成"，返回json给客户端
+	 * 
+	 * @param _id
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/{_id}/accomplish", method = RequestMethod.POST)
+	@ResponseBody
+	public Object accomplishSuccess(@PathVariable String _id, HttpServletRequest request) {
+
+		try {
+			this.exhibitionItemService.accomplish(_id, true);
+
+			RequestResult rr = new RequestResult();
+			rr.setSuccess(true);
+			rr.setMessage(_id);
+			return rr;
+		} catch (Exception e) {
+			return this.handleException(e);
+		}
+	}
+	
+	/****
+	 * 登记系统展业项 "已完成"，返回json给客户端
+	 * 
+	 * @param _id
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/{_id}/not_accomplish", method = RequestMethod.POST)
+	@ResponseBody
+	public Object accomplishFail(@PathVariable String _id, HttpServletRequest request) {
+
+		try {
+			this.exhibitionItemService.accomplish(_id, false);
+
+			RequestResult rr = new RequestResult();
+			rr.setSuccess(true);
+			rr.setMessage(_id);
+			return rr;
+		} catch (Exception e) {
+			return this.handleException(e);
+		}
+	}
 }
