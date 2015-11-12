@@ -9,23 +9,24 @@
 <title></title>
 <link rel="stylesheet"
 	href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" />
-	<link id="xheCSS_default"
-		href="http://xheditor.com/js/xheditor_skin/default/ui.css"
-		type="text/css" rel="stylesheet" />
-		<link rel="stylesheet"
-			href="${ctx }/resources/xheditor-1.2.2/demos/common.css"
-			type="text/css" media="screen" />
-		<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
-		<script type="text/javascript"
-			src="${ctx }/resources/xheditor-1.2.2/xheditor-1.2.2.min.js"></script>
-		<script type="text/javascript"
-			src="${ctx }/resources/xheditor-1.2.2/xheditor_lang/zh-cn.js"></script>
-		<script src="http://apps.bdimg.com/libs/layer/2.0/layer.js"></script>
-		<script type="text/javascript"
-			src="${ctx}/resources/js/jquery.nbq.ux.js"></script>
+<link id="xheCSS_default"
+	href="http://xheditor.com/js/xheditor_skin/default/ui.css"
+	type="text/css" rel="stylesheet" />
+<link rel="stylesheet"
+	href="${ctx }/resources/xheditor-1.2.2/demos/common.css"
+	type="text/css" media="screen" />
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="${ctx }/resources/xheditor-1.2.2/xheditor-1.2.2.js"></script>
+<script type="text/javascript"
+	src="${ctx }/resources/xheditor-1.2.2/xheditor_lang/zh-cn.js"></script>
+<script src="http://apps.bdimg.com/libs/layer/2.0/layer.js"></script>
+<script type="text/javascript"
+	src="${ctx}/resources/js/jquery.nbq.ux.js"></script>
 </head>
 <body>
-	<sf:form method="post" modelAttribute="note" id="addForm" style="margin:0 0!important; padding: 0 0!important">
+	<sf:form method="post" modelAttribute="note" id="addForm"
+		style="margin:0 0!important; padding: 0 0!important">
 		<input type="hidden" id="user_id" name="user_id"
 			value="${note.user_id }" />
 		<input type="hidden" id="target_id" name="target_id"
@@ -54,7 +55,30 @@
 		var content_editor;
 		$().ready(function() {
 
-			content_editor = $('#content').xheditor();
+			content_editor = $('#content').xheditor({
+				tools : 'full',
+				skin : 'default',
+				upMultiple : false,
+				html5Upload: true,
+				upImgUrl : "${ctx}/attachment/upload_xheditor?immediate=1",
+				upImgExt : "jpg,jpeg,gif,bmp,png"
+			});
+			
+			content_editor.settings.upImgUrl = "${ctx}/attachment/upload_xheditor?immediate=1";
+			content_editor.settings.onUpload = function insertUpload(msg) {
+				
+				$.logJson(msg);
+				
+				var attach = msg[0].attach;
+				var attach_id = attach._id_m;
+				
+				//alert(attach_id);
+			};
+			
+			$("#xheImgWidth").val(150);
+			$("#xheImgHeight").val(80);
+			
+			alert($("#xheImgWidth").val());
 
 			$("#btn_save").bind("click", save);
 		});
@@ -81,39 +105,41 @@
 			$.disableButton("btn_save");
 
 			$.ajax({
-				type : 'POST',
-				url : url_to,
-				data : $.extend({
-					ts : new Date().getTime()
-				}, paramForm),
-				dataType : 'json',
-				success : function(data) {
+						type : 'POST',
+						url : url_to,
+						data : $.extend({
+							ts : new Date().getTime()
+						}, paramForm),
+						dataType : 'json',
+						success : function(data) {
 
-					if (data['success'] == 'n') {
-						if (data['brErrors']) {
-							$.showBRErrors_mou_abs(data['brErrors'],
-									$("#addForm"));
-						} else {
-							$.alertError(data['message']);
+							if (data['success'] == 'n') {
+								if (data['brErrors']) {
+									$.showBRErrors_mou_abs(data['brErrors'],
+											$("#addForm"));
+								} else {
+									$.alertError(data['message']);
+								}
+							} else {
+
+								var callback = parent.closeAddNoteWindow;
+
+								layer
+										.open({
+											title : [ '成功',
+													'font-size:18px;background-color: #dff0d8;' ],
+											content : '添加成功',
+											yes : function(index) {
+												parent.refresh_note_count();
+												parent.closeAddNoteWindow(); //一般设定yes回调，必须进行手工关闭
+											}
+										});
+							}
+						},
+						complete : function(XMLHttpRequest, textStatus) {
+							$.enableButton("btn_save");
 						}
-					} else {
-
-						var callback = parent.closeAddNoteWindow;
-						
-						layer.open({
-							title: ['成功', 'font-size:18px;background-color: #dff0d8;'],
-						    content: '添加成功',
-						    yes: function(index){
-						    	parent.refresh_note_count();
-						    	parent.closeAddNoteWindow(); //一般设定yes回调，必须进行手工关闭
-						    }
-						});                
-					}
-				},
-				complete : function(XMLHttpRequest, textStatus) {
-					$.enableButton("btn_save");
-				}
-			});
+					});
 		};
 	</script>
 </body>

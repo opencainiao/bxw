@@ -1,13 +1,24 @@
 package bxw.modules.global.service;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
@@ -403,5 +414,130 @@ public class AttachMentSerivceImpl extends BaseService implements IAttachmentSer
 				}
 			}
 		}
+	}
+
+	/****
+	 * 上传一个无任何处理的文件
+	 */
+	@Override
+	public Attachment uploadOneAttachmentToMongo(HttpServletRequest request) {
+
+		String oriFileName = ""; // 文件的全路径，绝对路径名加文件名
+		String contentType = ""; // 文件的类型
+		long size = 0; // 文件的大小，以字节为单位
+		String ext = "";
+		String uploadDir = request.getSession().getServletContext().getRealPath(UPLOAD_PATH);
+		String newFilePath = uploadDir + "/";
+		String newFileName = EncoderHandler.encodeByAES(this.getUserId() + DateUtil.getCurrentTimsmp());
+
+		Attachment att = new Attachment();
+
+		try {
+			if ("application/octet-stream".equals(request.getContentType())) {
+				String dispoString = request.getHeader("Content-Disposition");
+
+				int iFindStart = dispoString.indexOf("filename=\"") + 10;
+				int iFindEnd = dispoString.indexOf("\"", iFindStart);
+
+				oriFileName = dispoString.substring(iFindStart, iFindEnd);
+				ext = FilenameUtils.getExtension(oriFileName);
+				newFileName = newFileName + "." + ext;
+				newFilePath = newFilePath + newFileName;
+
+				logger.debug("sFileName--[{}]", oriFileName);
+
+				int i = request.getContentLength();
+
+				byte buffer[] = new byte[i];
+				int j = 0;
+				while (j < i) { // 获取表单的上传文件
+					int k = request.getInputStream().read(buffer, j, i - j);
+					j += k;
+				}
+
+				if (buffer.length == 0) { // 文件是否为空
+					return null;
+				}
+
+				OutputStream out = new BufferedOutputStream(new FileOutputStream(newFilePath, true));
+				out.write(buffer);
+				out.close();
+
+				logger.debug("\n存储到文件成功\n{}", newFilePath);
+				
+				Path path = Paths.get(newFilePath);  
+				
+				File f = new File(newFilePath);
+				contentType = Files.probeContentType(path); // 文件的类型
+				size = FileUtils.sizeOf(f);// 文件的大小，以字节为单位
+			} else {
+
+				String tempDirectory = request.getSession().getServletContext().getRealPath(UPLOAD_PATH);
+				DiskFileItemFactory factory = new DiskFileItemFactory();
+				factory.setSizeThreshold(1024 * 1024); // 设定了1M的缓冲区
+				factory.setRepository(new File(tempDirectory)); // 设置上传文件的临时目录
+
+				ServletFileUpload upload = new ServletFileUpload(factory);
+
+				List<FileItem> items = upload.parseRequest(request); // 解析request请求
+				Iterator iter = items.iterator();
+
+				while (iter.hasNext()) {
+					FileItem item = (FileItem) iter.next();
+					if (!item.isFormField()) { // 如果是表单域 ，就是非文件上传元素
+
+						oriFileName = item.getName(); // 文件的全路径，绝对路径名加文件名
+						contentType = item.getContentType(); // 文件的类型
+						size = item.getSize(); // 文件的大小，以字节为单位
+
+						ext = FilenameUtils.getExtension(oriFileName);
+						newFileName = newFileName + "." + ext;
+						newFilePath = newFilePath + newFileName;
+
+						// 0.存储到本地
+						File savedFile = new File(newFilePath);
+						item.write(savedFile); // 把上传的内容写到一个文件中
+
+						logger.debug("\n存储到目录{}\n文件\n{}", newFilePath, newFileName);
+						logger.debug("本地文件存放路径:\n{}", savedFile.getParentFile().getAbsolutePath());
+					}
+				}
+			}
+
+			boolean isImage = FileUtil.isImage(new FileInputStream(newFilePath));
+
+			// 1.上传到数据库
+			String id = doUploadOneFileToMongo(new File(newFilePath));
+
+			// 2.创建附件文件
+			att.setFile_id(id);
+			att.setSuffix(ext);
+			att.setIsAttach(request.getParameter("isattach"));
+			att.setIsIndexPic(request.getParameter("isindexpic"));
+			att.setOriName(FilenameUtils.getBaseName(oriFileName));
+			att.setNewName(newFileName);
+			att.setType(contentType);
+			att.setSize(size);
+			att.setUploadDate(DateUtil.getCurdate());
+			att.setUploadTime(DateUtil.getCurrentTimsmp());
+			att.setIsImg(isImage);
+
+			// 4.将附件写入附件表
+			String _id = this.commonDaoMongo.insertOne(att);
+			att.set_id_m(_id);
+
+			// 5.删除本地原文件
+			logger.debug("原文件路径\n{}", newFilePath);
+			FileUtil.deleteFile(newFilePath);
+
+			logger.debug("上传文件完毕，上传之后的文件信息");
+			logger.debug(this.commonDaoMongo.findOneById(_id, Attachment.class));
+
+			return att;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }

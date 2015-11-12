@@ -31,8 +31,8 @@ public interface IAttachmentService {
 	 * @param dirpath
 	 * @throws IOException
 	 */
-	public File doUploadOneFileToServerDisk(MultipartFile attach,
-			String newFileName, String dirpath) throws IOException;
+	public File doUploadOneFileToServerDisk(MultipartFile attach, String newFileName, String dirpath)
+			throws IOException;
 
 	/****
 	 * 上传一个附件
@@ -44,9 +44,8 @@ public interface IAttachmentService {
 	 * @return
 	 * @throws IOException
 	 */
-	public Attachment uploadOneAttachmentToServerDisk(MultipartFile attach,
-			HttpServletRequest request, String dirpath, boolean needCompress,
-			List<ThumbParam> tps) throws IOException;
+	public Attachment uploadOneAttachmentToServerDisk(MultipartFile attach, HttpServletRequest request, String dirpath,
+			boolean needCompress, List<ThumbParam> tps) throws IOException;
 
 	/****
 	 * 删除一个附件<br>
@@ -67,8 +66,7 @@ public interface IAttachmentService {
 	 * @param newFileName
 	 * @return 文件的ID
 	 */
-	public String doUploadOneFileToMongo(MultipartFile attach,
-			String newFileName) throws IOException;
+	public String doUploadOneFileToMongo(MultipartFile attach, String newFileName) throws IOException;
 
 	/****
 	 * 上传一个附件
@@ -80,8 +78,7 @@ public interface IAttachmentService {
 	 * @return
 	 * @throws IOException
 	 */
-	public Attachment uploadOneAttachmentToMongo(MultipartFile attach,
-			HttpServletRequest request, boolean needCompress,
+	public Attachment uploadOneAttachmentToMongo(MultipartFile attach, HttpServletRequest request, boolean needCompress,
 			List<ThumbParam> tps) throws IOException;
 
 	/****
@@ -110,8 +107,7 @@ public interface IAttachmentService {
 	 * @return
 	 */
 	public Attachment uploadOneAttachmentToMongoOnlyCj(MultipartFile fileIn,
-			MultipartHttpServletRequest multipartRequest, boolean isCompress,
-			ThumbParam tp) throws IOException;
+			MultipartHttpServletRequest multipartRequest, boolean isCompress, ThumbParam tp) throws IOException;
 
 	/****
 	 * 把文件上传到数据库
@@ -142,7 +138,15 @@ public interface IAttachmentService {
 	 * 删除一个附件
 	 * 
 	 * @param oriHeadImg
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public void deleteOneAttachment(String oriHeadImg) throws IOException;
+
+	/****
+	 * 创建一个无任何特殊处理的文件上传
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public Attachment uploadOneAttachmentToMongo(HttpServletRequest request);
 }

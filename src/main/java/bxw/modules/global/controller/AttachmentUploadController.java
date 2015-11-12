@@ -44,8 +44,7 @@ import mou.web.webbase.util.ValidateUtil;
 @RequestMapping("/attachment")
 public class AttachmentUploadController extends BaseController {
 
-	private static final Logger logger = LogManager
-			.getLogger(AttachmentUploadController.class);
+	private static final Logger logger = LogManager.getLogger(AttachmentUploadController.class);
 
 	@Resource(name = "attachmentService")
 	private IAttachmentService attachmentService;
@@ -101,8 +100,8 @@ public class AttachmentUploadController extends BaseController {
 				String key = (String) it.next();
 				MultipartFile fileIn = multipartRequest.getFile(key);
 
-				attach = this.attachmentService.uploadOneAttachmentToServerDisk(
-						fileIn, multipartRequest, dirpath, isCompress, tps);
+				attach = this.attachmentService.uploadOneAttachmentToServerDisk(fileIn, multipartRequest, dirpath,
+						isCompress, tps);
 			}
 
 			result.put("success", "y");
@@ -123,8 +122,7 @@ public class AttachmentUploadController extends BaseController {
 	 */
 	@RequestMapping(value = "/ajaxDeleteOneAttachment", method = RequestMethod.POST)
 	@ResponseBody
-	public Object ajaxDeleteOneAttachment(String _id_m,
-			HttpServletRequest request) {
+	public Object ajaxDeleteOneAttachment(String _id_m, HttpServletRequest request) {
 
 		Map<String, Object> result = new HashMap<String, Object>();
 		if (StringUtil.isEmpty(_id_m)) {
@@ -152,8 +150,7 @@ public class AttachmentUploadController extends BaseController {
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	@ResponseBody
-	public Object ajaxUploadOneAttachmentToMongo(HttpServletRequest request)
-			throws UnsupportedEncodingException {
+	public Object ajaxUploadOneAttachmentToMongo(HttpServletRequest request) throws UnsupportedEncodingException {
 
 		if (request.getCharacterEncoding() == null) {
 			request.setCharacterEncoding("UTF-8");// 你的编码格式
@@ -205,8 +202,7 @@ public class AttachmentUploadController extends BaseController {
 				String key = (String) it.next();
 				MultipartFile fileIn = multipartRequest.getFile(key);
 
-				attach = this.attachmentService.uploadOneAttachmentToMongo(
-						fileIn, multipartRequest, isCompress, tps);
+				attach = this.attachmentService.uploadOneAttachmentToMongo(fileIn, multipartRequest, isCompress, tps);
 			}
 
 			result.put("success", "y");
@@ -230,8 +226,7 @@ public class AttachmentUploadController extends BaseController {
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/upload_pic_cj", method = RequestMethod.POST)
 	@ResponseBody
-	public Object ajaxUploadOneAttachmentToMongoOnlyCJ(
-			HttpServletRequest request, String x1, String y1, String x2,
+	public Object ajaxUploadOneAttachmentToMongoOnlyCJ(HttpServletRequest request, String x1, String y1, String x2,
 			String y2, String w, String h) throws UnsupportedEncodingException {
 
 		HttpServletRequestUtil.debugParams(request);
@@ -265,9 +260,8 @@ public class AttachmentUploadController extends BaseController {
 				String key = (String) it.next();
 				MultipartFile fileIn = multipartRequest.getFile(key);
 
-				attach = this.attachmentService
-						.uploadOneAttachmentToMongoOnlyCj(fileIn,
-								multipartRequest, isCompress, tp);
+				attach = this.attachmentService.uploadOneAttachmentToMongoOnlyCj(fileIn, multipartRequest, isCompress,
+						tp);
 			}
 
 			result.put("success", "y");
@@ -291,8 +285,7 @@ public class AttachmentUploadController extends BaseController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/{_id}", method = RequestMethod.GET)
-	public void downloadFile(@PathVariable String _id,
-			HttpServletRequest request, HttpServletResponse response)
+	public void downloadFile(@PathVariable String _id, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 
 		Attachment att = this.attachmentService.getAttachMent(_id);
@@ -323,5 +316,43 @@ public class AttachmentUploadController extends BaseController {
 				gfsFile.writeTo(response.getOutputStream());
 			}
 		}
+	}
+
+	/****
+	 * 上传一个附件到mongo数据库。 上传附件时，默认不对图片生成缩略图
+	 * 
+	 * @param request
+	 * @return 返回生成的附件信息
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping(value = "/upload_xheditor", method = RequestMethod.POST)
+	@ResponseBody
+	public Object uploadOneAttachmentToMongo(HttpServletRequest request)
+			throws UnsupportedEncodingException {
+
+		if (request.getCharacterEncoding() == null) {
+			request.setCharacterEncoding("UTF-8");// 你的编码格式
+		}
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		Map<String, Object> msg = new HashMap<String, Object>();
+		
+		Attachment attach = null;
+		try {
+			attach = this.attachmentService.uploadOneAttachmentToMongo(request);
+			
+			String url = request.getServletContext().getAttribute("ctx") + "/attachment/" + attach.get_id_m();
+			result.put("err", "");
+			msg.put("url", url);
+			msg.put("attach", attach);
+			result.put("msg",msg);
+
+			logger.debug("xheditor上传文件完毕，上传结果\n{}", attach);
+		} catch (Exception e) {
+			result.put("err", StringUtil.getStackTrace(e));
+		}
+
+		return result;
 	}
 }
