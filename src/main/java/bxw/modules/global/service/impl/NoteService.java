@@ -121,6 +121,22 @@ public class NoteService extends BaseService implements INoteService {
 	@Override
 	public DBObject updatePart(DBObject returnFields, Note note) {
 
+		List<String> attaches = note.getAttaches();
+		if (attaches!=null && attaches.size()>0){
+			
+			String content = note.getContent();
+			for (String attachId:attaches){
+				if (content.contains(attachId)){
+					// 更新附件的归属id
+					this.attachmentService.updateAttachOwnerIdById(attachId, note.get_id_m());
+				}else{
+					// 删除附件(因为note没有使用，所以删除)
+					this.attachmentService.deleteOneAttachment(attachId);
+					logger.debug("\n删除附件【{}】完毕！",attachId);
+				}
+			}
+		}
+		
 		DBObject toUpdate = makeUpdate(note);
 
 		return this.commonDaoMongo.updateOneById(note.get_id_m(), returnFields, toUpdate, Note.class);

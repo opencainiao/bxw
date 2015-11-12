@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -38,7 +38,7 @@
 			</div>
 			<div class="panel-body">
 				<textarea id="content" name="content"
-					class="xheditor-simple {upImgUrl:'/uploadImg',upImgExt:'jpg,jpeg,gif,png'}"
+					class="xheditor {tools:',Blocktag,Fontface,FontSize,Bold,Italic,Underline,Strikethrough,FontColor,BackColor,Removeformat,|,Align,List,Outdent,Indent,|,Link,Unlink,Img,Hr,Emot,Table,|,Preview',skin:'default',upImgExt:'jpg,jpeg,gif,png'}" 
 					rows="12" cols="80" style="width: 100%">${note.content }</textarea>
 			</div>
 			<div class="panel-footer">
@@ -53,12 +53,39 @@
 	<script>
 		var content_editor;
 		$().ready(function() {
-
+			
+			var attaches = [];
+			<c:forEach var="attach" items="${note.attaches}">
+				attaches.push("${attach}");
+			</c:forEach>
+			$("#content").data("attaches",attaches);
+			
+			$.logJson($("#content").data("attaches"));
+			
 			content_editor = $('#content').xheditor();
+			
+			content_editor.settings.upImgUrl = "${ctx}/attachment/upload_xheditor?immediate=1";
+			content_editor.settings.onUpload = function insertUpload(msg) {
+				var attach = msg[0].attach;
+				var attach_id = attach._id_m;
+				addAttatch(attach_id);
+			};
 
 			$("#btn_save").bind("click", save);
 		});
 
+		function addAttatch(attach_id){
+			var attaches = $("#content").data("attaches");
+			
+			if (attaches == null){
+				attaches = [];
+			}
+			
+			attaches.push(attach_id);
+			
+			$("#content").data("attaches",attaches);
+		}
+		
 		//保存
 		var save = function() {
 
@@ -70,6 +97,7 @@
 
 			var paramForm = $('form').getFormParam_ux();
 			paramForm["content"] = content.trim();
+			paramForm["attaches"] = JSON.stringify($("#content").data("attaches"));
 			$.logJson(paramForm);
 
 			var url_to = $.getSitePath() + "/note/${note._id_m }/update";

@@ -55,16 +55,13 @@
 		var content_editor;
 		$().ready(function() {
 
-			content_editor = $('#content').xheditor({tools:'Cut,Copy,Paste,Pastetext,|,Source,Fullscreen,About',skin:'default'});
+			content_editor = $('#content').xheditor();
 			
 			content_editor.settings.upImgUrl = "${ctx}/attachment/upload_xheditor?immediate=1";
 			content_editor.settings.onUpload = function insertUpload(msg) {
 				var attach = msg[0].attach;
 				var attach_id = attach._id_m;
 				addAttatch(attach_id);
-				//alert(attach_id);
-				
-				//$.logJson( $("#content").data("attaches"));
 			};
 
 			$("#btn_save").bind("click", save);
