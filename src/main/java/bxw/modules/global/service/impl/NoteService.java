@@ -1,5 +1,6 @@
 package bxw.modules.global.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -65,7 +66,18 @@ public class NoteService extends BaseService implements INoteService {
 
 	@Override
 	public String add(Note note) {
-
+		List<String> attachesNew = new ArrayList<String>();
+		List<String> attaches = note.getAttaches();
+		if (attaches!=null && attaches.size()>0){
+			String content = note.getContent();
+			for (String attachId:attaches){
+				if (content.contains(attachId)){
+					attachesNew.add(attachId);
+				}
+			}
+		}
+		note.setAttaches(attachesNew);
+		
 		// 1.插入一条note
 		this.setCreateInfo(note);
 		String noteId = this.commonDaoMongo.insertOne(note);
@@ -82,7 +94,6 @@ public class NoteService extends BaseService implements INoteService {
 		logger.debug("更新后的记录条数【{}】", result.get("note_count"));
 		
 		//3.对附件，设置附件的归属id为noteid
-		List<String> attaches = note.getAttaches();
 		if (attaches!=null && attaches.size()>0){
 			
 			String content = note.getContent();
@@ -121,12 +132,14 @@ public class NoteService extends BaseService implements INoteService {
 	@Override
 	public DBObject updatePart(DBObject returnFields, Note note) {
 
+		List<String> attachesNew = new ArrayList<String>();
 		List<String> attaches = note.getAttaches();
 		if (attaches!=null && attaches.size()>0){
 			
 			String content = note.getContent();
 			for (String attachId:attaches){
 				if (content.contains(attachId)){
+					attachesNew.add(attachId);
 					// 更新附件的归属id
 					this.attachmentService.updateAttachOwnerIdById(attachId, note.get_id_m());
 				}else{
@@ -136,6 +149,8 @@ public class NoteService extends BaseService implements INoteService {
 				}
 			}
 		}
+		
+		note.setAttaches(attachesNew);
 		
 		DBObject toUpdate = makeUpdate(note);
 
@@ -154,6 +169,7 @@ public class NoteService extends BaseService implements INoteService {
 		DBObject updateSet = new BasicDBObject();
 
 		updateSet.put("content", note.getContent());
+		updateSet.put("attaches", note.getAttaches());
 
 		this.setModifyInfo(updateSet);
 		update.put("$set", updateSet);
