@@ -1,5 +1,7 @@
 package bxw.modules.global.model;
 
+import java.util.List;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.mou.mongodb.base.domain.BaseModel;
@@ -19,6 +21,7 @@ public class Note extends BaseModel {
 	private String title;//
 	private String content;//
 	private int note_count;// 记录数
+	private List<String> attaches;
 
 	public String getUser_id() {
 		return user_id;
@@ -66,6 +69,14 @@ public class Note extends BaseModel {
 
 	public void setNote_count(int note_count) {
 		this.note_count = note_count;
+	}
+
+	public List<String> getAttaches() {
+		return attaches;
+	}
+
+	public void setAttaches(List<String> attaches) {
+		this.attaches = attaches;
 	}
 
 }

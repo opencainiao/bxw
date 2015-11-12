@@ -39,7 +39,7 @@
 			</div>
 			<div class="panel-body">
 				<textarea id="content" name="content"
-					class="xheditor-simple {upImgUrl:'/uploadImg',upImgExt:'jpg,jpeg,gif,png'}"
+					class="xheditor {tools:',Blocktag,Fontface,FontSize,Bold,Italic,Underline,Strikethrough,FontColor,BackColor,Removeformat,|,Align,List,Outdent,Indent,|,Link,Unlink,Img,Hr,Emot,Table,|,Preview',skin:'default',upImgExt:'jpg,jpeg,gif,png'}" 
 					rows="12" cols="80" style="width: 100%">${note.content }</textarea>
 			</div>
 			<div class="panel-footer">
@@ -55,34 +55,32 @@
 		var content_editor;
 		$().ready(function() {
 
-			content_editor = $('#content').xheditor({
-				tools : 'full',
-				skin : 'default',
-				upMultiple : false,
-				html5Upload: true,
-				upImgUrl : "${ctx}/attachment/upload_xheditor?immediate=1",
-				upImgExt : "jpg,jpeg,gif,bmp,png"
-			});
+			content_editor = $('#content').xheditor({tools:'Cut,Copy,Paste,Pastetext,|,Source,Fullscreen,About',skin:'default'});
 			
 			content_editor.settings.upImgUrl = "${ctx}/attachment/upload_xheditor?immediate=1";
 			content_editor.settings.onUpload = function insertUpload(msg) {
-				
-				$.logJson(msg);
-				
 				var attach = msg[0].attach;
 				var attach_id = attach._id_m;
-				
+				addAttatch(attach_id);
 				//alert(attach_id);
+				
+				//$.logJson( $("#content").data("attaches"));
 			};
-			
-			$("#xheImgWidth").val(150);
-			$("#xheImgHeight").val(80);
-			
-			alert($("#xheImgWidth").val());
 
 			$("#btn_save").bind("click", save);
 		});
 
+		function addAttatch(attach_id){
+			var attaches = $("#content").data("attaches");
+			
+			if (attaches == null){
+				attaches = [];
+			}
+			
+			attaches.push(attach_id);
+			
+			$("#content").data("attaches",attaches);
+		}
 		//保存
 		var save = function() {
 
@@ -94,6 +92,7 @@
 
 			var paramForm = $('form').getFormParam_ux();
 			paramForm["content"] = content.trim();
+			paramForm["attaches"] = JSON.stringify($("#content").data("attaches"));
 			$.logJson(paramForm);
 
 			var url_to = $.getSitePath() + "/note/add";
@@ -105,41 +104,40 @@
 			$.disableButton("btn_save");
 
 			$.ajax({
-						type : 'POST',
-						url : url_to,
-						data : $.extend({
-							ts : new Date().getTime()
-						}, paramForm),
-						dataType : 'json',
-						success : function(data) {
+				type : 'POST',
+				url : url_to,
+				data : $.extend({
+					ts : new Date().getTime()
+				}, paramForm),
+				dataType : 'json',
+				success : function(data) {
 
-							if (data['success'] == 'n') {
-								if (data['brErrors']) {
-									$.showBRErrors_mou_abs(data['brErrors'],
-											$("#addForm"));
-								} else {
-									$.alertError(data['message']);
-								}
-							} else {
-
-								var callback = parent.closeAddNoteWindow;
-
-								layer
-										.open({
-											title : [ '成功',
-													'font-size:18px;background-color: #dff0d8;' ],
-											content : '添加成功',
-											yes : function(index) {
-												parent.refresh_note_count();
-												parent.closeAddNoteWindow(); //一般设定yes回调，必须进行手工关闭
-											}
-										});
-							}
-						},
-						complete : function(XMLHttpRequest, textStatus) {
-							$.enableButton("btn_save");
+					if (data['success'] == 'n') {
+						if (data['brErrors']) {
+							$.showBRErrors_mou_abs(data['brErrors'],
+									$("#addForm"));
+						} else {
+							$.alertError(data['message']);
 						}
-					});
+					} else {
+
+						var callback = parent.closeAddNoteWindow;
+
+						layer.open({
+							title : [ '成功',
+									'font-size:18px;background-color: #dff0d8;' ],
+							content : '添加成功',
+							yes : function(index) {
+								parent.refresh_note_count();
+								parent.closeAddNoteWindow(); //一般设定yes回调，必须进行手工关闭
+							}
+						});
+					}
+				},
+				complete : function(XMLHttpRequest, textStatus) {
+					$.enableButton("btn_save");
+				}
+			});
 		};
 	</script>
 </body>

@@ -199,7 +199,7 @@ public class AttachMentSerivceImpl extends BaseService implements IAttachmentSer
 		return this.commonDaoMongo.saveFile(attach.getInputStream(), newFileName);
 	}
 
-	public void doRemoveOneFileFromMongo(String fileId) throws IOException {
+	public void doRemoveOneFileFromMongo(String fileId) {
 
 		this.commonDaoMongo.removeFile(fileId);
 
@@ -390,16 +390,18 @@ public class AttachMentSerivceImpl extends BaseService implements IAttachmentSer
 	}
 
 	@Override
-	public void deleteOneAttachment(String _id_m) throws IOException {
+	public void deleteOneAttachment(String _id_m)  {
 
 		Attachment att = this.commonDaoMongo.findOneById(_id_m, Attachment.class);
 		if (att == null) {
+			logger.debug("\n{}对应的附件不存在",_id_m);
 			return;
 		}
 
 		// 1.删除附件对应的存储在数据库文件
 		String fileId = att.getFile_id();
 		doRemoveOneFileFromMongo(fileId);
+		logger.debug("\n删除文件成功【{}】",fileId);
 
 		// 2.删除attachment
 		this.commonDaoMongo.removeById(_id_m, Attachment.class);
@@ -464,9 +466,9 @@ public class AttachMentSerivceImpl extends BaseService implements IAttachmentSer
 				out.close();
 
 				logger.debug("\n存储到文件成功\n{}", newFilePath);
-				
-				Path path = Paths.get(newFilePath);  
-				
+
+				Path path = Paths.get(newFilePath);
+
 				File f = new File(newFilePath);
 				contentType = Files.probeContentType(path); // 文件的类型
 				size = FileUtils.sizeOf(f);// 文件的大小，以字节为单位

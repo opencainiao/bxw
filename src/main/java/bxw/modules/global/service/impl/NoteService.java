@@ -17,6 +17,7 @@ import com.mou.mongodb.base.springdb.dao.IBaseDaoMongo;
 import bxw.modules.base.BaseService;
 import bxw.modules.exhibition.model.ExhibitionItem;
 import bxw.modules.global.model.Note;
+import bxw.modules.global.service.IAttachmentService;
 import bxw.modules.global.service.INoteService;
 
 /****
@@ -31,6 +32,9 @@ public class NoteService extends BaseService implements INoteService {
 	@Resource(name = "commonDaoMongo")
 	private IBaseDaoMongo commonDaoMongo;
 
+	@Resource(name = "attachmentService")
+	private IAttachmentService attachmentService;
+	
 	private static final Logger logger = LogManager.getLogger(NoteService.class);
 
 	@Override
@@ -62,10 +66,11 @@ public class NoteService extends BaseService implements INoteService {
 	@Override
 	public String add(Note note) {
 
+		// 1.插入一条note
 		this.setCreateInfo(note);
 		String noteId = this.commonDaoMongo.insertOne(note);
 
-		// 增加目标的记录数
+		// 2.增加目标的记录数
 		String target_id = note.getTarget_id();
 		String target_type = note.getTarget_type();
 
@@ -75,6 +80,24 @@ public class NoteService extends BaseService implements INoteService {
 		Class clazz = getClass(target_type);
 		DBObject result = commonDaoMongo.updateOneById(target_id, null, update, clazz);
 		logger.debug("更新后的记录条数【{}】", result.get("note_count"));
+		
+		//3.对附件，设置附件的归属id为noteid
+		List<String> attaches = note.getAttaches();
+		if (attaches!=null && attaches.size()>0){
+			
+			String content = note.getContent();
+			for (String attachId:attaches){
+				if (content.contains(attachId)){
+					// 更新附件的归属id
+					this.attachmentService.updateAttachOwnerIdById(attachId, noteId);
+				}else{
+					// 删除附件(因为note没有使用，所以删除)
+					this.attachmentService.deleteOneAttachment(attachId);
+					logger.debug("\n删除附件【{}】完毕！",attachId);
+				}
+			}
+		}
+		
 		return noteId;
 	}
 

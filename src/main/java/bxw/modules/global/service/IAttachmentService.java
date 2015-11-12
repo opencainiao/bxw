@@ -140,7 +140,7 @@ public interface IAttachmentService {
 	 * @param oriHeadImg
 	 * @throws IOException
 	 */
-	public void deleteOneAttachment(String oriHeadImg) throws IOException;
+	public void deleteOneAttachment(String oriHeadImg);
 
 	/****
 	 * 创建一个无任何特殊处理的文件上传

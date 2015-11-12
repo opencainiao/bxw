@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,9 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
 import bxw.modules.base.BaseController;
+import bxw.modules.client.model.propertyeidtor.AddressListEditor;
+import bxw.modules.client.model.propertyeidtor.PhoneListEditor;
+import bxw.modules.client.model.propertyeidtor.StringListEditor;
 import bxw.modules.exhibition.enums.ExhibitionCharacter;
 import bxw.modules.exhibition.model.ExhibitionItem;
 import bxw.modules.global.model.Note;
@@ -44,6 +49,11 @@ public class NoteController extends BaseController {
 	@Resource(name = "noteService")
 	private INoteService noteService;
 
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+
+		binder.registerCustomEditor(List.class, "attaches", new StringListEditor());
+	}
 	/****
 	 * 进入添加页面
 	 * 
