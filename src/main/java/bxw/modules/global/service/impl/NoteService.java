@@ -35,7 +35,7 @@ public class NoteService extends BaseService implements INoteService {
 
 	@Resource(name = "attachmentService")
 	private IAttachmentService attachmentService;
-	
+
 	private static final Logger logger = LogManager.getLogger(NoteService.class);
 
 	@Override
@@ -55,7 +55,7 @@ public class NoteService extends BaseService implements INoteService {
 		return this.handleDBObjList(commonDaoMongo, Note.class, queryCondition, consts, pageVO);
 
 	}
-	
+
 	@Override
 	public List<Note> batchSearch(DBObject queryCondition, DBObject sort, DBObject returnFields) {
 
@@ -68,16 +68,16 @@ public class NoteService extends BaseService implements INoteService {
 	public String add(Note note) {
 		List<String> attachesNew = new ArrayList<String>();
 		List<String> attaches = note.getAttaches();
-		if (attaches!=null && attaches.size()>0){
+		if (attaches != null && attaches.size() > 0) {
 			String content = note.getContent();
-			for (String attachId:attaches){
-				if (content.contains(attachId)){
+			for (String attachId : attaches) {
+				if (content.contains(attachId)) {
 					attachesNew.add(attachId);
 				}
 			}
 		}
 		note.setAttaches(attachesNew);
-		
+
 		// 1.插入一条note
 		this.setCreateInfo(note);
 		String noteId = this.commonDaoMongo.insertOne(note);
@@ -92,23 +92,23 @@ public class NoteService extends BaseService implements INoteService {
 		Class clazz = getClass(target_type);
 		DBObject result = commonDaoMongo.updateOneById(target_id, null, update, clazz);
 		logger.debug("更新后的记录条数【{}】", result.get("note_count"));
-		
-		//3.对附件，设置附件的归属id为noteid
-		if (attaches!=null && attaches.size()>0){
-			
+
+		// 3.对附件，设置附件的归属id为noteid
+		if (attaches != null && attaches.size() > 0) {
+
 			String content = note.getContent();
-			for (String attachId:attaches){
-				if (content.contains(attachId)){
+			for (String attachId : attaches) {
+				if (content.contains(attachId)) {
 					// 更新附件的归属id
 					this.attachmentService.updateAttachOwnerIdById(attachId, noteId);
-				}else{
+				} else {
 					// 删除附件(因为note没有使用，所以删除)
 					this.attachmentService.deleteOneAttachment(attachId);
-					logger.debug("\n删除附件【{}】完毕！",attachId);
+					logger.debug("\n删除附件【{}】完毕！", attachId);
 				}
 			}
 		}
-		
+
 		return noteId;
 	}
 
@@ -123,7 +123,7 @@ public class NoteService extends BaseService implements INoteService {
 		Class rtnClazz = null;
 		if ("exhibitionitem".equals(target_type)) {
 			rtnClazz = ExhibitionItem.class;
-		}else if ("note".equals(target_type)) {
+		} else if ("note".equals(target_type)) {
 			rtnClazz = Note.class;
 		}
 		return rtnClazz;
@@ -134,24 +134,24 @@ public class NoteService extends BaseService implements INoteService {
 
 		List<String> attachesNew = new ArrayList<String>();
 		List<String> attaches = note.getAttaches();
-		if (attaches!=null && attaches.size()>0){
-			
+		if (attaches != null && attaches.size() > 0) {
+
 			String content = note.getContent();
-			for (String attachId:attaches){
-				if (content.contains(attachId)){
+			for (String attachId : attaches) {
+				if (content.contains(attachId)) {
 					attachesNew.add(attachId);
 					// 更新附件的归属id
 					this.attachmentService.updateAttachOwnerIdById(attachId, note.get_id_m());
-				}else{
+				} else {
 					// 删除附件(因为note没有使用，所以删除)
 					this.attachmentService.deleteOneAttachment(attachId);
-					logger.debug("\n删除附件【{}】完毕！",attachId);
+					logger.debug("\n删除附件【{}】完毕！", attachId);
 				}
 			}
 		}
-		
+
 		note.setAttaches(attachesNew);
-		
+
 		DBObject toUpdate = makeUpdate(note);
 
 		return this.commonDaoMongo.updateOneById(note.get_id_m(), returnFields, toUpdate, Note.class);
@@ -180,9 +180,18 @@ public class NoteService extends BaseService implements INoteService {
 
 	@Override
 	public int RemoveOneById(String _id) {
-		
+
 		Note note = this.findOneByIdObject(_id);
-		
+
+		// 删除记录的所有附件
+		List<String> attaches = note.getAttaches();
+		if (attaches != null && attaches.size() > 0) {
+			for (String attachId : attaches) {
+				this.attachmentService.deleteOneAttachment(attachId);
+			}
+		}
+
+		// 更新note归属的对象的附件数
 		DBObject update = new BasicDBObject();
 		update.put("$inc", new BasicDBObject("note_count", -1));
 
@@ -191,6 +200,7 @@ public class NoteService extends BaseService implements INoteService {
 		Class clazz = getClass(target_type);
 		DBObject result = commonDaoMongo.updateOneById(target_id, null, update, clazz);
 
+		// 删除note
 		return this.commonDaoMongo.removeById(_id, Note.class);
 	}
 

@@ -25,6 +25,7 @@ import bxw.modules.exhibition.model.Exhibition;
 import bxw.modules.exhibition.model.ExhibitionItem;
 import bxw.modules.infrustructure.enums.SysConstTypeEnum;
 import bxw.modules.infrustructure.service.ISysConstService;
+import mou.web.webbase.domain.exception.ValidateException;
 
 /****
  * 展业项目服务
@@ -246,7 +247,14 @@ public class ExhibitionItemService extends BaseService implements IExhibitionIte
 
 	@Override
 	public int RemoveOneById(String _id) {
-
+		
+		// 如果有记录，则不允许删除
+		ExhibitionItem exhibitionItem = this.commonDaoMongo.findOneById(_id, ExhibitionItem.class);
+		int note_count = exhibitionItem.getNote_count();
+		if (note_count > 0){
+			throw new ValidateException("有记录，不能删除");
+		}
+		
 		return this.commonDaoMongo.removeById(_id, ExhibitionItem.class);
 	}
 

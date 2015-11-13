@@ -148,11 +148,16 @@ var data_manage_functions = {
 			}, data),
 			dataType : 'json',
 			success : function(data) {
-				data_manage.gridsetting.params = [ {
-					name : 'reload',
-					value : true
-				} ];
-				$("#list").flexReload(data_manage.gridsetting);
+				
+				if (data['success'] == 'n') {
+					$.alertErrorMask(data['message']);
+				} else {
+					data_manage.gridsetting.params = [ {
+						name : 'reload',
+						value : true
+					} ];
+					$("#list").flexReload(data_manage.gridsetting);
+				} 
 			}
 		});
 	},
