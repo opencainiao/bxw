@@ -227,6 +227,7 @@
 							<value>target/cobertura/cobertura.ser</value>
 						</property>
 					</systemProperties>
+					<skipTests>true</skipTests>   
 				</configuration>
 			</plugin>
 		</plugins>

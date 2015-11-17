@@ -143,6 +143,8 @@
 						}
 					} else {
 						$.alertSuccessCallback("修改成功", successstr, closeUploadHeadImg);
+						$("#loginusername_left", window.top.document).html($("#nick").val());
+						$("#loginusername_top", window.top.document).html($("#nick").val());
 					}
 				},
 				complete : function(XMLHttpRequest, textStatus) {

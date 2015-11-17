@@ -50,7 +50,10 @@ public final class common_005fjs_005fgentelella_jsp extends org.apache.jasper.ru
       out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${ctx}", java.lang.String.class, (PageContext)_jspx_page_context, null));
       out.write("/resources/gentelella/production/js/jquery.min.js\" type=\"text/javascript\"><\\/script>');\r\n");
       out.write("</script>\r\n");
-      out.write("\r\n");
+      out.write("<script type=\"text/javascript\"\r\n");
+      out.write("\tsrc=\"");
+      out.print(request.getContextPath());
+      out.write("/resources/js/jquery.ba-resize.js\"></script>\r\n");
       out.write("<script type=\"text/javascript\"\r\n");
       out.write("\tsrc=\"http://cdn.bootcss.com/bootstrap/3.3.1/js/bootstrap.min.js\"></script>\r\n");
       out.write("\r\n");

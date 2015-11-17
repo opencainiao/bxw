@@ -128,11 +128,6 @@ public final class choose_005fclient_jsp extends org.apache.jasper.runtime.HttpJ
       out.write("\t\t\t\tparent.setSelectedClient(selectedObj);\r\n");
       out.write("\t\t\t});\r\n");
       out.write("\r\n");
-      out.write("\t\t\tdocument.onkeydown = function(event) {\r\n");
-      out.write("\t\t\t\tif (event.keyCode == 13) {\r\n");
-      out.write("\t\t\t\t\treturn false;\r\n");
-      out.write("\t\t\t\t}\r\n");
-      out.write("\t\t\t}\r\n");
       out.write("\t\t});\r\n");
       out.write("\r\n");
       out.write("\t\tfunction refresh_parent() {\r\n");

@@ -10,7 +10,8 @@
 				<li class=""><a href="javascript:;"
 					class="user-profile dropdown-toggle" data-toggle="dropdown"
 					aria-expanded="false"> <img id="head_img_top"
-						src="${ctx }/attachment/${user_head_img }" alt="">${nickname}
+						src="${ctx }/attachment/${user_head_img }" alt="">
+						<span id="loginusername_top">${nickname}</span>
 						<span class=" fa fa-angle-down"></span>
 				</a>
 					<ul
