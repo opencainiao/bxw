@@ -1,6 +1,7 @@
 package bxw.modules.client.service;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -709,5 +710,44 @@ public class ClientService extends BaseService implements IClientService {
 		}
 
 		return clients;
+	}
+
+	@Override
+	public DBObject addVisitingCard(String client_id, String visitingCardId) {
+
+		DBObject returnFilds = new BasicDBObject();
+		returnFilds.put("name_card_ids", 1);
+
+		Client client = this.commonDaoMongo.findOnePartById(client_id, returnFilds, Client.class);
+
+		List<String> name_card_ids = client.getName_card_ids();
+
+		if (name_card_ids == null) {
+			name_card_ids = new ArrayList<String>();
+		}
+		name_card_ids.add(visitingCardId);
+
+		// 设置名片属性
+		DBObject update = new BasicDBObject();
+		DBObject updateSet = new BasicDBObject();
+		updateSet.put("name_card_ids", name_card_ids);
+		this.setModifyInfo(updateSet);
+		update.put("$set", updateSet);
+
+		return this.commonDaoMongo.updateOneById(client.get_id_m(), null, update, Client.class);
+	}
+
+	@Override
+	public List<String> getVisitingCards(String client_id) {
+
+		Client client = this.commonDaoMongo.findOnePartById(client_id, null, Client.class);
+
+		List<String> name_card_ids = client.getName_card_ids();
+
+		if (name_card_ids == null) {
+			name_card_ids = new ArrayList<String>();
+		}
+
+		return name_card_ids;
 	}
 }

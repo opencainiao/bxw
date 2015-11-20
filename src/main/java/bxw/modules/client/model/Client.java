@@ -35,7 +35,7 @@ public class Client extends BaseModel {
 	private String region_type; // 地区分类
 	private String education_type; // 教育程度分类
 
-	private String name_card_id; // 名片id
+	private List<String> name_card_ids; // 名片id
 	private String company; // 工作单位
 	private String company_nature; // 企业性质
 	private String trade_type; // 行业类型
@@ -274,12 +274,12 @@ public class Client extends BaseModel {
 		this.education_type = education_type;
 	}
 
-	public String getName_card_id() {
-		return name_card_id;
+	public List<String> getName_card_ids() {
+		return name_card_ids;
 	}
 
-	public void setName_card_id(String name_card_id) {
-		this.name_card_id = name_card_id;
+	public void setName_card_ids(List<String> name_card_ids) {
+		this.name_card_ids = name_card_ids;
 	}
 
 	public String getCompany() {

@@ -122,4 +122,19 @@ public interface IClientService {
 
 	public int RemoveOneByIdLogic(String _id);
 
+	/****
+	 * 给客户添加一个名片
+	 * @param client_id
+	 * @param visitingCardId
+	 * @return
+	 */
+	public DBObject addVisitingCard(String client_id, String visitingCardId);
+
+	/****
+	 * 查询客户的所有名片
+	 * @param client_id
+	 * @return
+	 */
+	public List<String> getVisitingCards(String client_id);
+
 }

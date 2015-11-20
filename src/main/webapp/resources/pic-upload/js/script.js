@@ -21,9 +21,9 @@ function bytesToSize(bytes) {
 
 // check for selected crop region
 function checkForm() {
-	if (parseInt($('#w').val()))
+	if ($('#filesize').val() != "")
 		return true;
-	$('.error').html('Please select a crop region and then press Upload').show();
+	$('.error').html('请选择一张图片').show();
 	return false;
 };
 
@@ -35,12 +35,23 @@ function updateInfo(e) {
 	$('#y2').val(e.y2);
 	$('#w').val(e.w);
 	$('#h').val(e.h);
+	
+	if(e.w == 0){
+		var oImage = document.getElementById('preview');
+		$('#w').val(oImage.naturalWidth);
+		$('#h').val(oImage.naturalHeight);
+		
+		$('#x1').val(0);
+		$('#y1').val(0);
+		$('#x2').val(oImage.naturalWidth);
+		$('#y2').val(oImage.naturalHeight);
+	}
 };
 
 // clear info by cropping (onRelease event handler)
 function clearInfo() {
-	$('.info #w').val('');
-	$('.info #h').val('');
+	//$('.info #w').val('');
+	//$('.info #h').val('');
 };
 
 function fileSelectHandler() {
