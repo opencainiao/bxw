@@ -34,6 +34,10 @@
 				<a href="#familly" aria-controls="profile" role="tab"
 					data-toggle="tab">家庭成员</a>
 			</li>
+			<li role="presentation">
+				<a href="#material" aria-controls="material" role="tab"
+					data-toggle="tab">图片资料</a>
+			</li>
 		</ul>
 
 		<!-- Tab panes -->
@@ -45,6 +49,10 @@
 			<div role="tabpanel" class="tab-pane" id="familly">
 				<jsp:include
 					page="/WEB-INF/jsp/front/client/client_info/full/detail_familly.jsp"></jsp:include>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="material">
+				<jsp:include
+					page="/WEB-INF/jsp/front/client/client_info/full/detail_material.jsp"></jsp:include>
 			</div>
 		</div>
 	</div>

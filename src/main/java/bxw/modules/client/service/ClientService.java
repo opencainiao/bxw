@@ -22,6 +22,7 @@ import bxw.modules.base.BaseService;
 import bxw.modules.client.model.Address;
 import bxw.modules.client.model.Client;
 import bxw.modules.client.model.Phone;
+import bxw.modules.global.service.IAttachmentService;
 import bxw.modules.infrustructure.enums.SysConstTypeEnum;
 import bxw.modules.infrustructure.service.ICityService;
 import bxw.modules.infrustructure.service.ISysConstService;
@@ -52,6 +53,9 @@ public class ClientService extends BaseService implements IClientService {
 
 	@Resource(name = "cityService")
 	private ICityService cityService;
+	
+	@Resource(name = "attachmentService")
+	private IAttachmentService attachmentService;
 
 	private static final Logger logger = LogManager.getLogger(ClientService.class);
 
@@ -749,5 +753,110 @@ public class ClientService extends BaseService implements IClientService {
 		}
 
 		return name_card_ids;
+	}
+
+	@Override
+	public void deleteVisitingCard(String client_id, String card_id) {
+		
+		DBObject returnFilds = new BasicDBObject();
+		returnFilds.put("name_card_ids", 1);
+
+		Client client = this.commonDaoMongo.findOnePartById(client_id, returnFilds, Client.class);
+
+		List<String> name_card_ids_ori = client.getName_card_ids();
+		
+		List<String> name_card_ids_new = new ArrayList<String>();
+
+		if (name_card_ids_ori != null) {
+			for (String name_card_id : name_card_ids_ori){
+				if (!name_card_id.equals(card_id)){
+					name_card_ids_new.add(name_card_id);
+				}
+			}
+		}
+		// 设置名片属性
+		DBObject update = new BasicDBObject();
+		DBObject updateSet = new BasicDBObject();
+		updateSet.put("name_card_ids", name_card_ids_new);
+		this.setModifyInfo(updateSet);
+		update.put("$set", updateSet);
+
+		this.commonDaoMongo.updateOneById(client_id, null, update, Client.class);		
+		
+		// 删除card_id对应的附件
+		this.attachmentService.deleteOneAttachment(card_id);
+		
+	}
+	
+	@Override
+	public DBObject addIdCard(String client_id, String idCardId) {
+
+		DBObject returnFilds = new BasicDBObject();
+		returnFilds.put("id_card_ids", 1);
+
+		Client client = this.commonDaoMongo.findOnePartById(client_id, returnFilds, Client.class);
+
+		List<String> id_card_ids = client.getId_card_ids();
+
+		if (id_card_ids == null) {
+			id_card_ids = new ArrayList<String>();
+		}
+		id_card_ids.add(idCardId);
+
+		// 设置身份证属性
+		DBObject update = new BasicDBObject();
+		DBObject updateSet = new BasicDBObject();
+		updateSet.put("id_card_ids", id_card_ids);
+		this.setModifyInfo(updateSet);
+		update.put("$set", updateSet);
+
+		return this.commonDaoMongo.updateOneById(client.get_id_m(), null, update, Client.class);
+	}
+
+	@Override
+	public List<String> getIdCards(String client_id) {
+
+		Client client = this.commonDaoMongo.findOnePartById(client_id, null, Client.class);
+
+		List<String> id_card_ids = client.getId_card_ids();
+
+		if (id_card_ids == null) {
+			id_card_ids = new ArrayList<String>();
+		}
+
+		return id_card_ids;
+	}
+
+	@Override
+	public void deleteIdCard(String client_id, String card_id) {
+		
+		DBObject returnFilds = new BasicDBObject();
+		returnFilds.put("id_card_ids", 1);
+
+		Client client = this.commonDaoMongo.findOnePartById(client_id, returnFilds, Client.class);
+
+		List<String> id_card_ids_ori = client.getId_card_ids();
+		
+		List<String> id_card_ids_new = new ArrayList<String>();
+
+		if (id_card_ids_ori != null) {
+			for (String id_card_id : id_card_ids_ori){
+				if (!id_card_id.equals(card_id)){
+					id_card_ids_new.add(id_card_id);
+				}
+			}
+		}
+		// 设置名片属性
+		DBObject update = new BasicDBObject();
+		DBObject updateSet = new BasicDBObject();
+		updateSet.put("id_card_ids", id_card_ids_new);
+		this.setModifyInfo(updateSet);
+		update.put("$set", updateSet);
+
+		this.commonDaoMongo.updateOneById(client_id, null, update, Client.class);		
+		
+		// 删除card_id对应的附件
+		this.attachmentService.deleteOneAttachment(card_id);
+		
 	}
 }

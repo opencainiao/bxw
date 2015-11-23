@@ -36,6 +36,8 @@ public class Client extends BaseModel {
 	private String education_type; // 教育程度分类
 
 	private List<String> name_card_ids; // 名片id
+	private List<String> id_card_ids; // 身份证照片id
+
 	private String company; // 工作单位
 	private String company_nature; // 企业性质
 	private String trade_type; // 行业类型
@@ -795,6 +797,14 @@ public class Client extends BaseModel {
 
 	public String getEmail_info() {
 		return email_info;
+	}
+
+	public List<String> getId_card_ids() {
+		return id_card_ids;
+	}
+
+	public void setId_card_ids(List<String> id_card_ids) {
+		this.id_card_ids = id_card_ids;
 	}
 
 	public ClientBaseInfo getBaseInf() {

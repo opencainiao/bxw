@@ -137,10 +137,9 @@ public interface IAttachmentService {
 	/****
 	 * 删除一个附件
 	 * 
-	 * @param oriHeadImg
-	 * @throws IOException
+	 * @param attachment_id
 	 */
-	public void deleteOneAttachment(String oriHeadImg);
+	public void deleteOneAttachment(String attachment_id);
 
 	/****
 	 * 创建一个无任何特殊处理的文件上传

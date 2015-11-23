@@ -50,8 +50,7 @@ public interface IClientService {
 	 * @param returnFields
 	 * @return
 	 */
-	public PageVO batchSearchPage(DBObject queryCondition, DBObject sort,
-			DBObject returnFields);
+	public PageVO batchSearchPage(DBObject queryCondition, DBObject sort, DBObject returnFields);
 
 	/****
 	 * 下载用户的所有客户
@@ -69,8 +68,7 @@ public interface IClientService {
 	 *            最后操作时间 如果为空，则不加条件。否则查询该时间以后的
 	 * @return
 	 */
-	public List<DBObject> findAllClientsByUserId(String userId,
-			String last_op_time);
+	public List<DBObject> findAllClientsByUserId(String userId, String last_op_time);
 
 	/****
 	 * 条件查询，1页，查询所有
@@ -80,8 +78,7 @@ public interface IClientService {
 	 * @param returnFields
 	 * @return
 	 */
-	public PageVO batchSearchOnePage(DBObject query, DBObject sort,
-			DBObject returnFields);
+	public PageVO batchSearchOnePage(DBObject query, DBObject sort, DBObject returnFields);
 
 	/****
 	 * 插入对象，返回插入后的生成的ObjectId
@@ -124,6 +121,7 @@ public interface IClientService {
 
 	/****
 	 * 给客户添加一个名片
+	 * 
 	 * @param client_id
 	 * @param visitingCardId
 	 * @return
@@ -132,9 +130,43 @@ public interface IClientService {
 
 	/****
 	 * 查询客户的所有名片
+	 * 
 	 * @param client_id
 	 * @return
 	 */
 	public List<String> getVisitingCards(String client_id);
+
+	/*****
+	 * 删除客户的一张名片
+	 * 
+	 * @param client_id
+	 * @param card_id
+	 */
+	public void deleteVisitingCard(String client_id, String card_id);
+	
+	/****
+	 * 给客户添加一个身份证
+	 * 
+	 * @param client_id
+	 * @param visitingCardId
+	 * @return
+	 */
+	public DBObject addIdCard(String client_id, String visitingCardId);
+
+	/****
+	 * 查询客户的所有身份证
+	 * 
+	 * @param client_id
+	 * @return
+	 */
+	public List<String> getIdCards(String client_id);
+
+	/*****
+	 * 删除客户的一张名片
+	 * 
+	 * @param client_id
+	 * @param card_id
+	 */
+	public void deleteIdCard(String client_id, String card_id);
 
 }
