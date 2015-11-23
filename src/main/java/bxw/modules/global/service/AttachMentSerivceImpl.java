@@ -315,7 +315,9 @@ public class AttachMentSerivceImpl extends BaseService implements IAttachmentSer
 		// 裁剪图的绝对路径
 		String thumbPath = null;
 
-		boolean isImage = FileUtil.isImage(attach.getInputStream());
+		String saveFilePath = savedFile.getAbsolutePath();
+		boolean isImage = false;
+		isImage = FileUtil.isImage(attach.getInputStream());
 
 		// 1.如果需要裁剪，则直接裁剪，生成裁剪后的图片
 		// 3.进行缩略图压缩
@@ -358,10 +360,14 @@ public class AttachMentSerivceImpl extends BaseService implements IAttachmentSer
 		att.set_id_m(_id);
 
 		// 5.删除本地原文件
-		String oriPath = savedFile.getAbsolutePath();
-		logger.debug("原文件路径\n{}", oriPath);
-		FileUtil.deleteFile(oriPath);
-		FileUtil.deleteFile(thumbPath);
+		try {
+			Path path = savedFile.toPath();
+			Files.delete(path);
+			logger.debug("删除原文件路径\n{}", saveFilePath);
+			FileUtil.deleteFile(thumbPath);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		logger.debug("上传文件完毕，上传之后的文件信息");
 		logger.debug(this.commonDaoMongo.findOneById(_id, Attachment.class));
@@ -390,18 +396,18 @@ public class AttachMentSerivceImpl extends BaseService implements IAttachmentSer
 	}
 
 	@Override
-	public void deleteOneAttachment(String _id_m)  {
+	public void deleteOneAttachment(String _id_m) {
 
 		Attachment att = this.commonDaoMongo.findOneById(_id_m, Attachment.class);
 		if (att == null) {
-			logger.debug("\n{}对应的附件不存在",_id_m);
+			logger.debug("\n{}对应的附件不存在", _id_m);
 			return;
 		}
 
 		// 1.删除附件对应的存储在数据库文件
 		String fileId = att.getFile_id();
 		doRemoveOneFileFromMongo(fileId);
-		logger.debug("\n删除文件成功【{}】",fileId);
+		logger.debug("\n删除文件成功【{}】", fileId);
 
 		// 2.删除attachment
 		this.commonDaoMongo.removeById(_id_m, Attachment.class);
@@ -433,6 +439,8 @@ public class AttachMentSerivceImpl extends BaseService implements IAttachmentSer
 		String newFileName = EncoderHandler.encodeByAES(this.getUserId() + DateUtil.getCurrentTimsmp());
 
 		Attachment att = new Attachment();
+
+		FileInputStream fis = null;
 
 		try {
 			if ("application/octet-stream".equals(request.getContentType())) {
@@ -506,7 +514,13 @@ public class AttachMentSerivceImpl extends BaseService implements IAttachmentSer
 				}
 			}
 
-			boolean isImage = FileUtil.isImage(new FileInputStream(newFilePath));
+			fis = new FileInputStream(newFilePath);
+			boolean isImage = FileUtil.isImage(fis);
+			try {
+				fis.close();
+			} catch (Exception e1) {
+
+			}
 
 			// 1.上传到数据库
 			String id = doUploadOneFileToMongo(new File(newFilePath));
@@ -537,6 +551,13 @@ public class AttachMentSerivceImpl extends BaseService implements IAttachmentSer
 
 			return att;
 		} catch (Exception e) {
+			if (fis != null) {
+				try {
+					fis.close();
+				} catch (Exception e1) {
+
+				}
+			}
 			e.printStackTrace();
 		}
 

@@ -2,6 +2,8 @@ package bxw.common.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
@@ -47,7 +49,7 @@ public class FileUtil {
 	/****
 	 * 
 	 * @param file
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public static void ensureNewFile(File file) throws IOException {
 		if (file.exists()) {
@@ -113,9 +115,15 @@ public class FileUtil {
 	 */
 	public static boolean deleteFile(String sPath) {
 		File file = new File(sPath);
+		Path path = file.toPath();
 		// 路径为文件且不为空则进行删除
 		if (file.isFile() && file.exists()) {
-			return file.delete();
+			try {
+				Files.delete(path);
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
+			}
 		}
 
 		return true;

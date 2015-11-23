@@ -48,6 +48,12 @@ public class IPicThumbImpl implements IPicThumb {
 		double scall = scall_w < scall_h ? scall_w : scall_h;
 
 		Thumbnails.of(oriBi).scale(scall).toFile(thumbPath);
+		
+		try{
+			is.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -74,6 +80,12 @@ public class IPicThumbImpl implements IPicThumb {
 				.sourceRegion(Positions.CENTER, param_width + 100, param_height + 100)
 				// 新图的大小
 				.size(param_width, param_height).keepAspectRatio(false).toFile(thumbPath);
+		
+		try{
+			is.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -99,6 +111,12 @@ public class IPicThumbImpl implements IPicThumb {
 		BufferedImage tbi = Thumbnails.of(oriBi).scale((param_width * 1.2) / ori_width).asBufferedImage();
 		// 2、进行切割并且保持
 		Thumbnails.of(tbi).scale(1.0f).sourceRegion(Positions.CENTER, param_width, param_height).toFile(thumbPath);
+	
+		try{
+			is.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -153,6 +171,12 @@ public class IPicThumbImpl implements IPicThumb {
 				.sourceRegion((int) tp.getX1(), (int) tp.getY1(), param_width, param_height)
 				// 新图的大小
 				.size(param_width, param_height).keepAspectRatio(false).toFile(thumbPath);
+		
+		try{
+			is.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 
 	}
 
