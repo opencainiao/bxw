@@ -20,14 +20,18 @@
 <script src="${ctx }/resources/pic-upload/js/jquery.Jcrop.min.js"></script>
 <script src="${ctx }/resources/pic-upload/js/script.js"></script>
 <script src="${ctx }/resources/js/jquery.form.js"></script>
-
+<style>
+.info input{
+	width:120px;
+}
+</style>
 </head>
 <body>
 	<form id="upload_form" enctype="multipart/form-data">
 		<input type="hidden" id="_id" name="_id" value=${userid } />
 		<div class="input-group" style="padding: 8px; padding-left: 10px">
 			<input type="file" name="image_file" id="image_file"
-				style="width: 88px;" onChange=fileSelectHandler() class="pull-left"
+				style="width: 88px; text-align: left;" onChange=fileSelectHandler(1) class="pull-left"
 				required />
 
 			<div class="input-group-btn pull-left" style="margin-left: 10px">
@@ -43,7 +47,7 @@
 
 			<div class="error"></div>
 
-			<div class="step2">
+			<div class="step2" style="overflow:auto!important">
 				<img id="preview" />
 
 				<div class="info">

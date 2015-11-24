@@ -54,7 +54,7 @@ function clearInfo() {
 	//$('.info #h').val('');
 };
 
-function fileSelectHandler() {
+function fileSelectHandler(type) {
 
 	// get selected file
 	var oFile = $('#image_file')[0].files[0];
@@ -119,17 +119,23 @@ function fileSelectHandler() {
 				$('#preview').height(oImage.naturalHeight);
 			}
 
-			// initialize Jcrop
-			$('#preview').Jcrop({
+			var jcrop_stting = {
 				minSize : [ 32, 32 ], // min crop size
-				aspectRatio : 1, // keep aspect ratio 1:1
 				bgFade : true, // use fade effect
 				bgOpacity : .3, // fade opacity
 				setSelect : [ 50, 0, 180, 180 ],
+				allowResize:true,
 				onChange : updateInfo,
 				onSelect : updateInfo,
-				onRelease : clearInfo
-			}, function() {
+				onRelease : clearInfo	
+			}
+			
+			// 正方形
+			if(type&& type==1){
+				jcrop_stting["aspectRatio"] = 1;
+			}
+			// initialize Jcrop
+			$('#preview').Jcrop(jcrop_stting, function() {
 				// use the Jcrop API to get the real image size
 				var bounds = this.getBounds();
 				//boundx = bounds[0];
