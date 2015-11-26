@@ -11,7 +11,6 @@ import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -779,6 +778,157 @@ public class ClientController extends BaseController {
 	@RequestMapping(value = "/delete_id_card", method = RequestMethod.POST)
 	@ResponseBody
 	public Object deleteIdCard(Model model, HttpServletRequest request, String client_id, String card_id) {
+
+		if (StringUtil.isEmpty(client_id)) {
+			return this.handleValidateFalse("client_id不能为空");
+		}
+		if (StringUtil.isEmpty(card_id)) {
+			return this.handleValidateFalse("card_id不能为空");
+		}
+
+		HttpServletRequestUtil.debugParams(request);
+
+		try {
+			this.clientService.deleteIdCard(client_id, card_id);
+
+			RequestResult rr = new RequestResult();
+			rr.setSuccess(true);
+			return rr;
+		} catch (Exception e) {
+			return this.handleException(e);
+		}
+	}
+
+	// ------------------------------------------------------------------------------------------
+	// 上传附件
+
+	/****
+	 * 进入上传身份证页面
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/to_upload_file", method = RequestMethod.GET)
+	public String to_upload_file(Model model, String client_id) {
+
+		model.addAttribute("client_id", client_id);
+
+		return "front/client/client_info/file_upload/up_file";
+	}
+
+	/****
+	 * 上传用户身份证,上传一个要裁剪的图片到mongo数据库。 只存储裁剪后的图片
+	 * 
+	 * @param _id
+	 * @param request
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @param w
+	 * @param h
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@SuppressWarnings({ "rawtypes", "unused" })
+	@RequestMapping(value = "/{client_id}/upload_file", method = RequestMethod.POST)
+	@ResponseBody
+	public Object uploadFile(@PathVariable String client_id, HttpServletRequest request, String x1, String y1,
+			String x2, String y2, String w, String h) throws UnsupportedEncodingException {
+
+		if (StringUtil.isEmpty(client_id)) {
+			return this.handleValidateFalse("client_id不能为空");
+		}
+
+		HttpServletRequestUtil.debugParams(request);
+
+		Attachment attach = null;
+		Map<String, Object> result = new HashMap<String, Object>();
+
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+
+		ThumbParam tp = new ThumbParam();
+		tp.setWidth((int) Double.parseDouble(w));
+		tp.setHeight((int) Double.parseDouble(h));
+
+		boolean isCompress = false;
+
+		if (StringUtil.isNotEmpty(x1) && ValidateUtil.isNumericOrDouble(x1)) {
+
+			tp.setX1(Double.parseDouble(x1));
+			tp.setY1(Double.parseDouble(y1));
+			tp.setX2(Double.parseDouble(x2));
+			tp.setY2(Double.parseDouble(y2));
+
+			tp.setThumbType(ThumbType.NO_COMPRESS_CAIJIAN); // 不压缩直接裁剪
+			isCompress = true;
+		}
+
+		try {
+
+			// 上传身份证图片
+			for (Iterator it = multipartRequest.getFileNames(); it.hasNext();) {
+				String key = (String) it.next();
+				MultipartFile fileIn = multipartRequest.getFile(key);
+
+				attach = this.attachmentService.uploadOneAttachmentToMongoOnlyCj(fileIn, multipartRequest, isCompress,
+						tp);
+			}
+
+			// 添加用户的名片信息
+			String idCardId = attach.get_id_m();
+			DBObject updateResult = this.clientService.addIdCard(client_id, idCardId);
+
+			result.put("success", "y");
+			result.put("attach_id", idCardId);
+
+			logger.debug("上传文件完毕，上传结果\n{}", attach);
+		} catch (Exception e) {
+			return this.handleException(e);
+		}
+
+		return result;
+	}
+
+	/****
+	 * 查询所有附件
+	 * 
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/get_files", method = RequestMethod.POST)
+	@ResponseBody
+	public Object get_files(Model model, HttpServletRequest request, String client_id) {
+
+		if (StringUtil.isEmpty(client_id)) {
+			return this.handleValidateFalse("client_id不能为空");
+		}
+
+		HttpServletRequestUtil.debugParams(request);
+
+		try {
+			List<String> idCards = this.clientService.getIdCards(client_id);
+
+			RequestResult rr = new RequestResult();
+			rr.setSuccess(true);
+			rr.setObject(idCards);
+			return rr;
+		} catch (Exception e) {
+			return this.handleException(e);
+		}
+	}
+
+	/****
+	 * 删除一个附件
+	 * 
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/delete_file", method = RequestMethod.POST)
+	@ResponseBody
+	public Object delete_file(Model model, HttpServletRequest request, String client_id, String card_id) {
 
 		if (StringUtil.isEmpty(client_id)) {
 			return this.handleValidateFalse("client_id不能为空");

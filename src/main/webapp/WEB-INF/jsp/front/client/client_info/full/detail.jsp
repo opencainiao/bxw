@@ -38,6 +38,10 @@
 				<a href="#material" aria-controls="material" role="tab"
 					data-toggle="tab">图片资料</a>
 			</li>
+			<li role="presentation">
+				<a href="#files" aria-controls="files" role="tab"
+					data-toggle="tab">附件</a>
+			</li>
 		</ul>
 
 		<!-- Tab panes -->
@@ -53,6 +57,10 @@
 			<div role="tabpanel" class="tab-pane" id="material">
 				<jsp:include
 					page="/WEB-INF/jsp/front/client/client_info/full/detail_material.jsp"></jsp:include>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="files">
+				<jsp:include
+					page="/WEB-INF/jsp/front/client/client_info/full/detail_files.jsp"></jsp:include>
 			</div>
 		</div>
 	</div>
