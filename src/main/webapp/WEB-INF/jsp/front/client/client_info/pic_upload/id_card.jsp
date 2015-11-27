@@ -64,9 +64,6 @@
 
 
 	<script>
-	
-	</script>
-	<script>
 		function validate() {
 
 			// 控制按钮为禁用

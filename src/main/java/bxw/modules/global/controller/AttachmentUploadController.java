@@ -2,6 +2,7 @@ package bxw.modules.global.controller;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -299,6 +300,12 @@ public class AttachmentUploadController extends BaseController {
 				String header = "attachment; filename=#FILENAME#";
 				String fileName = att.getOriName() + "." + att.getSuffix();
 
+				if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0) {
+					fileName = URLEncoder.encode(fileName, "UTF-8");
+				} else {
+					fileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
+				}
+
 				header = header.replace("#FILENAME#", fileName);
 				response.setHeader("Content-Disposition", header);
 				response.setContentType("application/octet-stream; charset=UTF-8");
@@ -327,26 +334,25 @@ public class AttachmentUploadController extends BaseController {
 	 */
 	@RequestMapping(value = "/upload_xheditor", method = RequestMethod.POST)
 	@ResponseBody
-	public Object uploadOneAttachmentToMongo(HttpServletRequest request)
-			throws UnsupportedEncodingException {
+	public Object uploadOneAttachmentToMongo(HttpServletRequest request) throws UnsupportedEncodingException {
 
 		if (request.getCharacterEncoding() == null) {
 			request.setCharacterEncoding("UTF-8");// 你的编码格式
 		}
-		
+
 		Map<String, Object> result = new HashMap<String, Object>();
-		
+
 		Map<String, Object> msg = new HashMap<String, Object>();
-		
+
 		Attachment attach = null;
 		try {
 			attach = this.attachmentService.uploadOneAttachmentToMongo(request);
-			
+
 			String url = request.getServletContext().getAttribute("ctx") + "/attachment/" + attach.get_id_m();
 			result.put("err", "");
 			msg.put("url", url);
 			msg.put("attach", attach);
-			result.put("msg",msg);
+			result.put("msg", msg);
 
 			logger.debug("xheditor上传文件完毕，上传结果\n{}", attach);
 		} catch (Exception e) {

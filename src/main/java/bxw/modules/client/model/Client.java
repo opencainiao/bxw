@@ -37,6 +37,7 @@ public class Client extends BaseModel {
 
 	private List<String> name_card_ids; // 名片id
 	private List<String> id_card_ids; // 身份证照片id
+	private List<String> file_ids; // 客户附件id
 
 	private String company; // 工作单位
 	private String company_nature; // 企业性质
@@ -282,6 +283,14 @@ public class Client extends BaseModel {
 
 	public void setName_card_ids(List<String> name_card_ids) {
 		this.name_card_ids = name_card_ids;
+	}
+
+	public List<String> getFile_ids() {
+		return file_ids;
+	}
+
+	public void setFile_ids(List<String> file_ids) {
+		this.file_ids = file_ids;
 	}
 
 	public String getCompany() {

@@ -1,6 +1,7 @@
 package bxw.modules.client.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.mongodb.DBObject;
 import com.mou.mongodb.base.domain.PageVO;
@@ -143,7 +144,7 @@ public interface IClientService {
 	 * @param card_id
 	 */
 	public void deleteVisitingCard(String client_id, String card_id);
-	
+
 	/****
 	 * 给客户添加一个身份证
 	 * 
@@ -168,5 +169,30 @@ public interface IClientService {
 	 * @param card_id
 	 */
 	public void deleteIdCard(String client_id, String card_id);
+
+	/****
+	 * 给客户添加一个文件
+	 * 
+	 * @param client_id
+	 * @param visitingCardId
+	 * @return
+	 */
+	public DBObject addFile(String client_id, String attachId);
+
+	/****
+	 * 查询客户的所有文件
+	 * 
+	 * @param client_id
+	 * @return
+	 */
+	public List<Map<String,String>> getFiles(String client_id);
+
+	/*****
+	 * 删除客户的一个文件
+	 * 
+	 * @param client_id
+	 * @param card_id
+	 */
+	public void deleteFile(String client_id, String attachId);
 
 }

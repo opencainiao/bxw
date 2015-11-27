@@ -30,16 +30,16 @@
 </div>
 
 	<!-- 第一步：编写模版。你可以使用一个script标签存放模板，如： -->
-	<script id="visiting_tpl" type="text/html">
+	<script id="file_tpl" type="text/html">
 				{{# for(var i = 0, len = d.length; i < len; i++){ }}
-				<div class="panel panel-default" style="margin: 3px" id="{{ d[i]}}"">
+				<div class="panel panel-default" style="margin: 3px" id="{{ d[i].id}}"">
 					<div class="panel-body" id="content" style="overflow:auto">
-						<img  src="${ctx }/attachment/{{ d[i]}}" alt="" style="max-width:400px">
+						<a href="${ctx }/attachment/{{ d[i].id}}">{{ d[i].name }}</a>
 					</div>
 
 					<div class="panel-footer">
 						<div class="row ">
-							<div class="btn-group  btn-group-xs pull-right" data_id="{{  d[i] }}">
+							<div class="btn-group  btn-group-xs pull-right" data_id="{{  d[i].id }}">
 								<button type="button" id="btn_note" r_name="delete" 
 									style="margin-right: 10px; border-radius:3px!important"
 									class="btn btn-danger btn-sm center-block" >
@@ -79,17 +79,17 @@
 				if (data['success'] == 'n') {
 				} else {
 					
-					var visiting_cards = data.object;
+					var files = data.object;
 					
-					if (visiting_cards.length>0){
-						var gettpl = document.getElementById('visiting_tpl').innerHTML;
-						laytpl(gettpl).render(visiting_cards, function(html) {
+					if (files.length>0){
+						var gettpl = document.getElementById('file_tpl').innerHTML;
+						laytpl(gettpl).render(files, function(html) {
 							document.getElementById('file_div_body').innerHTML = html;
 						});
 
-						var visiting_card_count = visiting_cards.length;
+						var file_count = files.length;
 
-						$("#file_count").html(visiting_card_count);
+						$("#file_count").html(file_count);
 
 						iniFilesButtonEvent();
 					}

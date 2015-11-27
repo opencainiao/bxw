@@ -62,4 +62,21 @@
 		<img id="preview" />
 	</div>
 </body>
+<script >
+function uploadComplete(responseText) {
+	
+	var data = JSON.parse(responseText);
+	
+	$.logJson(data);
+
+	if (data['success'] == 'n') {
+		
+		$.alertError(data['message']);
+		
+	} else {
+		parent.showFiles();
+		parent.closeUpload_file();
+	}
+}
+</script>
 </html>

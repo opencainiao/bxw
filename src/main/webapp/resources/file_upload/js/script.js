@@ -168,7 +168,7 @@ function uploadProgress(e) { // upload process in progress
 
 function uploadFinish(e) { // upload successfully finished
     var oUploadResponse = document.getElementById('upload_response');
-    oUploadResponse.innerHTML = e.target.responseText;
+  //  oUploadResponse.innerHTML = e.target.responseText;
     oUploadResponse.style.display = 'block';
 
     document.getElementById('progress_percent').innerHTML = '100%';
@@ -177,6 +177,8 @@ function uploadFinish(e) { // upload successfully finished
     document.getElementById('remaining').innerHTML = '| 00:00:00';
 
     clearInterval(oTimer);
+    
+    uploadComplete(e.target.responseText);
 }
 
 function uploadError(e) { // upload error

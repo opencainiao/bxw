@@ -2,7 +2,9 @@ package bxw.modules.client.service;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -857,6 +859,90 @@ public class ClientService extends BaseService implements IClientService {
 		
 		// 删除card_id对应的附件
 		this.attachmentService.deleteOneAttachment(card_id);
+		
+	}
+
+
+	@Override
+	public DBObject addFile(String client_id, String attachId) {
+
+		DBObject returnFilds = new BasicDBObject();
+		returnFilds.put("file_ids", 1);
+
+		Client client = this.commonDaoMongo.findOnePartById(client_id, returnFilds, Client.class);
+
+		List<String> file_ids = client.getFile_ids();
+
+		if (file_ids == null) {
+			file_ids = new ArrayList<String>();
+		}
+		file_ids.add(attachId);
+
+		// 设置身份证属性
+		DBObject update = new BasicDBObject();
+		DBObject updateSet = new BasicDBObject();
+		updateSet.put("file_ids", file_ids);
+		this.setModifyInfo(updateSet);
+		update.put("$set", updateSet);
+
+		return this.commonDaoMongo.updateOneById(client.get_id_m(), null, update, Client.class);
+	}
+
+	@Override
+	public List<Map<String,String>> getFiles(String client_id) {
+
+		Client client = this.commonDaoMongo.findOnePartById(client_id, null, Client.class);
+
+		List<String> file_ids = client.getFile_ids();
+		
+		List<Map<String,String>> files = new ArrayList<Map<String,String>>();
+		
+		if (file_ids != null) {
+			
+			for (String file_id :file_ids){
+				String id = file_id;
+				String name = this.attachmentService.getAttachMent(id).getOriName();
+				Map<String,String> map = new HashMap<String,String>();
+				map.put("id", id);
+				map.put("name", name);
+				
+				files.add(map);
+			}
+		}
+
+		return files;
+	}
+
+	@Override
+	public void deleteFile(String client_id, String attachId) {
+		
+		DBObject returnFilds = new BasicDBObject();
+		returnFilds.put("file_ids", 1);
+
+		Client client = this.commonDaoMongo.findOnePartById(client_id, returnFilds, Client.class);
+
+		List<String> file_ids_ori = client.getFile_ids();
+		
+		List<String> file_ids_new = new ArrayList<String>();
+
+		if (file_ids_ori != null) {
+			for (String file_id : file_ids_ori){
+				if (!file_id.equals(attachId)){
+					file_ids_new.add(file_id);
+				}
+			}
+		}
+		// 设置文件属性
+		DBObject update = new BasicDBObject();
+		DBObject updateSet = new BasicDBObject();
+		updateSet.put("file_ids", file_ids_new);
+		this.setModifyInfo(updateSet);
+		update.put("$set", updateSet);
+
+		this.commonDaoMongo.updateOneById(client_id, null, update, Client.class);		
+		
+		// 删除card_id对应的附件
+		this.attachmentService.deleteOneAttachment(attachId);
 		
 	}
 }
