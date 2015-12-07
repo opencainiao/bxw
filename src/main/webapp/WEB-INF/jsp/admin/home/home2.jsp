@@ -82,10 +82,8 @@ function autoHeight() {
 			<div id="home_content" class="right_col" role="main">
 				<iframe id="frame_content_id" name="frame_content_id"
 					class="frame_content_container" width="100%"
-					style="min-height: 500px" frameborder="0" onload="handIframeLoad()"> </iframe>
-
-				<jsp:include
-					page="/WEB-INF/jsp/admin/include/common_nav_footer_gentelella.jsp"></jsp:include>
+					style="min-height: 500px" frameborder="0" onload="handIframeLoad()">
+				</iframe>
 			</div>
 			<!-- /page content -->
 		</div>
