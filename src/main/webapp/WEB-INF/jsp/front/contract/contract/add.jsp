@@ -46,7 +46,7 @@
 											合同编号 </label>
 										<div class="col-sm-8">
 											<input type="text" class="form-control" id="identifier_num"
-												name="identifier_num" value="${client.identifier_num}"
+												name="identifier_num" value="${contract.identifier_num}"
 												placeholder="">
 										</div>
 									</div>
@@ -93,7 +93,7 @@
 											<input id="assured_birth_date" name="assured_birth_date"
 												placeholder="请输入日期"
 												class="laydate-icon form-control dateipt"
-												value="${client.assured_birth_date}">
+												value="${contract.assured_birth_date}">
 										</div>
 									</div>
 									<div class="form-group ">
@@ -101,7 +101,7 @@
 											投保年龄 </label>
 										<div class="col-sm-8">
 											<input type="text" class="form-control" id="assured_age"
-												name="assured_age" value="${client.assured_age}">
+												name="assured_age" value="${contract.assured_age}">
 										</div>
 									</div>
 									<div class="form-group form-group-sm  ">
@@ -111,7 +111,7 @@
 											<select id="insurance_character" name="insurance_character"
 												class="form-control" data-src="constant"
 												data-typecode="INSURANCE_CHARACTER"
-												data-value="${client.insurance_character}"></select>
+												data-value="${contract.insurance_character}"></select>
 										</div>
 									</div>
 									<div class="form-group form-group-sm  ">
@@ -121,7 +121,7 @@
 											<select id="insurance_type" name="insurance_type"
 												class="form-control" data-src="constant"
 												data-typecode="INSURANCE_TYPE"
-												data-value="${client.insurance_type}"></select>
+												data-value="${contract.insurance_type}"></select>
 										</div>
 									</div>
 									<div class="form-group form-group-sm  ">
@@ -129,7 +129,7 @@
 										</label>
 										<div class="col-sm-8">
 											<input type="text" class="form-control" id="afyp" name="afyp"
-												value="${client.afyp}" placeholder="">
+												value="${contract.afyp}" placeholder="">
 										</div>
 									</div>
 									<div class="form-group form-group-sm  ">
@@ -139,7 +139,7 @@
 											<select id="payment_characher" name="payment_characher"
 												class="form-control" data-src="constant"
 												data-typecode="PAYMENT_CHARACHER"
-												data-value="${client.payment_characher}"></select>
+												data-value="${contract.payment_characher}"></select>
 										</div>
 									</div>
 									<div class="form-group form-group-sm  ">
@@ -148,7 +148,7 @@
 										<div class="col-sm-8">
 											<select id="bank_type" name="bank_type" class="form-control"
 												data-src="constant" data-typecode="BANK_TYPE"
-												data-value="${client.bank_type}"></select>
+												data-value="${contract.bank_type}"></select>
 										</div>
 									</div>
 									<div class="form-group form-group-sm  ">
@@ -157,7 +157,7 @@
 										<div class="col-sm-8">
 											<input type="text" class="form-control"
 												id="death_beneficiary" name="death_beneficiary"
-												value="${client.death_beneficiary}" placeholder="">
+												value="${contract.death_beneficiary}" placeholder="">
 										</div>
 									</div>
 									<div class="form-group form-group-sm  ">
@@ -165,7 +165,7 @@
 											class="col-sm-3 control-label text-danger"> 关系 </label>
 										<div class="col-sm-8">
 											<input type="text" class="form-control" id="relation_ship"
-												name="relation_ship" value="${client.relation_ship}"
+												name="relation_ship" value="${contract.relation_ship}"
 												placeholder="">
 										</div>
 									</div>
@@ -175,7 +175,7 @@
 										<div class="col-sm-8">
 											<select id="is_physical_examination"
 												name="is_physical_examination" class="form-control"
-												data-value="${client.is_physical_examination}">
+												data-value="${contract.is_physical_examination}">
 												<option value="1">体检</option>
 												<option value="0">不体检</option>
 											</select>
@@ -193,7 +193,7 @@
 											合同生效日 </label>
 										<div class="col-sm-8">
 											<input type="text" class="form-control" id="effective_date"
-												name="effective_date" value="${client.effective_date}"
+												name="effective_date" value="${contract.effective_date}"
 												placeholder="格式：yyyy-mm-dd">
 										</div>
 									</div>
@@ -205,7 +205,7 @@
 										<div class="col-sm-8">
 											<input type="text" class="form-control"
 												id="applicant_id_card" name="applicant_id_card"
-												value="${client.applicant_id_card}" placeholder="">
+												value="${contract.applicant_id_card}" placeholder="">
 										</div>
 									</div>
 
@@ -216,7 +216,7 @@
 										</label>
 										<div class="col-sm-8">
 											<input type="text" class="form-control" id="assured_id_card"
-												name="assured_id_card" value="${client.assured_id_card}"
+												name="assured_id_card" value="${contract.assured_id_card}"
 												placeholder="">
 										</div>
 									</div>
@@ -227,7 +227,7 @@
 										</label>
 										<div class="col-sm-8">
 											<select id="assured_sex" name="assured_sex"
-												class="form-control" data-value="${client.sex}">
+												class="form-control" data-value="${contract.assured_sex}">
 												<option value="1">男</option>
 												<option value="0">女</option>
 											</select>
@@ -238,7 +238,7 @@
 											保额 </label>
 										<div class="col-sm-8">
 											<input type="text" class="form-control" id="insurance_amt"
-												name="insurance_amt" value="${client.insurance_amt}"
+												name="insurance_amt" value="${contract.insurance_amt}"
 												placeholder="">
 										</div>
 									</div>
@@ -249,7 +249,7 @@
 											<select id="insurance_time_type" name="insurance_type"
 												class="form-control" data-src="constant"
 												data-typecode="INSURANCE_TIME_TYPE"
-												data-value="${client.insurance_time_type}"></select>
+												data-value="${contract.insurance_time_type}"></select>
 										</div>
 									</div>
 									<div class="form-group form-group-sm  ">
@@ -257,7 +257,7 @@
 											缴费期间 </label>
 										<div class="col-sm-8">
 											<input type="text" class="form-control" id="payment_period"
-												name="payment_period" value="${client.payment_period}"
+												name="payment_period" value="${contract.payment_period}"
 												placeholder="">
 										</div>
 									</div>
@@ -266,7 +266,7 @@
 										</label>
 										<div class="col-sm-8">
 											<input type="text" class="form-control" id="afyc" name="afyc"
-												value="${client.afyc}" placeholder="">
+												value="${contract.afyc}" placeholder="">
 										</div>
 									</div>
 									<div class="form-group form-group-sm  ">
@@ -276,7 +276,7 @@
 											<select id="payment_type" name="payment_type"
 												class="form-control" data-src="constant"
 												data-typecode="PAYMENT_TYPE"
-												data-value="${client.payment_type}"></select>
+												data-value="${contract.payment_type}"></select>
 										</div>
 									</div>
 									<div class="form-group form-group-sm  ">
@@ -284,7 +284,7 @@
 											银行卡号 </label>
 										<div class="col-sm-8">
 											<input type="text" class="form-control" id="bank_number"
-												name="bank_number" value="${client.bank_number}"
+												name="bank_number" value="${contract.bank_number}"
 												placeholder="">
 										</div>
 									</div>
@@ -297,7 +297,7 @@
 											<input type="text" class="form-control"
 												id="death_beneficiary_id_card"
 												name="death_beneficiary_id_card"
-												value="${client.death_beneficiary_id_card}" placeholder="">
+												value="${contract.death_beneficiary_id_card}" placeholder="">
 										</div>
 									</div>
 									<div class="form-group form-group-sm  ">
@@ -306,7 +306,7 @@
 										<div class="col-sm-8">
 											<input type="text" class="form-control"
 												id="beneficiary_percent" name="beneficiary_percent"
-												value="${client.beneficiary_percent}" placeholder="">
+												value="${contract.beneficiary_percent}" placeholder="">
 										</div>
 									</div>
 									<div class="form-group form-group-sm  ">
@@ -316,7 +316,7 @@
 											<input type="text" class="form-control"
 												id="physical_examination_items"
 												name="physical_examination_items"
-												value="${client.physical_examination_items}" placeholder="">
+												value="${contract.physical_examination_items}" placeholder="">
 										</div>
 									</div>
 								</div>
@@ -338,14 +338,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="panel panel-info">
-				<div class="panel-heading">
-					附件信息
-					<button type="button" id="edit_base" style="margin-left: 20px"
-						class="btn btn-primary btn-xs ">添加附件</button>
-				</div>
-				<div class="panel-body" id="attach_info_content"></div>
-			</div>
 			<hr />
 		</sf:form>
 	</div>
@@ -355,7 +347,6 @@
 				class="btn btn-primary btn-lg center-block">提交</button>
 		</div>
 	</div>
-
 
 	<script>
 		$().ready(function() {

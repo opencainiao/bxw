@@ -13,44 +13,46 @@
 </head>
 
 <body>
-	<div class="container-fluid inlineone" style="margin-top: 30px">
-		<div class="col form-horizontal center-block " style="width: 400px">
-							<div class="form-group ">
-					<label for="val" class="col-sm-3 control-label"> 常量值 </label>
-					<div>
-						<input type="text" class="form-control" id="val"
-							name="val" value="${sysconst.val}" readonly>
-					</div>
-				</div>
-				<div class="form-group ">
-					<label for="dspval" class="col-sm-3 control-label"> 常量显示值 </label>
-					<div>
-						<input type="text" class="form-control" id="dspval"
-							name="dspval" value="${sysconst.dspval}" readonly>
-					</div>
-				</div>
-				<div class="form-group ">
-					<label for="typename" class="col-sm-3 control-label"> 常量类型 </label>
-					<div>
-						<input type="text" class="form-control" id="typename"
-							name="typename" value="${sysconst.typename}" readonly>
-					</div>
-				</div>
-				<div class="form-group ">
-					<label for="valordernum" class="col-sm-3 control-label"> 常量值顺序号 </label>
-					<div>
-						<input type="text" class="form-control" id="valordernum"
-							name="valordernum" value="${sysconst.valordernum}" readonly>
-					</div>
-				</div>
-				<div class="form-group ">
-					<label for="type" class="col-sm-3 control-label"> 常量类型码 </label>
-					<div>
-						<input type="text" class="form-control" id="type"
-							name="type" value="${sysconst.type}" readonly>
-					</div>
-				</div>
+	<ul class="breadcrumb" style="margin-bottom: 5px;">
+		<li>
+			<a href="<%=request.getContextPath()%>/front/contract/list">合同管理</a>
+			<span class="divider"></span>
+		</li>
+		<li class="active">合同信息</li>
+	</ul>
+	<div>
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active">
+				<a href="#personal" aria-controls="home" role="tab"
+					data-toggle="tab">基本信息</a>
+			</li>
+			<li role="presentation">
+				<a href="#files" aria-controls="files" role="tab"
+					data-toggle="tab">
+					附件【
+					<span id="file_count">0</span>
+					】个
+				</a>
+			</li>
+		</ul>
+
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="personal">
+				<jsp:include
+					page="/WEB-INF/jsp/front/contract/contract/detail_contract.jsp"></jsp:include>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="files">
+				<jsp:include
+					page="/WEB-INF/jsp/front/contract/contract/detail_files.jsp"></jsp:include>
+			</div>
 		</div>
 	</div>
+	<script>
+		$().ready(function() {
+			$("div.tab-pane").css("padding-top", "15px");
+		});
+	</script>
 </body>
 </html>

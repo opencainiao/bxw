@@ -803,7 +803,7 @@ public class ClientController extends BaseController {
 	// 上传附件
 
 	/****
-	 * 进入上传身份证页面
+	 * 进入上传附件页面
 	 * 
 	 * @param model
 	 * @return
@@ -817,7 +817,7 @@ public class ClientController extends BaseController {
 	}
 
 	/****
-	 * 上传用户身份证,上传一个文件到mongo数据库。 如果是图片，只存储裁剪后的图片
+	 * 上传用户附件,上传一个文件到mongo数据库。 如果是图片，只存储裁剪后的图片
 	 * 
 	 * @param _id
 	 * @param request

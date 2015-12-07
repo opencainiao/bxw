@@ -1,5 +1,10 @@
 package bxw.modules.contract.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
@@ -17,6 +22,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
@@ -26,6 +33,8 @@ import bxw.common.util.RegexPatternUtil;
 import bxw.modules.base.BaseController;
 import bxw.modules.contract.model.Contract;
 import bxw.modules.contract.service.IContractService;
+import bxw.modules.global.model.Attachment;
+import bxw.modules.global.service.IAttachmentService;
 import mou.web.webbase.domain.RequestResult;
 import mou.web.webbase.util.HttpServletRequestUtil;
 
@@ -43,6 +52,9 @@ public class ContractController extends BaseController {
 
 	@Resource(name = "contractService")
 	private IContractService contractService;
+
+	@Resource(name = "attachmentService")
+	private IAttachmentService attachmentService;
 
 	/****
 	 * 进入添加合同页面
@@ -99,8 +111,8 @@ public class ContractController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Model model,HttpServletRequest request) {
-		
+	public String list(Model model, HttpServletRequest request) {
+
 		request.getSession().setAttribute("source", null);
 
 		return "front/contract/contract/list";
@@ -180,6 +192,7 @@ public class ContractController extends BaseController {
 		Contract contract = this.contractService.findContractInfById(_id);
 
 		model.addAttribute("contract", contract);
+		model.addAttribute("applicant_id",contract.getApplicant_id());
 
 		return "front/contract/contract/detail";
 	}
@@ -259,30 +272,165 @@ public class ContractController extends BaseController {
 			return this.handleException(e);
 		}
 	}
-	
+
 	/****
 	 * 进入选择投保人页面
 	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/choose_applicant", method = RequestMethod.GET)
-	public String chooseApplicant(HttpServletRequest request, Model model, String user_id,
-			String user_name, String user_sex) {
+	public String chooseApplicant(HttpServletRequest request, Model model, String user_id, String user_name,
+			String user_sex) {
 
 		// 开启modelDriven
 		return "front/contract/contract/choose_applicant";
 	}
-	
+
 	/****
 	 * 进入选择投保人页面
 	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/choose_assured", method = RequestMethod.GET)
-	public String chooseAssured(HttpServletRequest request, Model model, String user_id,
-			String user_name, String user_sex) {
+	public String chooseAssured(HttpServletRequest request, Model model, String user_id, String user_name,
+			String user_sex) {
 
 		// 开启modelDriven
 		return "front/contract/contract/choose_assured";
+	}
+
+	// ------------------------------------------------------------------------------------------
+	// 上传附件
+
+	/****
+	 * 进入上传附件页面
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/to_upload_file", method = RequestMethod.GET)
+	public String to_upload_file(Model model, String contract_id) {
+
+		model.addAttribute("contract_id", contract_id);
+
+		return "front/contract/contract/file_upload/up_file";
+	}
+
+	/****
+	 * 上传用户附件,上传一个文件到mongo数据库。 如果是图片，只存储裁剪后的图片
+	 * 
+	 * @param _id
+	 * @param request
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @param w
+	 * @param h
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@SuppressWarnings({ "rawtypes", "unused" })
+	@RequestMapping(value = "/{contract_id}/upload_file", method = RequestMethod.POST)
+	@ResponseBody
+	public Object uploadFile(@PathVariable String contract_id, HttpServletRequest request, String x1, String y1,
+			String x2, String y2, String w, String h) throws UnsupportedEncodingException {
+
+		if (StringUtil.isEmpty(contract_id)) {
+			return this.handleValidateFalse("contract_id不能为空");
+		}
+
+		HttpServletRequestUtil.debugParams(request);
+
+		Attachment attach = null;
+		Map<String, Object> result = new HashMap<String, Object>();
+
+		try {
+
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+
+			// 上传文件
+			for (Iterator it = multipartRequest.getFileNames(); it.hasNext();) {
+				String key = (String) it.next();
+				MultipartFile fileIn = multipartRequest.getFile(key);
+
+				logger.debug("\nmultifile的key\n{}", key);
+
+				attach = this.attachmentService.uploadOneAttachmentToMongo(fileIn, multipartRequest, false, null);
+			}
+
+			// 添加用户的文件信息
+			String fileId = attach.get_id_m();
+			DBObject updateResult = this.contractService.addFile(contract_id, fileId);
+
+			result.put("success", "y");
+			result.put("attach_id", fileId);
+
+			logger.debug("上传文件完毕，上传结果\n{}", attach);
+		} catch (Exception e) {
+			return this.handleException(e);
+		}
+
+		return result;
+	}
+
+	/****
+	 * 查询所有附件
+	 * 
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/get_files", method = RequestMethod.POST)
+	@ResponseBody
+	public Object get_files(Model model, HttpServletRequest request, String contract_id) {
+
+		if (StringUtil.isEmpty(contract_id)) {
+			return this.handleValidateFalse("contract_id不能为空");
+		}
+
+		HttpServletRequestUtil.debugParams(request);
+
+		try {
+			List<Map<String, String>> files = this.contractService.getFiles(contract_id);
+
+			RequestResult rr = new RequestResult();
+			rr.setSuccess(true);
+			rr.setObject(files);
+			return rr;
+		} catch (Exception e) {
+			return this.handleException(e);
+		}
+	}
+
+	/****
+	 * 删除一个附件
+	 * 
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/delete_file", method = RequestMethod.POST)
+	@ResponseBody
+	public Object delete_file(Model model, HttpServletRequest request, String contract_id, String file_id) {
+
+		if (StringUtil.isEmpty(contract_id)) {
+			return this.handleValidateFalse("contract_id不能为空");
+		}
+		if (StringUtil.isEmpty(file_id)) {
+			return this.handleValidateFalse("file_id不能为空");
+		}
+
+		HttpServletRequestUtil.debugParams(request);
+
+		try {
+			this.contractService.deleteFile(contract_id, file_id);
+
+			RequestResult rr = new RequestResult();
+			rr.setSuccess(true);
+			return rr;
+		} catch (Exception e) {
+			return this.handleException(e);
+		}
 	}
 }

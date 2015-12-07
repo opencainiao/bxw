@@ -54,6 +54,8 @@ public class Contract extends BaseModel {
 	private String physical_examination_items;// 体检项目
 	private String remark;// 其他
 
+	private List<String> file_ids; // 附件id
+
 	private String applicant_pinyin_name;// 姓名拼音， 比如：ZHANGSAN
 	private String applicant_first_char_header;// 姓名拼音第一个首字母， 比如：Z
 	private String applicant_all_char_header;// 姓名拼音首字母， 比如：ZS
@@ -387,6 +389,14 @@ public class Contract extends BaseModel {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public List<String> getFile_ids() {
+		return file_ids;
+	}
+
+	public void setFile_ids(List<String> file_ids) {
+		this.file_ids = file_ids;
 	}
 
 	public String getApplicant_pinyin_name() {

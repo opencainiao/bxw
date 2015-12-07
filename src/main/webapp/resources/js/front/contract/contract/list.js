@@ -24,7 +24,7 @@ $().ready(function() {
 		var beanName = "clientService";
 		var methodName = "downLoadAllClientByUserId";
 
-		var url = $.getSitePath() + '/front/client/download_clients';
+		var url = $.getSitePath() + '/front/contract/download_contracts';
 		
 		var config = {
 				url:url,
@@ -52,7 +52,7 @@ var data_manage_functions = {
 	 */
 	delOne : function(data) {
 
-		var url_to = $.getSitePath() + '/front/client/' + data["_id_m"] + '/delete';
+		var url_to = $.getSitePath() + '/front/contract/' + data["_id_m"] + '/delete';
 
 		$.ajax({
 			type : 'POST',
@@ -77,7 +77,7 @@ var data_manage_functions = {
 	 */
 	toEdit : function(data) {
 
-		var url = $.getSitePath() + '/front/client/' + data["_id_m"] + "/update";
+		var url = $.getSitePath() + '/front/contract/' + data["_id_m"] + "/update";
 
 		$.popUpWindow("编辑用户信息", url, "800px", "400px", "edit", $("#data_manage"));
 	},
@@ -89,7 +89,7 @@ var data_manage_functions = {
 	 */
 	toDetail : function(data) {
 
-		var url = $.getSitePath() + '/front/client/' + data["_id_m"];
+		var url = $.getSitePath() + '/front/contract/' + data["_id_m"];
 
 		$.loadPage(url);
 

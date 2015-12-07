@@ -186,6 +186,10 @@ jQuery.fn.iniSelect_All = function(data, setting) {
 
 				if (data_src != null && data_src == "constant") {
 					$.iniSelectConstant(config);
+				}else{
+					var _obj = $("#" + id);
+					var val = _obj.attr("data-value");
+					_obj.setSelectedValue(val);
 				}
 			});
 		},

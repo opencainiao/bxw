@@ -1,5 +1,8 @@
 package bxw.modules.contract.service;
 
+import java.util.List;
+import java.util.Map;
+
 import com.mongodb.DBObject;
 import com.mou.mongodb.base.domain.PageVO;
 
@@ -64,5 +67,30 @@ public interface IContractService {
 	 * @return
 	 */
 	public int RemoveOneById(String _id);
+	
+	/****
+	 * 给合同添加一个文件
+	 * 
+	 * @param client_id
+	 * @param visitingCardId
+	 * @return
+	 */
+	public DBObject addFile(String contract_id, String attachId);
+
+	/****
+	 * 查询合同的所有文件
+	 * 
+	 * @param contract_id
+	 * @return
+	 */
+	public List<Map<String,String>> getFiles(String contract_id);
+
+	/*****
+	 * 删除合同的一个文件
+	 * 
+	 * @param contract_id
+	 * @param card_id
+	 */
+	public void deleteFile(String contract_id, String attachId);
 
 }
