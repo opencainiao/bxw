@@ -1,5 +1,8 @@
 package bxw.modules.infrustructure.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
@@ -384,7 +387,54 @@ public class SysConstController extends BaseController {
 			sort.put("val", 1);
 			sort.put("dspval", 1);
 
-			return this.sysConstService.findSysconstByConstType(typecode, sort, returnFields);
+			List<DBObject> allConsts = this.sysConstService.findSysconstByConstType(typecode, sort, returnFields);
+
+			return allConsts;
+
+		} catch (Exception e) {
+			return this.handleException(e);
+		}
+	}
+	
+	/****
+	 * 查询系统常量值
+	 * 
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/all_const_of_consttype_json", method = RequestMethod.POST)
+	@ResponseBody
+	public Object all_const_of_consttype_json(Model model, String typecode, String typename, HttpServletRequest request) {
+		try {
+
+			Map<String, String> rtnMap = new HashMap<String, String>();
+			if (StringUtil.isEmpty(typecode)) {
+				return this.handleValidateFalse("typecode不能为空!");
+			}
+
+			typecode = typecode.trim();
+
+			DBObject sort = new BasicDBObject();
+			sort.put("valordernum", 1);
+			sort.put("val", 1);
+
+			DBObject returnFields = new BasicDBObject();
+			sort.put("val", 1);
+			sort.put("dspval", 1);
+
+			List<DBObject> allConsts = this.sysConstService.findSysconstByConstType(typecode, sort, returnFields);
+
+			if (allConsts != null && allConsts.size() == 0) {
+				return rtnMap;
+			}
+
+			for (DBObject dbo : allConsts) {
+				rtnMap.put(String.valueOf(dbo.get("val")), String.valueOf(dbo.get("dspval")));
+			}
+
+			return rtnMap;
+
 		} catch (Exception e) {
 			return this.handleException(e);
 		}

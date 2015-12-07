@@ -200,7 +200,7 @@ var data_manage = {
 			{
 				display : '常量显示值',
 				name : 'dspval',
-				width : 160
+				width : 250
 		},
 			{
 				display : '常量值顺序号',

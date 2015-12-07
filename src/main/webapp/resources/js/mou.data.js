@@ -1,7 +1,8 @@
 // 封装全局数据
 ;
 (function($) {
-	$.extend({
+	$
+			.extend({
 				/***************************************************************
 				 * 本地存储JSON对象
 				 */
@@ -234,6 +235,8 @@
 
 					var constant_all_typecode = $.getJsonLocal("ALLCONSTANT")[typecode];
 
+					$.logJson(typecode);
+					$.logJson(constant_all_typecode);
 					/*
 					 * 远程获取下来的是数组（有序） 本地存储的是json对象（无序）
 					 * 
@@ -251,6 +254,27 @@
 					 * constant_all_typecode = data; } }, complete :
 					 * function(XMLHttpRequest, textStatus) { } }); }
 					 */
+
+					if (constant_all_typecode == null) {
+
+						$.logJson(constant_all_typecode, "从远程获取" + typecode);
+
+						var url = $.getSitePath()
+								+ '/backend/sysconst/all_const_of_consttype_json?typecode=#TYPECODE#';
+						url = url.replace('#TYPECODE#', typecode);
+
+						$.ajax({
+							type : 'POST',
+							url : url,
+							dataType : 'json',
+							async : false,
+							success : function(data) {
+								constant_all_typecode = data;
+							},
+							complete : function(XMLHttpRequest, textStatus) {
+							}
+						});
+					}
 
 					return constant_all_typecode;
 				},

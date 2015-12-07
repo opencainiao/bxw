@@ -264,6 +264,7 @@ var data_manage = {
 		}, {
 			display : '保险期间',
 			name : 'insurance_time_type',
+			condition: $.getConstants("INSURANCE_TIME_TYPE"),
 			width : 130
 		}, {
 			display : '缴费期间',
@@ -271,11 +272,11 @@ var data_manage = {
 			width : 70
 		}, {
 			display : 'AFYP',
-			name : 'AFYP',
+			name : 'afyp',
 			width : 120
 		}, {
 			display : 'AFYC',
-			name : 'AFYC',
+			name : 'afyc',
 			width : 120
 		}, {
 			display : '缴法',
