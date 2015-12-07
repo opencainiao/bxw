@@ -146,10 +146,15 @@ public class ContractController extends BaseController {
 				Pattern namePattern = RegexPatternUtil.getLikePattern(name);
 
 				BasicDBList values = new BasicDBList();
-				values.add(new BasicDBObject("username", namePattern));
-				values.add(new BasicDBObject("pinyin_name", namePattern));
-				values.add(new BasicDBObject("first_char_header", namePattern));
-				values.add(new BasicDBObject("all_char_header", namePattern));
+				values.add(new BasicDBObject("applicant_name", namePattern));
+				values.add(new BasicDBObject("applicant_pinyin_name", namePattern));
+				values.add(new BasicDBObject("applicant_first_char_header", namePattern));
+				values.add(new BasicDBObject("applicant_all_char_header", namePattern));
+				values.add(new BasicDBObject("assured_name", namePattern));
+				values.add(new BasicDBObject("assured_pinyin_name", namePattern));
+				values.add(new BasicDBObject("assured_first_char_header", namePattern));
+				values.add(new BasicDBObject("assured_all_char_header", namePattern));
+
 				query.put("$or", values);
 			}
 
@@ -192,7 +197,7 @@ public class ContractController extends BaseController {
 		Contract contract = this.contractService.findContractInfById(_id);
 
 		model.addAttribute("contract", contract);
-		model.addAttribute("applicant_id",contract.getApplicant_id());
+		model.addAttribute("applicant_id", contract.getApplicant_id());
 
 		return "front/contract/contract/detail";
 	}

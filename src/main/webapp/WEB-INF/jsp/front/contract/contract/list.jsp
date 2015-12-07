@@ -27,11 +27,12 @@
 					<span>姓名</span>
 					<input class="form-control input-sm" style="width: 300px"
 						type="text" id="username" name="username"
-						placeholder="输入客户姓名、拼音或是首字母">
+						placeholder="输入投保人/被保险人姓名、拼音或是首字母">
 				</div>
 				<button class="btn btn-info" type="button" id="btn_search">
 					查询</button>
 
+<!-- 
 				<span>阶段</span>
 				<select id="exhibition_stage" name="exhibition_stage"
 					class="form-control input-sm" data-src="constant"
@@ -43,7 +44,7 @@
 					class="form-control input-sm" data-src="constant"
 					data-typecode="EXHIBITION_STATE" 
 					data-value="" data-allownull></select>
-
+ -->
 				<button class="btn btn-primary" type="button" id="btn_add"
 					style="margin-left: 50px;">添加合同</button>
 			</form>

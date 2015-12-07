@@ -1,5 +1,11 @@
 $().ready(function() {
 
+	document.onkeydown = function(event) {
+		if (event.keyCode == 13) {
+			return false;
+		}
+	}
+	
 	data_manage.init();
 
 	$("#btn_add").click(function() {
@@ -110,8 +116,8 @@ var data_manage = {
 
 	search : function() {
 		var searchcondition = {};
-		searchcondition["name"] = "search_condition";
-		searchcondition["value"] = $("#search_condition").val().trim();
+		searchcondition["name"] = "username";
+		searchcondition["value"] = $("#username").val().trim();
 
 		var params = [];
 		params.push(searchcondition);
