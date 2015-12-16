@@ -18,7 +18,7 @@ public class SysConst extends BaseModelWithUseFlg {
 	private String typename; // 常量类型名称
 	private String val;// 常量值
 	private String dspval; // 常量显示值
-	private String valordernum;// 常量值顺序号
+	private Integer valordernum;// 常量值顺序号
 
 	@NotEmpty(message = "常量类型不能为空")
 	public String getTypecode() {
@@ -56,11 +56,11 @@ public class SysConst extends BaseModelWithUseFlg {
 		this.dspval = dspval;
 	}
 
-	public String getValordernum() {
+	public Integer getValordernum() {
 		return valordernum;
 	}
 
-	public void setValordernum(String valordernum) {
+	public void setValordernum(Integer valordernum) {
 		this.valordernum = valordernum;
 	}
 

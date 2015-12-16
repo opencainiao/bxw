@@ -417,7 +417,7 @@ var data_manage = {
 			width : 120,
 			condition : {
 				'0' : '已停用',
-				'1' : '启用',
+				'1' : '启用'
 			}
 		}, {
 			display : '操作',

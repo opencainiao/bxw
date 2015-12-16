@@ -10,7 +10,7 @@
 <link rel="stylesheet"
 	href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" />
 <link id="xheCSS_default"
-	href="http://xheditor.com/js/xheditor_skin/default/ui.css"
+	href="${ctx }/resources/xheditor-1.2.2/xheditor_skin/default/ui.css"
 	type="text/css" rel="stylesheet" />
 <link rel="stylesheet"
 	href="${ctx }/resources/xheditor-1.2.2/demos/common.css"

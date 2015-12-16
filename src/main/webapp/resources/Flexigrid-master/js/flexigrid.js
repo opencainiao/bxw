@@ -1206,7 +1206,26 @@ var mou_grid_ux = {
 								} else if (m_type == 'sno') {
 									td.innerHTML = (i + 1);
 								} else if (m_type == 'link') {
-									var tdThis = "<a href='#' style='color:#8B008B; font-weight:bold; text-decoration:underline'>" + $.htmlDecode(row[colModelTmp.name]) + "</a>";
+									var colModelName_ = colModelTmp.name;
+									var inner_value = "";
+									if (colModelName_.indexOf(".") < 0) {
+										inner_value = row[colModelName_];
+									} else {
+										var names_ = colModelName_.split(".");
+
+										var data_iHtml = row;
+
+										for (var _iiii = 0; _iiii < names_.length - 1; ++_iiii) {
+											data_iHtml = data_iHtml[names_[_iiii]];
+										}
+
+										inner_value = data_iHtml[names_[names_.length - 1]];
+									}
+
+									if (colModelTmp.condition) {
+										inner_value = colModelTmp.condition[inner_value];
+									}
+									var tdThis = "<a href='#' style='color:#8B008B; font-weight:bold; text-decoration:underline'>" + inner_value + "</a>";
 									td.innerHTML = tdThis;
 								} else if (m_type == 'image') {
 
