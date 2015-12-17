@@ -1,54 +1,174 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
-
-<!DOCTYPE html>
-<html lang="en">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="utf-8">
-<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link rel="stylesheet"
+	href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+<link id="xheCSS_default"
+	href="${ctx }/resources/xheditor-1.2.2/xheditor_skin/default/ui.css"
+	type="text/css" rel="stylesheet" />
+<link rel="stylesheet"
+	href="${ctx }/resources/xheditor-1.2.2/demos/common.css"
+	type="text/css" media="screen" />
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="${ctx }/resources/xheditor-1.2.2/xheditor-1.2.2.js"></script>
+<script type="text/javascript"
+	src="${ctx }/resources/xheditor-1.2.2/xheditor_lang/zh-cn.js"></script>
+<script src="http://apps.bdimg.com/libs/layer/2.0/layer.js"></script>
+<script type="text/javascript"
+	src="${ctx}/resources/js/jquery.nbq.ux.js"></script>
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/js/jquery_ux_select.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/laydate-v1.1/laydate/laydate.js"></script>
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/layer-v2.0/layer/layer.js"></script>
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/layer/extend/layer.ext.js"></script>
 
-<jsp:include page="/WEB-INF/jsp/include/common_css.jsp"></jsp:include>
-<jsp:include page="/WEB-INF/jsp/include/common_js.jsp"></jsp:include>
+<style>
+.col-xs-5{
+	padding-left: 0px;
+}
 
+.col-sm-3{
+	padding-right: 0px;
+}
+
+label{
+	padding-top: 6px;
+}
+
+#laydate_YY {
+	width: 123px !important;
+	height: 26px !important;
+}
+
+#laydate_MM {
+	width: 101px !important;
+	height: 26px !important;
+}
+
+#laydate_table {
+	border-top-width: 0px !important;
+}
+
+#laydate_box {
+	width: 242px !important;
+}
+
+.laydate_ym   label {
+	margin-right: -3px !important;
+}
+
+#laydate_ys {
+	width: 124px !important;
+}
+
+div.laydate_yms {
+	width: 124px !important;
+}
+
+.laydate_bottom {
+	height: 30px !important;
+}
+</style>
 </head>
-
 <body>
-	<div id="edit_div" class="onepage" style="margin-top: 30px">
-		<input type="hidden" name="_id" value="${sysconst._id}" readonly />
-		<sf:form modelAttribute="exhibition" class="form-horizontal">
-			<input type="hidden" id="user_id" name="user_id"
-				value="${exhibition.user_id }" />
-			<input type="hidden" id="username" name="username"
-				value="${exhibition.username }" />
+	<sf:form method="post" modelAttribute="plan" id="addForm"
+		style="margin:0 0!important; padding: 5px 5px!important">
 
-			<div class="form-group  form-group-sm " style="margin-top: 15px">
-				<label for="family_income_feature" class="col-sm-2 control-label">客户</label>
-				<div class="col-sm-7">
-					<input type="text" id="client_choose" name="client_choose"
-						class="form-control " value="${exhibition.username }" readonly>
+		<input type="hidden" id="type" name="type" value="${plan.type }" />
+
+		<div class="panel panel-info">
+			<div class="panel-heading hide">年份</div>
+			<div class="panel-body">
+				<div class="row" id="year_month_div">
+					<div class="form-group form-group-sm col-sm-4 " id="year_div">
+						<label for="year" class="col-sm-3 control-label"> 年 </label>
+						<div class="col-xs-5">
+							<div class="input-group input-group-xs ">
+								<input id="year" class="form-control" style="width: 150px" name="year" type="text"
+									placeholder="" value="${plan.year }" readonly>
+							</div>
+						</div>
+					</div>
+					<div class="form-group form-group-sm col-sm-4 " id="month_div">
+						<label for="month" class="col-sm-3 control-label"> 月 </label>
+						<div class="col-xs-5">
+							<select id="month" name="month"
+								class="form-control input-sm" data-src="constant"
+								data-typecode="MONTH" data-value="${plan.month }" style="width: 80px" disabled>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row" id="start_end_div">
+					<div class="form-group form-group-sm  col-sm-4">
+						<label for="start_date" class="col-sm-3 control-label">开始
+						</label>
+						<div class="col-xs-5">
+							<input id="start_date" name="start_date" placeholder="请输入日期"
+								class="laydate-icon form-control dateipt" style="width: 150px"
+								value="${plan.start_date }">
+						</div>
+					</div>
+					<div class="form-group form-group-sm  col-sm-4">
+						<label for="end_date" class="col-sm-3 control-label">结束 </label>
+						<div class="col-xs-5">
+							<input id="end_date" name="end_date" placeholder="请输入日期"
+								class="laydate-icon form-control dateipt" style="width: 150px"
+								value="${plan.end_date }">
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="form-group form-group-sm ">
-				<label for="remark" class="col-sm-2 control-label"> 说明 </label>
-				<div class="col-sm-7">
-					<textarea type="text" class="form-control " id="remark"
-						name="remark" placeholder="请输入说明" style="height: 180px">${ exhibition.remark}</textarea>
+		</div>
+
+		<div class="panel panel-info" style="margin-bottom: 0px;">
+			<div class="panel-heading">
+				<h3 class="panel-title">内容</h3>
+			</div>
+			<div class="panel-body">
+				<textarea id="content" name="content"
+					class="xheditor {tools:',Blocktag,Fontface,FontSize,Bold,Italic,Underline,Strikethrough,FontColor,BackColor,Removeformat,|,Align,List,Outdent,Indent,|,Link,Unlink,Img,Hr,Emot,Table,|,Preview',skin:'default',upImgExt:'jpg,jpeg,gif,png'}"
+					rows="20" cols="80" style="width: 100%">${plan.content }</textarea>
+			</div>
+			<div class="panel-footer">
+				<div class="row ">
+					<button type="button" id="btn_save"
+						class="btn btn-primary btn-sm center-block">提交</button>
 				</div>
 			</div>
-
-			<hr />
-			<div class="col-sm-7">
-				<button type="button" id="btn_save"
-					class="btn btn-primary btn-lg center-block">提交</button>
-			</div>
-		</sf:form>
-	</div>
+		</div>
+	</sf:form>
 
 	<script>
 		$().ready(function() {
-
+			
+			var attaches = [];
+			<c:forEach var="attach" items="${plan.attaches}">
+			attaches.push("${attach}");
+			</c:forEach>
+			$("#content").data("attaches", attaches);
+			//$.logJson($("#content").data("attaches"));
+			
+			var plan_type = $("#type").val();
+			if (plan_type == "PLAN_YEAR") {
+				$("#month_div").hide();
+				$("#start_end_div").hide();
+			} else if (plan_type == "PLAN_MONTH") {
+				$("#start_end_div").hide();
+			} else if (plan_type == "PLAN_OTHER") {
+				$("#month_div").hide();
+			}
+			
 			$("#btn_save").bind("click", save);
 
 			document.onkeydown = function(event) {
@@ -56,29 +176,81 @@
 					return false;
 				}
 			}
+			
+			content_editor = $('#content').xheditor();
+
+			content_editor.settings.upImgUrl = "${ctx}/attachment/upload_xheditor?immediate=1";
+			content_editor.settings.onUpload = function insertUpload(
+					msg) {
+				var attach = msg[0].attach;
+				var attach_id = attach._id_m;
+				addAttatch(attach_id);
+			};
+			
+			$("#start_date").click(function() {
+				laydate({
+					elem : '#start_date',
+					istime : true,
+					format : 'YYYY-MM-DD', // 分隔符可以任意定义，该例子表示只显示年月
+					festival : true, //显示节日
+					choose : function(datas) { //选择日期完毕的回调
+						//console.log(datas);
+					}
+				});
+			});
+
+
+			$("#end_date").click(function() {
+				laydate({
+					elem : '#end_date',
+					istime : true,
+					format : 'YYYY-MM-DD', // 分隔符可以任意定义，该例子表示只显示年月
+					festival : true, //显示节日
+					choose : function(datas) { //选择日期完毕的回调
+
+						//console.log(datas);
+					}
+				});
+			});
 		});
+		
+		function addAttatch(attach_id) {
+			var attaches = $("#content").data("attaches");
+
+			if (attaches == null) {
+				attaches = [];
+			}
+
+			attaches.push(attach_id);
+
+			$("#content").data("attaches", attaches);
+		}
 
 		//保存
 		var save = function() {
 
-			// 控制按钮为禁用
-			$.disableButton("btn_save");
+			var content = content_editor.getSource();
+			if (content.trim() == "") {
+				layer.alert("内容不能为空");
+				return false;
+			}
 
-			var paramForm = $('form').serializeJsonObject();
-
-			$.logJson(paramForm);
+			var paramForm = $('form').getFormParam_ux();
+			paramForm["content"] = content.trim();
+			paramForm["attaches"] = JSON.stringify($("#content").data(
+					"attaches"));
+			
+			//$.logJson(paramForm);
 
 			var successstr = "修改成功";
 
 			var url_to = window.location.href ;
-			var url_success = $.getSitePath() + "/front/exhibition/list";
 
 			var params = [];
-			//params.push("typecode=${sysconst.typecode}");
-			//params.push("typename=${sysconst.typename}");
 			params.push("ts=" + new Date().getTime());
 
-			url_success = url_success + "?" + params.join("&");
+			// 控制按钮为禁用
+			$.disableButton("btn_save");
 
 			$.ajax({
 				type : 'POST',
@@ -92,18 +264,26 @@
 
 					if (data['success'] == 'n') {
 						if (data['brErrors']) {
-							$.showBRErrors_mou_abs(data['brErrors'],
-									$("#add_div"));
+							$.alertBRErrorMask(data['brErrors'],
+									"错误");
 						} else {
 							$.alertError(data['message']);
 						}
 					} else {
 
-						var callback = parent.data_manage_functions.closeAddWindow;
-
-						$.alertSuccessCallback("成功", successstr,
-								callback);
-						//$.alertSuccessNewPage("成功", successstr, url_success);
+						var callback = function(){
+							parent.data_manage_functions.refreshPage();
+							parent.data_manage_functions.closeEditWindow();
+						}
+						
+						layer.open({
+							title : [ '成功',
+									'font-size:18px;background-color: #dff0d8;' ],
+							content : '修改成功',
+							yes : function(index) {
+								callback();
+							}
+						});
 					}
 				},
 				complete : function(XMLHttpRequest, textStatus) {

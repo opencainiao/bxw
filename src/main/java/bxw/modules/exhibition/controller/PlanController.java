@@ -1,5 +1,6 @@
 package bxw.modules.exhibition.controller;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +28,7 @@ import com.mongodb.DBObject;
 
 import bxw.common.util.RegexPatternUtil;
 import bxw.modules.base.BaseController;
+import bxw.modules.client.model.propertyeidtor.StringListEditor;
 import bxw.modules.exhibition.model.Plan;
 import bxw.modules.exhibition.service.IPlanService;
 import mou.web.webbase.domain.RequestResult;
@@ -45,6 +49,12 @@ public class PlanController extends BaseController {
 	@Resource(name = "planService")
 	private IPlanService planService;
 
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+
+		binder.registerCustomEditor(List.class, "attaches", new StringListEditor());
+	}
+	
 	/****
 	 * 进入添加展业页面
 	 * 

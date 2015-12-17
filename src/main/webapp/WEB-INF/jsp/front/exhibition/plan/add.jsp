@@ -191,7 +191,7 @@ div.laydate_yms {
 						format : 'YYYY-MM-DD', // 分隔符可以任意定义，该例子表示只显示年月
 						festival : true, //显示节日
 						choose : function(datas) { //选择日期完毕的回调
-							console.log(datas);
+							//console.log(datas);
 						}
 					});
 				});
@@ -206,7 +206,7 @@ div.laydate_yms {
 						festival : true, //显示节日
 						choose : function(datas) { //选择日期完毕的回调
 
-							console.log(datas);
+							//console.log(datas);
 						}
 					});
 				});
@@ -237,7 +237,7 @@ div.laydate_yms {
 			paramForm["content"] = content.trim();
 			paramForm["attaches"] = JSON.stringify($("#content").data(
 					"attaches"));
-			$.logJson(paramForm);
+			//$.logJson(paramForm);
 
 			var url_to = $.getSitePath() + "/front/plan/add";
 			var params = [];
@@ -248,41 +248,41 @@ div.laydate_yms {
 			$.disableButton("btn_save");
 
 			$.ajax({
-						type : 'POST',
-						url : url_to,
-						data : $.extend({
-							ts : new Date().getTime()
-						}, paramForm),
-						dataType : 'json',
-						success : function(data) {
+				type : 'POST',
+				url : url_to,
+				data : $.extend({
+					ts : new Date().getTime()
+				}, paramForm),
+				dataType : 'json',
+				success : function(data) {
 
-							if (data['success'] == 'n') {
-								if (data['brErrors']) {
-									$.alertBRErrorMask(data['brErrors'],
-											"错误");
-								} else {
-									$.alertError(data['message']);
-								}
-							} else {
-
-								var callback = parent.closeAddNoteWindow;
-
-								layer.open({
-									title : [ '成功',
-											'font-size:18px;background-color: #dff0d8;' ],
-									content : '添加成功',
-									yes : function(index) {
-										var url_to = $.getSitePath() + '/front/plan/list';
-
-										window.location.href = url_to;
-									}
-								});
-							}
-						},
-						complete : function(XMLHttpRequest, textStatus) {
-							$.enableButton("btn_save");
+					if (data['success'] == 'n') {
+						if (data['brErrors']) {
+							$.alertBRErrorMask(data['brErrors'],
+									"错误");
+						} else {
+							$.alertError(data['message']);
 						}
-					});
+					} else {
+
+						var callback = parent.closeAddNoteWindow;
+
+						layer.open({
+							title : [ '成功',
+									'font-size:18px;background-color: #dff0d8;' ],
+							content : '添加成功',
+							yes : function(index) {
+								var url_to = $.getSitePath() + '/front/plan/list';
+
+								window.location.href = url_to;
+							}
+						});
+					}
+				},
+				complete : function(XMLHttpRequest, textStatus) {
+					$.enableButton("btn_save");
+				}
+			});
 		};
 	</script>
 </body>

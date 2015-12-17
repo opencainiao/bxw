@@ -127,11 +127,8 @@ public final class home2_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t\t\t<div id=\"home_content\" class=\"right_col\" role=\"main\">\r\n");
       out.write("\t\t\t\t<iframe id=\"frame_content_id\" name=\"frame_content_id\"\r\n");
       out.write("\t\t\t\t\tclass=\"frame_content_container\" width=\"100%\"\r\n");
-      out.write("\t\t\t\t\tstyle=\"min-height: 500px\" frameborder=\"0\" onload=\"handIframeLoad()\"> </iframe>\r\n");
-      out.write("\r\n");
-      out.write("\t\t\t\t");
-      org.apache.jasper.runtime.JspRuntimeLibrary.include(request, response, "/WEB-INF/jsp/admin/include/common_nav_footer_gentelella.jsp", out, false);
-      out.write("\r\n");
+      out.write("\t\t\t\t\tstyle=\"min-height: 500px\" frameborder=\"0\" onload=\"handIframeLoad()\">\r\n");
+      out.write("\t\t\t\t</iframe>\r\n");
       out.write("\t\t\t</div>\r\n");
       out.write("\t\t\t<!-- /page content -->\r\n");
       out.write("\t\t</div>\r\n");

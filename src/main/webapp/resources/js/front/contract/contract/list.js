@@ -21,7 +21,7 @@ $().ready(function() {
 
 		var config = $.getTitleAndFieldFromGrid(data_manage.gridsetting);
 
-		$.logJson(config);
+	//	$.logJson(config);
 
 		// return;
 		var titles = config["titles"];

@@ -1138,7 +1138,7 @@ var mou_grid_ux = {
 								// + m_type);
 								if (m_type == 'tpl') {
 									var tpl_id = colModelTmp['tpl_id'];
-									console.log("tpl_id----" + tpl_id);
+									//console.log("tpl_id----" + tpl_id);
 									
 									var tpl = document.getElementById(tpl_id).innerHTML; //读取模版
 									//方式一：异步渲染（推荐）
@@ -1165,7 +1165,7 @@ var mou_grid_ux = {
 									if (colModelTmp.condition) {
 										inner_value = colModelTmp.condition[inner_value];
 									}
-									td.innerHTML = $.htmlDecode(inner_value);
+									td.innerHTML = inner_value;
 								} else if (m_type == 'radio') {
 									
 									var valname = colModelTmp.valname;
@@ -1686,7 +1686,7 @@ var mou_grid_ux = {
 						var _tr = _td.parent();
 						var gridid = _tr.parent().parent().attr("id");
 						
-						console.log("grid_id--" + gridid);
+						//console.log("grid_id--" + gridid);
 						
 						// 生成选中的对象
 						var config_select = mou_grid_ux.getTdSelect(gridid, _td.attr('no'));

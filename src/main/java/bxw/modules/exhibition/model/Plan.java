@@ -1,5 +1,7 @@
 package bxw.modules.exhibition.model;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,14 +19,17 @@ public class Plan extends BaseModel {
 	protected String user_id; // 用户id
 	protected String user_name; // 用户名
 	protected String type; // 计划类型(1-年度计划,2-月计划,3-其他计划)
-	
+	protected String plan_name;
+
 	protected String content; // 计划内容
 	protected String remark; // 说明
-	
+
 	private String year;
 	private int month;
 	protected String start_date; // 开始日期
 	protected String end_date; // 结束日期
+
+	private List<String> attaches;
 
 	public String getUser_id() {
 		return user_id;
@@ -100,4 +105,29 @@ public class Plan extends BaseModel {
 		this.month = month;
 	}
 
+	public List<String> getAttaches() {
+		return attaches;
+	}
+
+	public void setAttaches(List<String> attaches) {
+		this.attaches = attaches;
+	}
+
+	public String getPlan_name() {
+		return plan_name;
+	}
+
+	public void setPlan_name(String plan_name) {
+		this.plan_name = plan_name;
+	}
+
+	public void setPlanName() {
+		if (this.type.contains("PLAN_YEAR")) {
+			this.plan_name = "年计划【" + this.year + "】";
+		} else if (this.type.contains("PLAN_MONTH")) {
+			this.plan_name = "月计划【" + this.year + "-" + this.month + "】";
+		}else{
+			this.plan_name = "其他";
+		}
+	}
 }

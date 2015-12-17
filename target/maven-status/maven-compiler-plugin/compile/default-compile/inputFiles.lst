@@ -18,6 +18,7 @@ F:\git\bxw\src\main\java\bxw\modules\infrustructure\service\ISysConstService.jav
 F:\git\bxw\src\main\java\bxw\modules\exhibition\enums\ExhibitionCharacter.java
 F:\git\bxw\src\main\java\bxw\modules\user\enums\UserActiveResult.java
 F:\git\bxw\src\main\java\bxw\common\util\ValidateUtil.java
+F:\git\bxw\src\main\java\bxw\modules\exhibition\enums\PlanState.java
 F:\git\bxw\src\main\java\bxw\modules\client\model\Phone.java
 F:\git\bxw\src\main\java\bxw\modules\client\service\IPhoneService.java
 F:\git\bxw\src\main\java\bxw\modules\client\service\modifyclientinfo\IModifyClientInfoService.java
@@ -43,9 +44,10 @@ F:\git\bxw\src\main\java\bxw\common\web\init\listener\InitListener.java
 F:\git\bxw\src\main\java\bxw\common\globalobj\WorkbookConfig.java
 F:\git\bxw\src\main\java\bxw\modules\client\service\AddressService.java
 F:\git\bxw\src\main\java\bxw\modules\client\service\modifyclientinfo\ClientWorkInfoService.java
+F:\git\bxw\src\main\java\bxw\modules\contract\service\ContractService.java
 F:\git\bxw\src\main\java\bxw\modules\infrustructure\service\impl\AutoIncreaserService.java
-F:\git\bxw\src\main\java\bxw\modules\user\model\User.java
 F:\git\bxw\src\main\java\bxw\modules\user\service\LoginInfService.java
+F:\git\bxw\src\main\java\bxw\modules\user\model\User.java
 F:\git\bxw\src\main\java\bxw\modules\exhibition\enums\AccomplishFlg.java
 F:\git\bxw\src\main\java\bxw\modules\infrustructure\service\ICityService.java
 F:\git\bxw\src\main\java\bxw\modules\infrustructure\service\impl\CityService.java
@@ -72,6 +74,7 @@ F:\git\bxw\src\main\java\bxw\modules\client\service\IPhoneTypeService.java
 F:\git\bxw\src\main\java\bxw\modules\client\controller\PhoneTypeController.java
 F:\git\bxw\src\main\java\bxw\modules\infrustructure\model\Tag.java
 F:\git\bxw\src\main\java\bxw\modules\global\service\INoteService.java
+F:\git\bxw\src\main\java\bxw\modules\exhibition\service\IPlanService.java
 F:\git\bxw\src\main\java\bxw\modules\global\service\impl\NoteService.java
 F:\git\bxw\src\main\java\bxw\modules\client\service\IEmailTypeService.java
 F:\git\bxw\src\main\java\bxw\common\globalhandler\UTF8StringHttpMessageConverter.java
@@ -85,6 +88,7 @@ F:\git\bxw\src\main\java\bxw\modules\user\controller\UserLoginController.java
 F:\git\bxw\src\main\java\bxw\modules\client\model\Address.java
 F:\git\bxw\src\main\java\bxw\modules\infrustructure\model\City.java
 F:\git\bxw\src\main\java\bxw\modules\infrustructure\model\SysConstType.java
+F:\git\bxw\src\main\java\bxw\modules\exhibition\model\Plan.java
 F:\git\bxw\src\main\java\bxw\modules\client\controller\ClientBaseInfoController.java
 F:\git\bxw\src\main\java\bxw\modules\client\service\util\CommonTypeSearchUtil.java
 F:\git\bxw\src\main\java\bxw\modules\global\service\IPicThumbImpl.java
@@ -92,9 +96,9 @@ F:\git\bxw\src\main\java\bxw\modules\client\service\PhoneTypeService.java
 F:\git\bxw\src\main\java\bxw\common\web\interceptors\PriviInteceptor.java
 F:\git\bxw\src\main\java\bxw\modules\infrustructure\service\impl\SysMenuService.java
 F:\git\bxw\src\main\java\bxw\common\util\MongoObjectUtil.java
-F:\git\bxw\src\main\java\bxw\modules\user\enums\UserCharacter.java
-F:\git\bxw\src\main\java\bxw\modules\exhibition\service\ExhibitionItemService.java
 F:\git\bxw\src\main\java\bxw\modules\client\service\AddressTypeService.java
+F:\git\bxw\src\main\java\bxw\modules\exhibition\service\ExhibitionItemService.java
+F:\git\bxw\src\main\java\bxw\modules\user\enums\UserCharacter.java
 F:\git\bxw\src\main\java\bxw\modules\client\service\IFamillyRelationShip.java
 F:\git\bxw\src\main\java\bxw\modules\client\controller\AddressController.java
 F:\git\bxw\src\main\java\bxw\modules\client\service\IEmailService.java
@@ -126,13 +130,16 @@ F:\git\bxw\src\main\java\bxw\common\Constant.java
 F:\git\bxw\src\main\java\bxw\modules\client\service\PhoneService.java
 F:\git\bxw\src\main\java\bxw\common\globalhandler\PageSearchRequestUtil.java
 F:\git\bxw\src\main\java\bxw\modules\client\model\Client.java
+F:\git\bxw\src\main\java\bxw\modules\contract\model\Contract.java
 F:\git\bxw\src\main\java\bxw\modules\user\model\LoginUserInf.java
 F:\git\bxw\src\main\java\bxw\common\web\init\initors\SysConstInitor.java
+F:\git\bxw\src\main\java\bxw\modules\exhibition\service\PlanService.java
 F:\git\bxw\src\main\java\bxw\modules\base\BaseService.java
 F:\git\bxw\src\main\java\bxw\modules\exhibition\service\IExhibitionItemService.java
 F:\git\bxw\src\main\java\bxw\modules\user\enums\Sex.java
 F:\git\bxw\src\main\java\bxw\common\util\WebContextUtil.java
 F:\git\bxw\src\main\java\bxw\modules\client\service\FamillyRelationShipService.java
+F:\git\bxw\src\main\java\bxw\modules\exhibition\controller\PlanController.java
 F:\git\bxw\src\main\java\bxw\modules\infrustructure\enums\SysConstTypeEnum.java
 F:\git\bxw\src\main\java\bxw\modules\client\model\propertyeidtor\StringListEditor.java
 F:\git\bxw\src\main\java\bxw\modules\user\controller\ProfileController.java
@@ -147,6 +154,7 @@ F:\git\bxw\src\main\java\bxw\common\util\EnumUtils.java
 F:\git\bxw\src\main\java\bxw\modules\user\enums\LoginState.java
 F:\git\bxw\src\main\java\bxw\common\web\interceptors\RuntimeLogInteceptor.java
 F:\git\bxw\src\main\java\bxw\modules\client\model\Email.java
+F:\git\bxw\src\main\java\bxw\modules\contract\service\IContractService.java
 F:\git\bxw\src\main\java\bxw\modules\client\controller\EmailTypeController.java
 F:\git\bxw\src\main\java\bxw\modules\infrustructure\controller\CityController.java
 F:\git\bxw\src\main\java\bxw\common\web\interceptors\CharacterInteceptor.java
@@ -155,6 +163,7 @@ F:\git\bxw\src\main\java\bxw\modules\client\model\partinfo\ClientSourceInfo.java
 F:\git\bxw\src\main\java\bxw\modules\client\controller\ClientController.java
 F:\git\bxw\src\main\java\bxw\modules\user\model\LoginInf.java
 F:\git\bxw\src\main\java\bxw\modules\client\model\propertyeidtor\AddressListEditor.java
+F:\git\bxw\src\main\java\bxw\modules\contract\controller\ContractController.java
 F:\git\bxw\src\main\java\bxw\modules\user\service\IUserService.java
 F:\git\bxw\src\main\java\bxw\common\globalobj\SessionPublicData.java
 F:\git\bxw\src\main\java\bxw\modules\exhibition\service\ExhibitionService.java

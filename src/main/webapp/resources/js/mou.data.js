@@ -235,8 +235,8 @@
 
 					var constant_all_typecode = $.getJsonLocal("ALLCONSTANT")[typecode];
 
-					$.logJson(typecode);
-					$.logJson(constant_all_typecode);
+					//$.logJson(typecode);
+					//$.logJson(constant_all_typecode);
 					/*
 					 * 远程获取下来的是数组（有序） 本地存储的是json对象（无序）
 					 * 

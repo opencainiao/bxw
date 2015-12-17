@@ -10,7 +10,10 @@
 <jsp:include page="/WEB-INF/jsp/include/common_css.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/jsp/include/common_js.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/jsp/include/common_flexigrid.jsp"></jsp:include>
+<script type="text/javascript" src="${ctx}/resources/laytpl/laytpl.js"></script>
 
+<link href="${ctx}/resources/css/cus/cus-style.css" rel="stylesheet"
+	type="text/css">
 </head>
 
 <body>
@@ -69,6 +72,16 @@
 	<script type="text/javascript"
 		src="<%=request.getContextPath()%>/resources/js/front/exhibition/plan/list.js"></script>
 
+	<script id="time_tpl" type="text/html">
+		<div class="container-fluid" style="padding-left:8px">
+			<div class="row">
+				<div class="col-sm-2">
+					{{ d.start_date }} - <br>{{ d.end_date }}
+				</div>
+			</div>
+		</div>
+	</script>
+	
 	<script>
 		/****
 		 * 弹出选择客户窗口

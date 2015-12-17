@@ -142,7 +142,17 @@ var data_manage_functions = {
 		var url = $.getSitePath() + '/front/plan/' + data["_id_m"]
 				+ "/update?type=" + data["type"];
 
-		var title = "编辑【" + data["type_name"] + "】"
+		var title = data["type"];
+		var plan_type = data["type"];
+		if (plan_type == "PLAN_YEAR") {
+			title = "年计划";
+		} else if (plan_type == "PLAN_MONTH") {
+			title = "月计划";
+		} else if (plan_type == "PLAN_OTHER") {
+			title = "计划";
+		}
+		
+		var title = "编辑【" + title + "】"
 
 		$.popUpWindow(title, url, "90%", "90%", "edit", $("#data_manage"));
 	},
@@ -155,8 +165,10 @@ var data_manage_functions = {
 	toDetail : function(data) {
 
 		var url = $.getSitePath() + '/front/plan/' + data["_id_m"];
+		
+		var title = data["plan_name"];
 
-		$.showDetailWindow(data["type_name"], url, "98%", "98%");
+		$.showDetailWindow(title, url, "98%", "98%");
 	},
 	/***************************************************************************
 	 * 关闭编辑窗口
@@ -327,32 +339,25 @@ var data_manage = {
 			hide : true
 		}, {
 			display : '类型',
-			name : 'type',
-			width : 120,
+			name : 'plan_name',
+			width : 90,
 			align : 'left',
 			m_type : 'link',
 			sortable : false,
 			callback : data_manage_functions.toDetail,
-			linkConfig : [ "_id_m","type" ],
-			condition : {
-				'PLAN_OTHER': '其他',
-				'PLAN_YEAR': '年计划',
-				'PLAN_MONTH': '月计划'
-			}
+			linkConfig : [ "_id_m","plan_name" ]
 		}, {
 			display : '内容',
 			name : 'content',
-			width : 550,
+			width : 500,
 			align : 'left'
 		}, {
-			display : '开始日期',
-			name : 'start_date',
-			width : 80
-		}, {
-			display : '结束日期',
-			name : 'start_date',
-			width : 140
-		}, {
+			display : '日期',
+			name : 'date',
+			width : 80,
+			m_type : 'tpl',
+			tpl_id:'time_tpl'
+		},  {
 			display : '操作',
 			name : 'operation',
 			m_type : 'buttons',
@@ -367,7 +372,7 @@ var data_manage = {
 				r_name : 'toEdit',
 				text : '编辑',
 				callback : data_manage_functions.toEdit,
-				paramConfig : [ "_id_m", "type", "type_name", "username" ]
+				paramConfig : [ "_id_m", "type" ]
 			} ]
 		} ]
 	}
