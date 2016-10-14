@@ -70,24 +70,38 @@ function autoHeight() {
 
 </script>
 
-<body class="nav-md">
-	<div class="container body">
-		<div class="main_container">
-			<jsp:include
-				page="/WEB-INF/jsp/admin/include/common_nav_left_gentelella.jsp"></jsp:include>
+<body class="nav-md" style="background: #2a3f54">
+	<nav class="navbar navbar-inverse " style="border: 0px;">
+		<div class="container-fluid" style="padding: 0 0;">
+			<!-- 导航栏 -->
+			<div id="top_nav" class="row" style="margin: 0 0">
 			<jsp:include
 				page="/WEB-INF/jsp/admin/include/common_nav_top_gentelella.jsp"></jsp:include>
-
-			<!-- page content -->
-			<div id="home_content" class="right_col" role="main">
-				<iframe id="frame_content_id" name="frame_content_id"
-					class="frame_content_container" width="100%"
-					style="min-height: 500px" frameborder="0" onload="handIframeLoad()">
-				</iframe>
+			
 			</div>
-			<!-- /page content -->
+		</div>
+	</nav>
+
+	<div class="container-fluid"
+		style="padding-left: 0px; padding-right: 0px;">
+		<div class="row"
+			style="margin-top: 0px; margin-left: 0px; margin-right: 0px;">
+			<div id="left_menu_tree" class="col-sm-3 col-md-2 sidebar"
+				style="padding-left: 0px; padding-right: 0px; float: left">
+				<jsp:include
+				page="/WEB-INF/jsp/admin/include/common_nav_left_gentelella.jsp"></jsp:include>	
+			</div>
+			<div class="col-sm-9 col-md-10 main"
+				style="float: left; padding: 10px 10px 0 10px; background-color: white;">
+				<iframe id="frame_content_id" name="frame_content_id"
+					class="frame_content_container" width="100%" style="height: 100%;"
+					frameborder="0" onload="handIframeLoad()"> </iframe>
+			</div>
+			
 		</div>
 	</div>
+	
+	
 
 	<div id="custom_notifications" class="custom-notifications dsp_none">
 		<ul class="list-unstyled notifications clearfix"

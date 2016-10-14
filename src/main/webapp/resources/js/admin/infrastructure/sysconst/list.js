@@ -183,15 +183,9 @@ var data_manage = {
 		}, 
 		{
 			display : '常量类型码',
-			name : 'typecode',
+			name : 'type_code',
 			width : 120,
 			hide : true
-		},
-			{
-				display : '常量类型',
-				name : 'typename',
-				width : 120,
-				hide : true,
 		},{
 			display : '常量值',
 			name : 'val',
@@ -199,7 +193,7 @@ var data_manage = {
 		},
 			{
 				display : '常量显示值',
-				name : 'dspval',
+				name : 'dsp_val',
 				width : 250
 		},
 			{

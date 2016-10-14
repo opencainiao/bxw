@@ -51,6 +51,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
@@ -140,7 +141,7 @@
 			<artifactId>jsp-api</artifactId>
 		</dependency>
 
-		<dependency>
+	 	<dependency>
 			<groupId>taglibs</groupId>
 			<artifactId>standard</artifactId>
 		</dependency>
@@ -149,10 +150,11 @@
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
 		</dependency>
-		<dependency>
+		
+		 <dependency>
 			<groupId>jsptags</groupId>
 			<artifactId>pager-taglib</artifactId>
-		</dependency>
+		</dependency> 
 	</dependencies>
 	<build>
 		<finalName>bxw</finalName>

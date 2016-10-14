@@ -3,7 +3,7 @@
 
 <div class="panel panel-info">
 	<div class="panel-heading">基本信息</div>
-	<div class="panel-body">
+L<div class="panel-body">
 		<div class="row">
 			<div class="col-xs-6">
 				<div class="row">
@@ -102,7 +102,7 @@
 							<div class="col-sm-8">
 								<select id="region_type" name="region_type" class="form-control"
 									data-src="constant" data-typecode="REGION_TYPE"
-									data-value="${client.region_type}"></select>
+									data-value="{$region_type}"></select>
 							</div>
 						</div>
 					</div>
@@ -188,7 +188,7 @@
 
 		var toAdd = '<div   data-order= "#ORDER#"                                                                            '
 				+ '			class="input-group input-group-xs  online-input col-md-12 one_box"                   '
-				+ '			style="padding-left: 15px; margin-top: 8px; width: 450px">                                 '
+				+ '			style="padding-left: 0px; margin-top: 8px; width: 450px">                                 '
 				+ '			<span class="input-group-btn" >                          '
 				+ '				<select id="type_phone" name="type_phone"                                  '
 				+ '				class="form-control" style="width: 80px;">                                                      '
@@ -238,7 +238,7 @@
 		//console.log("p---" + JSON.stringify(p));
 
 		var toAdd = '<div data-order= "#ORDER#" class="input-group input-group-xs  online-input col-md-12 one_box regin-container"                           '
-			    +'	style="padding-left: 15px; margin-top: 8px; width:#DIV_W#">                                       '
+			    +'	style="padding-left: 0px; margin-top: 8px; width:#DIV_W#">                                       '
 				+ '	<div class="row" >                                                                              ' + '		<div class="col-xs-4 control-label">                                                          '
 				+ '			<span class="input-group-btn">                                                              '
 				+ '				<select id="type_address"                                                                 '
@@ -251,12 +251,12 @@
 				+'					style="margin-left: 15px;">删除</button>                                                '
 				+ '			</span>                                                                                     ' + '		</div>                                                                                        '
 				+ '	</div>                                                                                          ' + '	<div class="row" >                                                                              '
-				+ '		<span class="input-group input-group-btn col-xs-3 control-label" style="padding-left:15px">   ' + '			<select id="province" name="province" class="form-control" ></select>                       '
+				+ '		<span class="input-group input-group-btn col-xs-3 control-label" style="padding-left:10px">   ' + '			<select id="province" name="province" class="form-control" ></select>                       '
 				+ '		</span>                                                                                       ' + '		<span class="input-group input-group-btn col-xs-3 control-label" style="padding-left:8px">    '
 				+ '			<select id="city" name="city" class="form-control" ></select>                               ' + '		</span>                                                                                       '
 				+ '		<span class="input-group input-group-btn col-xs-3 control-label" style="padding-left:8px">    ' + '			<select id="district" name="district" class="form-control" ></select>                             '
 				+ '		</span>                                                                                       ' + '	</div>                                                                                          '
-				+ '	<div class="row" >                                                                              ' + '		<span class="col-sm-12 control-label" style="padding-left:15px ;padding-right: 0px">          '
+				+ '	<div class="row" >                                                                              ' + '		<span class="col-sm-12 control-label" style="padding-left:10px ;padding-right: 0px">          '
 				+ '			<input type="text" class="form-control" id="detail_address" name="detail_address"           '
 				+'				placeholder="请输入详细地址">                                                             '
 				+ '		</span>                                                                                       ' + '	</div>                                                                                          '

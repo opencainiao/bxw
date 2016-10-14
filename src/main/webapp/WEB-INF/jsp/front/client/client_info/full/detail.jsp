@@ -17,10 +17,6 @@
 
 <body>
 	<ul class="breadcrumb">
-		<li>
-			<a href="<%=request.getContextPath()%>/front/client/list">客户管理</a>
-			<span class="divider"></span>
-		</li>
 		<li class="active">客户信息（${ client.client_name}）</li>
 	</ul>
 	<div>

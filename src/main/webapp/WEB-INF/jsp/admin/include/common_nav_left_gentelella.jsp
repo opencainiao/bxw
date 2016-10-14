@@ -1,54 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 
-<style>
-.top_left_right {
-	position: fixed;
-	left: 170px;
-	top: 0px;
-}
 
-.top_left_right_sm {
-	position: fixed;
-	left: 80px;
-	top: 0px;
-}
-</style>
-<div class="col-md-3 left_col">
+<div class="left_col" style="background: #2a3f54 none repeat scroll 0 0 ">
 	<div class="left_col scroll-view">
 
 		<div class="navbar nav_title hidden" style="border: 0;">
-			<a href="index.html" class="site_title"><i class="fa fa-paw"></i>
-				<span>Gentellela Alela!</span> </a>
+			<a href="index.html" class="site_title"><i class="fa fa-paw"></i></a>
 		</div>
 		<div class="clearfix hidden"></div>
-
-		<div class="nav toggle top_left_right">
-			<a id="menu_toggle"><i class="fa fa-bars"></i></a>
-		</div>
-
-		<!-- menu prile quick info -->
-		<div class="profile">
-			<div class="profile_pic">
-				<img id="head_img_left"
-					src="${ctx }/attachment/${user_head_img }" 
-					src1="<%=request.getContextPath()%>/resources/gentelella/production/images/img.jpg"
-					alt="..." class="img-circle profile_img">
-			</div>
-			<div class="profile_info">
-				<span>欢迎</span>
-				<h2 id="loginusername_left">${nickname}</h2>
-			</div>
-		</div>
-		<!-- /menu prile quick info -->
 
 		<br />
 
 		<!-- sidebar menu -->
 		<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 			<div class="menu_section">
-				<h3>&nbsp;</h3>
-				<ul id="side-menu" class="nav side-menu">
+				<ul id="side-menu" class="nav side-menu" style="margin-top: 0px;">
 				</ul>
 			</div>
 			<div class="menu_section hide" >

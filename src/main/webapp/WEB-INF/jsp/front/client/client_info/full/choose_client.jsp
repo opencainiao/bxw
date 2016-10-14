@@ -57,7 +57,7 @@
 			$("#btn_confirm").bind("click", function() {
 				var selected = mou_grid_ux.getSelectedAllGrid("list");
 				if (selected.length == 0) {
-					bootbox.alert("<span style='color:red'>请选择一个客户</span>");
+					layer.alert("<span style='color:red'>请选择一个客户</span>");
 					return;
 				}
 				

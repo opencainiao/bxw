@@ -9,9 +9,8 @@
           http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<mongo:mongo-client id="mongo" host="localhost"
+	<mongo:mongo-client id="mongo" host="127.0.0.1"
 		port="27017">
-
 		<!-- credentials="admin:abc_123@xyz" -->
 		<mongo:client-options write-concern="Acknowledged"
 			threads-allowed-to-block-for-connection-multiplier="4"

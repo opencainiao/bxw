@@ -123,11 +123,11 @@ public class AdminLoginController {
 			}
 
 			// 3.校验用户状态
-			if (!user.isValidUser()) {
-				rr.setSuccess(false);
-				rr.setMessage("用户状态不合法，请联系系统管理员");
-				return rr;
-			}
+			// if (!user.isValidUser()) {
+			// rr.setSuccess(false);
+			// rr.setMessage("用户状态不合法，请联系系统管理员");
+			// return rr;
+			// }
 
 			// 4.设置登陆信息
 			String logInTime = DateUtil.getCurrentTimsmp();

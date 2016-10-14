@@ -370,9 +370,7 @@ dark,
 
 body {
     color: #73879C;
-    background: #2A3F54;
     /*#ECF0F1; #FCFCFC*/
-    
     font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
     font-size: 13px;
     font-weight: 400;
@@ -568,8 +566,8 @@ table.no-margin .progress {
 }
 
 .row {
-    margin-right: -10px;
-    margin-left: -10px;
+    margin-right: 0px;
+    margin-left: 0px;
 }
 
 .grid_slider .col-md-6 {
@@ -2443,7 +2441,7 @@ span.section {
 }
 
 .form-horizontal .control-label {
-    padding-top: 8px
+    padding-top: 5px
 }
 
 .form-control:focus {
@@ -6342,4 +6340,65 @@ ul.notifications {
     color: #E9EDEF;
     float: right;
     opacity: 1;
+}
+
+
+.form-inline >.btn, .bDiv .btn{
+	margin-bottom: 0px;
+}
+
+.btn-bar{
+	padding-left: 30px; padding-top: 5px; padding-bottom: 5px;
+}
+
+ul.bar_tabs > li.active a ,.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    background-color: #dff0d8;
+	margin-top: -2px;
+}
+
+#laydate_YY {
+	width: 123px !important;
+	height: 26px !important;
+}
+
+#laydate_MM {
+	width: 101px !important;
+	height: 26px !important;
+}
+
+#laydate_table {
+	border-top-width: 0px !important;
+}
+
+#laydate_box {
+	width: 242px !important;
+}
+
+.laydate_ym   label {
+	margin-right: -3px !important;
+}
+
+#laydate_ys {
+	width: 124px !important;
+}
+
+div.laydate_yms {
+	width: 124px !important;
+}
+
+.laydate_bottom {
+	height: 30px !important;
+}
+
+.ftitle{
+	font-size:14px!important;
+}
+.bg_gry{
+background: #f5f5f5;
+}
+
+.btn-bar-gray-bottom{
+	background: #f5f5f5;
+	border-bottom:1px solid #cccccc;
+	padding-right:25px;
 }
